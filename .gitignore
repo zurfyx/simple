@@ -1,0 +1,8 @@
+*.pyc
+.idea/
+
+simple/db.sqlite3
+simple/.coverage
+simple/.sass-cache/
+simple/static/CACHE/
+simple/static_root/
