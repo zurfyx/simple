@@ -1,19 +1,19 @@
 from django.conf.urls import url
 
-from .views import ProjectDetailList, ProjectList
+from .views import ProjectDetail, ProjectList
 
 urlpatterns = [
-    #List of Projects
+    # List of Projects
     url(
         r'^$',
         ProjectList.as_view(),
         name='project_list'
     ),
 
-    #Detail projects list
+    # Project details
     url(
-        r'^$',
-        ProjectDetailList.as_view(),
-        name='detail_project_list'
+        r'^\/(?P<pk>\d+)$',
+        ProjectDetail.as_view(),
+        name='project_detail'
     )
 ]

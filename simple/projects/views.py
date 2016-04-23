@@ -1,20 +1,22 @@
-from django.shortcuts import render
 from django.views.generic import ListView
+from django.views.generic.detail import DetailView
 
-from .models import AbstractProjectRoles, AbstractProject
+from .models import Project
 
 
 class ProjectList(ListView):
     """
     Display list of projects
     """
-    model = AbstractProject
+    model = Project
     template_name = 'projects/list.html'
+    context_object_name = 'projects'
 
 
-class ProjectDetailList(ListView):
+class ProjectDetail(DetailView):
     """
-    Display detail list of projects
+    Display project details
     """
-    model = AbstractProjectRoles
+    model = Project
     template_name = 'projects/detail.html'
+    context_object_name = 'project'
