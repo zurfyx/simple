@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block nav %}
+    <a href="{%  url "projects:project_list" %}">Projects</a>
+{% endblock %}
+
+{% block posts_content %}
+    <h2>Projects</h2>
+
+    <ul class="fit-width element-list push-up">
+        {% for project in project_list %}
+            <a href="{% url "projects:project_list" project.slug %}">
+                <li class="shadowed element">
+                    <span class="go right">
+                        &#10148;
+                    </span>
+                    {{project.title}}
+                </li>
+            </a>
+        {% endfor %}
+    </ul>
+{% endblock %}
