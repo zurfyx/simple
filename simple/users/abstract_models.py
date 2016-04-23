@@ -65,8 +65,8 @@ class AbstractUser(AbstractBaseUser):
     def has_module_perms(self, app_label):
         return True
 
-    def __str__(self):
-        return '{0}'.format(self.username)
+    def __unicode__(self):
+        return '{0}'.format(self.email)
 
     class Meta:
         abstract = True

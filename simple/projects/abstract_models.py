@@ -13,8 +13,8 @@ class AbstractProject(models.Model):
     #roles = models.ManyToManyField(User, through='User')
     approved = models.BooleanField(default=False)
 
-    def __str__(self):
-        return self.owner
+    def __unicode__(self):
+        return str(self.owner)
 
     class Meta:
         abstract = True
