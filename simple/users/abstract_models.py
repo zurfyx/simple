@@ -10,6 +10,7 @@ from . import constants
 
 class AbstractUser(AbstractBaseUser):
     """
+    Defines User Custom Model.
     Remember that password and last_login are inherited from AbstractBaseUser.
     """
     email = models.EmailField(db_index=True, unique=True)
@@ -65,7 +66,7 @@ class AbstractUser(AbstractBaseUser):
     def has_module_perms(self, app_label):
         return True
 
-    def __unicode__(self):
+    def __str__(self):
         return '{0}'.format(self.email)
 
     class Meta:

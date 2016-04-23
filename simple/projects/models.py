@@ -1,11 +1,11 @@
 from __future__ import unicode_literals
 
-from .abstract_models import AbstractProject, AbstractProjectRoles
+from .abstract_models import AbstractProject, AbstractProjectRole
 
 
 class Project(AbstractProject):
     pass
 
 
-class ProjectRoles(AbstractProjectRoles):
+class ProjectRole(AbstractProjectRole):
     pass

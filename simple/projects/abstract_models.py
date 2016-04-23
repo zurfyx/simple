@@ -5,25 +5,30 @@ from users.models import User
 
 class AbstractProject(models.Model):
     """
-    Remember that owner is inherited from User.
+    Defines a Project Model.
     """
     owner = models.ForeignKey(User)
     title = models.CharField(max_length=200)
     body = models.CharField(max_length=20000)
-    #roles = models.ManyToManyField(User, through='User')
+    roles = models.ManyToManyField(User, through='ProjectRole',
+                                   related_name='projects')
     approved = models.BooleanField(default=False)
 
-    def __unicode__(self):
-        return str(self.owner)
+    def __str__(self):
+        return '{0}'.format(self.title)
 
     class Meta:
         abstract = True
 
 
-class AbstractProjectRoles(AbstractProject):
+class AbstractProjectRole(models.Model):
     """
-    Defining role and approved projects.
+    Special user roles for projects.
+    These can be 1 => Scientist, 2 => Student, 3 => Scientific Citizen.
+    Project owner will always be a scientist.
     """
+    user = models.ForeignKey(User)
+    project = models.ForeignKey('Project')
     role = models.PositiveIntegerField(default=1)
     approved_role = models.BooleanField(default=False)
 
