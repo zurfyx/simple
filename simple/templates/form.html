@@ -7,16 +7,18 @@
         {% endfor %}
     </div>
 {% endif %}
-
 {% csrf_token %}
-<div class="container-fluid">
-    {% for field in form %}
-        {% if not field.is_hidden %}
-            <div class="row">
-                {{ field.label_tag }}
-            </div>
-        {% endif %}
+{% for field in form %}
+    {% if not field.is_hidden %}
         <div class="row">
-             {{ field }}
+            {{ field.label_tag }}
+            {% if field.field.required %}
+                {{ required_mark }}
+            {% endif %}
         </div>
-    {% endfor %}
+    {% endif %}
+    <div class="row">
+         {{ field }}
+    </div>
+{% endfor %}
+<input type="hidden" name="next" value="{{ next }}" />

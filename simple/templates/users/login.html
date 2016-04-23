@@ -1,0 +1,17 @@
+{% extends "users/base.html" %}
+
+{% block app_content %}
+    {% if user.is_authenticated %}
+        You're already logged in!
+    {% endif %}
+    <form method="post" action="">
+        {% for error in errors %}
+            <p>{{ error }}</p>
+        {% endfor %}
+        {% csrf_token %}
+        <input type="text" name="email" placeholder="Email" />
+        <input type="password" name="password" placeholder="Password" />
+        <input type="submit" value="Login" />
+        <input type="hidden" name="next" value="{{ next }}" />
+    </form>
+{% endblock %}
