@@ -1,11 +1,35 @@
+{%  load compress %}
+{%  load static %}
 <html>
 <head>
+    <title>Simple - The project sharing platform</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
 
+    {% block cdn_stylesheets %}
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+    {% endblock %}
+
+    {% block stylesheets %}
+        {% compress css %}
+            <link rel="stylesheet" type="text/scss" href="{% static "scss/style.scss" %}" />
+        {% endcompress %}
+    {% endblock %}
 </head>
 <body>
     <div id="content">
         {% block content %}
         {% endblock %}
     </div>
+
+    {% block cdn_scripts %}
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+    {% endblock %}
+
+    {% block scripts %}
+    {% endblock %}
+
+    {% block local_scripts %}
+    {% endblock %}
 </body>
 </html>

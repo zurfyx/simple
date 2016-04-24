@@ -4,3 +4,4 @@ django-annoying==0.9.0
 django-appconf==1.0.1
 six==1.10.0
 coverage==4.0.3
+django-compressor==2.0
