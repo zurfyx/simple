@@ -12,6 +12,7 @@ class AbstractProject(models.Model):
     body = models.CharField(max_length=20000)
     roles = models.ManyToManyField(User, through='ProjectRole',
                                    related_name='projects')
+    awaiting_approval = models.BooleanField(default=True)
     approved = models.BooleanField(default=False)
 
     def __str__(self):

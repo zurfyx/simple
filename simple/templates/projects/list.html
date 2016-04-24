@@ -4,7 +4,9 @@
     <h1>Projects list</h1>
     <ul>
         {% for project in projects %}
-            <li>{{ project }}</li>
+            {% if project.approved %}
+                <li>{{ project }}</li>
+            {% endif %}
         {% endfor %}
     </ul>
 {% endblock %}

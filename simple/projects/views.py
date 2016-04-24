@@ -1,6 +1,8 @@
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
+from django.shortcuts import get_object_or_404
 from django.views.generic import ListView
+from django.views.generic.base import RedirectView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView
 
@@ -41,8 +43,28 @@ class ProjectNewView(CustomLoginRequiredMixin, CreateView):
 
 class ProjectApproveList(HeadOfDepartmentMixin, ListView):
     model = Project
-    template_name = 'projects/approve.html'
+    template_name = 'projects/approve-list.html'
     context_object_name = 'projects'
 
     def get_queryset(self):
-        return self.model.objects.filter(approved=False)
+        return self.model.objects.filter(awaiting_approval=True)
+
+
+class ProjectApproveDeny(HeadOfDepartmentMixin, RedirectView):
+    pattern_name = 'projects:approve-list'
+    approve = False
+
+    def get_redirect_url(self, **kwargs):
+        project = get_object_or_404(Project, pk=kwargs['pk'])
+        project.awaiting_approval = False
+        project.approved = self.approve
+        project.save()
+        return reverse(self.pattern_name)
+
+
+class ProjectApprove(ProjectApproveDeny):
+    approve = True
+
+
+class ProjectDeny(ProjectApproveDeny):
+    approve = False

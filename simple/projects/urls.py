@@ -1,7 +1,7 @@
 from django.conf.urls import url
 
 from .views import ProjectDetail, ProjectList, ProjectNewView,\
-    ProjectApproveList
+    ProjectApproveList, ProjectApprove, ProjectDeny
 
 urlpatterns = [
     # List of Projects
@@ -29,6 +29,20 @@ urlpatterns = [
     url(
         r'^\/approve$',
         ProjectApproveList.as_view(),
-        name='approve-projects'
+        name='approve-list'
+    ),
+
+    # Approve project
+    url(
+        r'^\/approve/(?P<pk>\d+)$',
+        ProjectApprove.as_view(),
+        name='approve-project'
+    ),
+
+    # Deny project
+    url(
+        r'^\/deny/(?P<pk>\d+)$',
+        ProjectDeny.as_view(),
+        name='deny-project'
     ),
 ]

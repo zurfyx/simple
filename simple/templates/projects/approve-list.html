@@ -1,0 +1,11 @@
+<h1>Approve project proposals</h1>
+
+<ul>
+    {% for project in projects %}
+        <li>
+            {{ project.title }}
+            <a href="{% url "projects:approve-project" project.id %}">Approve</a>
+            <a href="{% url "projects:deny-project" project.id %}">Deny</a>
+        </li>
+    {% endfor %}
+</ul>
