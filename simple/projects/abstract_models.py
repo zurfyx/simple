@@ -8,7 +8,7 @@ class AbstractProject(models.Model):
     Defines a Project Model.
     """
     owner = models.ForeignKey(User)
-    title = models.CharField(max_length=200)
+    title = models.CharField(max_length=200, unique=True)
     body = models.CharField(max_length=20000)
     roles = models.ManyToManyField(User, through='ProjectRole',
                                    related_name='projects')
