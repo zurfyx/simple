@@ -4,7 +4,7 @@ from django.views.generic import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView
 
-from core.mixins import CustomLoginRequiredMixin
+from core.mixins import CustomLoginRequiredMixin, HeadOfDepartmentMixin
 from projects.forms import ProjectNewForm
 from .models import Project
 
@@ -37,3 +37,12 @@ class ProjectNewView(CustomLoginRequiredMixin, CreateView):
         project.owner = self.request.user
         project.save()
         return HttpResponseRedirect(reverse(self.success_url))
+
+
+class ProjectApproveList(HeadOfDepartmentMixin, ListView):
+    model = Project
+    template_name = 'projects/approve.html'
+    context_object_name = 'projects'
+
+    def get_queryset(self):
+        return self.model.objects.filter(approved=False)

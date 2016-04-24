@@ -55,8 +55,8 @@ class AbstractUser(AbstractBaseUser):
     def get_role_str(self):
         role = [
             (1, 'Member'),
-            (2, 'Head of Department'),
-            (3, 'Moderator'),
+            (2, 'Moderator'),
+            (3, 'Head of Department'),
         ]
         return role[self.role]
 
