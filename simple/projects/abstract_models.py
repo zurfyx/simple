@@ -4,7 +4,18 @@ from projects.constants import ProjectRoles
 from users.models import User
 
 
-class AbstractProject(models.Model):
+class AbstractTimeStamped(models.Model):
+    """
+    Auto-updated created and modified fields
+    """
+    created = models.DateTimeField(auto_now_add=True)
+    modified = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        abstract = True
+
+
+class AbstractProject(AbstractTimeStamped):
     """
     Defines a Project Model.
     """
@@ -37,8 +48,8 @@ class AbstractProjectRole(models.Model):
     approved_role = models.BooleanField(default=False)
 
     def __str__(self):
-        return str(self.role)
+        return ProjectRoles.PROJECT_ROLES[self.role][1]
 
     class Meta:
         abstract = True
-        unique_together = (('user', 'project'),)
+        unique_together = ('user', 'project')
