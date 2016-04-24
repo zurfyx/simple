@@ -1,4 +1,131 @@
-$default-color: #0096ff;
+/* CONSTANTS */
+$default-color: #00c6ff;
+$light-grey: #ccc;
+$dark-grey: #444;
+
+/* MIXINS */
+
+@mixin fullsize-background() {
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  background-position: center center;
+}
+
+@mixin alt-text-background() {
+  display: inline-block;
+  text-indent: -999em;
+  overflow:hidden;
+}
+
+@mixin round-btn($width: 50px, $height: 50px, $opacity: 0.7) {
+  display: inline-block;
+  background-color: #fff;
+  border-radius: $width;
+  width: $width;
+  height: $height;
+  opacity: $opacity;
+  line-height: $height;
+  text-align: center;
+}
+
+/* STYLES */
 
 body {
+  //font-family: 'Open Sans,Helmet,Freesans,Trebuchet MS,sans-serif';
 }
+
+h1, h2 {
+  margin: 0;
+  padding: 10px 0 10px 0;
+}
+
+h1, h2, input[type="button"], input[type="submit"] {
+  text-transform: uppercase;
+}
+
+a {
+  color: #000;
+  text-decoration: none;
+}
+
+a:hover {
+  color: $default-color;
+  text-decoration: none;
+}
+
+.center {
+  margin: 0 auto;
+}
+
+.vcenter {
+  position: relative;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+.center-text {
+  text-align:center;
+}
+
+.full-center {
+  @extend .center;
+  @extend .vcenter;
+  @extend .center-text;
+}
+
+
+.left {
+  float:left;
+}
+
+.right {
+  float: right;
+}
+
+.clear:after {
+  clear:both;
+}
+
+.min-page-padding {
+  padding: 10px;
+}
+
+#nav {
+  @extend .min-page-padding;
+  @extend .clear;
+  position:absolute;
+  z-index:1;
+  height: 40px;
+  width: 100%;
+
+  #logo {
+    @extend .left;
+    font-size: 25px;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+  /*#logo {
+    @include fullsize-background;
+    @include alt-text-background;
+    background-image: url("../img/logo_full.png");
+    width:130px;
+    height:50px;
+  }*/
+
+  #menu {
+    @extend .right;
+    font-size: 17px;
+    li {
+      display:inline;
+      list-style-type: none;
+    }
+  }
+}
+
+/* IMPORTS */
+
+@import 'home/base.scss';
