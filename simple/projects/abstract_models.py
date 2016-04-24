@@ -1,5 +1,6 @@
 from django.db import models
 
+from projects.constants import ProjectRoles
 from users.models import User
 
 
@@ -25,12 +26,14 @@ class AbstractProject(models.Model):
 class AbstractProjectRole(models.Model):
     """
     Special user roles for projects.
-    These can be 1 => Scientist, 2 => Student, 3 => Scientific Citizen.
+    These can be 1 => Scientist, 2 => Student, 3 => Scientific Citizen
+    (check constants).
     Project owner will always be a scientist.
     """
     user = models.ForeignKey(User)
     project = models.ForeignKey('Project')
-    role = models.PositiveIntegerField(default=1)
+    role = models.PositiveIntegerField(default=1,
+                                       choices=ProjectRoles.PROJECT_ROLES)
     approved_role = models.BooleanField(default=False)
 
     def __str__(self):
@@ -38,3 +41,4 @@ class AbstractProjectRole(models.Model):
 
     class Meta:
         abstract = True
+        unique_together = (('user', 'project'),)

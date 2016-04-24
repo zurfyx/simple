@@ -1,0 +1,11 @@
+{% extends "projects/base.html" %}
+
+{% block app_content %}
+    <!-- TODO
+    <p>A role petition is already awaiting for approval</p>
+    <p>Remove role</p> -->
+    <form method="post">
+        {% include "form.html" %}
+        <input type="submit" value="Request" />
+    </form>
+{% endblock %}

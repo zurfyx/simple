@@ -7,7 +7,8 @@ from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView
 
 from core.mixins import CustomLoginRequiredMixin, HeadOfDepartmentMixin
-from projects.forms import ProjectNewForm
+from projects.forms import ProjectNewForm, ProjectContributeForm
+from projects.mixins import ApprovedProjectRequiredMixin
 from .models import Project
 
 
@@ -62,9 +63,29 @@ class ProjectApproveDeny(HeadOfDepartmentMixin, RedirectView):
         return reverse(self.pattern_name)
 
 
-class ProjectApprove(ProjectApproveDeny):
+class ProjectApproveView(ProjectApproveDeny):
     approve = True
 
 
-class ProjectDeny(ProjectApproveDeny):
+class ProjectDenyView(ProjectApproveDeny):
     approve = False
+
+
+class ProjectContributeView(CustomLoginRequiredMixin,
+                            ApprovedProjectRequiredMixin, CreateView):
+    template_name = 'projects/contribute.html'
+    form_class = ProjectContributeForm
+    success_url = 'projects:detail'
+
+    def get_initial(self):
+        return {
+            'project': self.kwargs['pk'],
+        }
+
+    def form_valid(self, form):
+        project_role = form.save(commit=False)
+        project_role.user = self.request.user
+        project_role.save()
+        url_project = reverse(self.success_url,
+                              kwargs={'pk': self.kwargs['pk']})
+        return HttpResponseRedirect(url_project)
