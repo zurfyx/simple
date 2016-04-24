@@ -1,3 +1,4 @@
+from annoying.functions import get_object_or_None
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
@@ -9,7 +10,7 @@ from django.views.generic.edit import CreateView
 from core.mixins import CustomLoginRequiredMixin, HeadOfDepartmentMixin
 from projects.forms import ProjectNewForm, ProjectContributeForm
 from projects.mixins import ApprovedProjectRequiredMixin
-from .models import Project
+from .models import Project, ProjectRole
 
 
 class ProjectList(ListView):
@@ -83,9 +84,31 @@ class ProjectContributeView(CustomLoginRequiredMixin,
         }
 
     def form_valid(self, form):
+        if self._previous_role_petition():
+            url_contribute = reverse('projects:contribute',
+                                     kwargs={'pk': self.kwargs['pk']})
+            return HttpResponseRedirect(url_contribute)
         project_role = form.save(commit=False)
         project_role.user = self.request.user
         project_role.save()
         url_project = reverse(self.success_url,
                               kwargs={'pk': self.kwargs['pk']})
         return HttpResponseRedirect(url_project)
+
+    def _previous_role_petition(self):
+        """
+        No duplicate role petitions per project can be recorded.
+        Will return to the contribute view if so.
+        """
+        petition = ProjectRole.objects.get(user=self.request.user,
+                                           project=self.kwargs['pk'])
+        return petition is not None
+
+    def get_context_data(self, **kwargs):
+        context = super(ProjectContributeView, self).get_context_data(**kwargs)
+        project = Project.objects.get(pk=self.kwargs['pk'])
+        project_role = get_object_or_None(project.projectrole_set,
+                                          user=self.request.user)
+        context['project'] = project
+        context['project_role'] = project_role
+        return context

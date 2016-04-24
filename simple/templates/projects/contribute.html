@@ -1,11 +1,17 @@
 {% extends "projects/base.html" %}
 
 {% block app_content %}
-    <!-- TODO
-    <p>A role petition is already awaiting for approval</p>
-    <p>Remove role</p> -->
-    <form method="post">
-        {% include "form.html" %}
-        <input type="submit" value="Request" />
-    </form>
+    {% if project_role %}
+        {% if project_role.approved %}
+            <p>{{ project_role.get_role_str }}</p>
+        {% else %}
+            <p>{{ project_role.get_role_str }} role petition is awaiting for approval</p>
+        {% endif %}
+        <a href="#">Revoke role</a> <!-- TODO -->
+    {% else %}
+        <form method="post">
+            {% include "form.html" %}
+            <input type="submit" value="Request" />
+        </form>
+    {% endif %}
 {% endblock %}

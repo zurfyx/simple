@@ -2,5 +2,6 @@
 
 {% block app_content %}
     <h1>{{ project.title }}</h1>
+    <a href="{% url "projects:contribute" project.id %}">Contribute</a>
     <p>{{ project.body }}</p>
 {% endblock %}

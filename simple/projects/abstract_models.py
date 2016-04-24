@@ -47,8 +47,12 @@ class AbstractProjectRole(models.Model):
                                        choices=ProjectRoles.PROJECT_ROLES)
     approved_role = models.BooleanField(default=False)
 
-    def __str__(self):
+    def get_role_str(self):
         return ProjectRoles.PROJECT_ROLES[self.role][1]
+
+    def __str__(self):
+        return '({0}, {1}) -> {2}'\
+            .format(self.user, self.project, ProjectRoles.PROJECT_ROLES[self.role][1])
 
     class Meta:
         abstract = True
