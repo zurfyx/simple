@@ -26,7 +26,6 @@ class UserCreationForm(forms.ModelForm):
         return password2
 
     def save(self, commit=True):
-        print 'hi'
         # Save the provided password in hashed format
         user = super(UserCreationForm, self).save(commit=False)
         user.set_password(self.cleaned_data["password1"])

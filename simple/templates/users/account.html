@@ -1,0 +1,8 @@
+{% extends "users/base.html" %}
+
+{% block app_content %}
+    <h1>{{ user.get_full_name }}</h1>
+    {% if request.user.id == user.id %}
+        It's me!
+    {% endif %}
+{% endblock %}

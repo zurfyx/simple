@@ -1,8 +1,10 @@
 from django.contrib.auth import authenticate, login
+from django.views.generic import DetailView
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import CreateView
 
 from users.forms import UserCreationForm
+from users.models import User
 
 
 class RegisterView(CreateView):
@@ -42,3 +44,9 @@ class LoginView(TemplateView):
         context = super(LoginView, self).get_context_data(**kwargs)
         context['errors'] = self.errors
         return context
+
+
+class AccountView(DetailView):
+    template_name = 'users/account.html'
+    model = User
+    context_object_name = 'user'
