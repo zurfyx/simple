@@ -86,21 +86,39 @@ a:hover {
   float: right;
 }
 
+.clear {
+  zoom: 1;
+}
+
 .clear:after {
-  clear:both;
+  content: ".";
+  display: block;
+  clear: both;
+  visibility: hidden;
+  line-height: 0;
+  height: 0;
 }
 
 .min-page-padding {
   padding: 10px;
 }
 
-#nav {
+#header {
   @extend .min-page-padding;
   @extend .clear;
-  position:absolute;
-  z-index:1;
+  color: #444;
+  background-color: #EEF1F2;
+  padding-bottom: 40px;
   height: 40px;
   width: 100%;
+  z-index:1;
+
+  a {
+    color: #555;
+    &:hover {
+      color: #000;
+    }
+  }
 
   #logo {
     @extend .left;
@@ -116,7 +134,7 @@ a:hover {
     height:50px;
   }*/
 
-  #menu {
+  #nav {
     @extend .right;
     font-size: 17px;
     li {

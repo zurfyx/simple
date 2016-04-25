@@ -1,7 +1,15 @@
-#nav a {
-  color: #fff;
-  &:hover {
-    color: $default-color;
+#header.landing-header {
+  background-color: transparent;
+  position: absolute;
+  a {
+    color: #fff;
+    &:hover {
+      color: $default-color;
+    }
+  }
+
+  #logo {
+    font-weight: 400;
   }
 }
 

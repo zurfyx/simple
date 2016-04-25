@@ -16,6 +16,23 @@
     {% endblock %}
 </head>
 <body>
+    {% block header %}
+        <header id="header">
+            <a id="logo" href="{% url "home:landing" %}">{{ PROJECT_NAME }}</a>
+            <div id="nav">
+                <ul>
+                    <li><a href="{% url "projects:list" %}">Projects</a></li>
+                    {% if user.is_authenticated %}
+                        {{ user.first_name }}
+                    {% else %}
+                        <li><a href="{% url "users:login" %}">Log In</a></li>
+                        <li><a href="{% url "users:signup" %}">Sign Up</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </header>
+    {% endblock %}
+
     <div id="content">
         {% block content %}
         {% endblock %}
