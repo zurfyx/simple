@@ -1,6 +1,9 @@
 /* CONSTANTS */
 $default-color: #00c6ff;
+$default-font-color: #000;
+$default-contrast-font-color: #fff;
 $light-grey: #ccc;
+$hyper-light-grey: #f9f9f9;
 $dark-grey: #444;
 
 /* MIXINS */
@@ -50,9 +53,47 @@ a {
   text-decoration: none;
 }
 
-a:hover {
+a:link, a:visited, a:hover, a:active {
   color: $default-color;
   text-decoration: none;
+}
+
+form {
+
+  input {
+    display: block;
+    padding: 10px 10px 5px 10px;
+    border: none;
+    border-bottom: 1px solid #f3f3f3;
+    font-size: 16px;
+  }
+
+  input + input {
+    margin-top: 20px;
+  }
+
+  input:focus {
+    outline: none;
+    border: none;
+    border-bottom: 1px solid $default-color;
+  }
+
+  input[type=button], input[type=submit] {
+    padding: 10px 20px 10px 20px;
+    border-radius: 3px;
+
+    &:hover {
+      background-color: #e9e9e9;
+    }
+  }
+}
+
+.box {
+  background-color: #fff;
+  border: 1px solid #e8e8e8;
+  border-radius: 2px;
+  box-shadow: 0 1px 0 rgba(0,0,0,.25);
+  padding: 30px;
 }
 
 .center {
@@ -100,23 +141,22 @@ a:hover {
 }
 
 .min-page-padding {
-  padding: 10px;
+  padding: 25px 30px 25px 30px;
 }
 
 #header {
   @extend .min-page-padding;
   @extend .clear;
-  color: #444;
-  background-color: #EEF1F2;
-  padding-bottom: 40px;
-  height: 40px;
+  color: $default-contrast-font-color;
+  background-color: #303B42;
+  height: 94px;
   width: 100%;
   z-index:1;
 
   a {
-    color: #555;
+    color: $default-contrast-font-color;
     &:hover {
-      color: #000;
+      color: $default-color;
     }
   }
 
@@ -134,7 +174,7 @@ a:hover {
     height:50px;
   }*/
 
-  #nav {
+  #header-nav {
     @extend .right;
     font-size: 17px;
     li {
@@ -142,6 +182,23 @@ a:hover {
       list-style-type: none;
     }
   }
+}
+
+#menu {
+  @extend .min-page-padding;
+  /*background-color: #bccfdb;*/
+  background-color: $hyper-light-grey;
+  height: 100px;
+
+  h1 {
+    color: #333;
+    font-weight: bold;
+  }
+}
+
+#content {
+  background-color: $hyper-light-grey;
+  height: 800px; /* TODO */
 }
 
 /* IMPORTS */

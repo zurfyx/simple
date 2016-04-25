@@ -2,9 +2,9 @@
 {% load static %}
 
 {% block header %}
-    <header id="header" class="landing-header">
+    <header id="landing-header">
         <a id="logo" href="{% url "home:landing" %}">{{ PROJECT_NAME }}</a>
-        <div id="nav">
+        <div id="header-nav">
             <ul>
                 <li><a href="{% url "projects:list" %}">Projects</a></li>
                 <li><a href="{% url "users:login" %}">Log In</a></li>

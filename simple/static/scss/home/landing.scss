@@ -1,21 +1,41 @@
-#header.landing-header {
+#landing-header {
+  @extend .min-page-padding;
+  @extend .clear;
+  color: #444;
   background-color: transparent;
   position: absolute;
+  /*padding: 25px 30px 25px 30px;*/
+  height: 40px;
+  width: 100%;
+  z-index: 1;
+
   a {
-    color: #fff;
+    color: $default-contrast-font-color;
     &:hover {
       color: $default-color;
     }
   }
 
   #logo {
+    @extend .left;
+    font-size: 25px;
     font-weight: 400;
+    text-transform: uppercase;
+  }
+
+  #header-nav {
+    @extend .right;
+    font-size: 17px;
+    li {
+      display: inline;
+      list-style-type: none;
+    }
   }
 }
 
 #landing-carousel {
   h1, h2 {
-    color: #fff;
+    color: $default-contrast-font-color;
   }
 
   h1 {
