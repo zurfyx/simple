@@ -8,7 +8,7 @@
     <div class="center box" style="width:400px">
         <form method="post" action="">
             {% for error in errors %}
-                <p>{{ error }}</p>
+                <p class="error">{{ error }}</p>
             {% endfor %}
             {% csrf_token %}
             <input type="text" name="email" placeholder="Email" />

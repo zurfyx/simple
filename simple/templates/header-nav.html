@@ -1,0 +1,9 @@
+<ul>
+    <li><a href="{% url "projects:list" %}">Projects</a></li>
+    {% if user.is_authenticated %}
+        {{ user.first_name }}
+    {% else %}
+        <li><a href="{% url "users:login" %}">Log In</a></li>
+        <li><a href="{% url "users:signup" %}">Sign Up</a></li>
+    {% endif %}
+</ul>

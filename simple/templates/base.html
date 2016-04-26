@@ -18,31 +18,36 @@
 <body>
     {% block header %}
         <header id="header">
+        {% block header_ %}
             <a id="logo" href="{% url "home:landing" %}">{{ PROJECT_NAME }}</a>
-            <nav id="header-nav">
-                <ul>
-                    <li><a href="{% url "projects:list" %}">Projects</a></li>
-                    {% if user.is_authenticated %}
-                        {{ user.first_name }}
-                    {% else %}
-                        <li><a href="{% url "users:login" %}">Log In</a></li>
-                        <li><a href="{% url "users:signup" %}">Sign Up</a></li>
-                    {% endif %}
-                </ul>
-            </nav>
+
+            {# header navigation #}
+            {% block header-nav %}
+                <nav id="header-nav">
+                {% block header-nav_ %}
+                    {% include "header-nav.html" %}
+                {% endblock %}
+                </nav>
+            {% endblock %}
+
+        {% endblock %}
         </header>
     {% endblock %}
 
     {% block menu %}
         <nav id="menu">
+        {% block menu_ %}
             <div id="menu-title">{% block menu_title %}{% endblock %}</div>
+        {% endblock %}
         </nav>
     {% endblock %}
 
-    <div id="content">
-        {% block content %}
+    {% block content %}
+        <div id="content">
+        {% block content_ %}
         {% endblock %}
-    </div>
+        </div>
+    {% endblock %}
 
     {% block cdn_scripts %}
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>

@@ -4,37 +4,42 @@
 {% block header %}
     <header id="landing-header">
         <a id="logo" href="{% url "home:landing" %}">{{ PROJECT_NAME }}</a>
+
+        {# default header nav #}
         <div id="header-nav">
-            <ul>
-                <li><a href="{% url "projects:list" %}">Projects</a></li>
-                <li><a href="{% url "users:login" %}">Log In</a></li>
-                <li><a href="{% url "users:signup" %}">Sign Up</a></li>
-            </ul>
+            {% include "header-nav.html" %}
         </div>
+
     </header>
 {% endblock %}
 
+{% block menu %}
+    {# landing page has no menu #}
+{% endblock %}
+
 {% block app_content %}
-    <div id="landing-carousel" class="carousel slide" data-ride="carousel" data-interval="5000">
-        <ol class="carousel-indicators">
-             <li data-target="#landing-carousel" data-slide-to="0" class="active"></li>
-             <li data-target="#landing-carousel" data-slide-to="1" class=""></li>
-        </ol>
-        <div class="carousel-inner">
-            <div class="item active" style="background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url({% static "img/landing/landing-1.jpg" %})">
-                <!-- item 1 -->
-                <div class="full-center item-description">
-                    <h1>Let's work together</h1>
-                    <h2>Start your project</h2>
-                    <a class="item-go" href="{% url "projects:new" %}">Start</a>
+    <div id="landing-body">
+        <div id="landing-carousel" class="carousel slide" data-ride="carousel" data-interval="5000">
+            <ol class="carousel-indicators">
+                 <li data-target="#landing-carousel" data-slide-to="0" class="active"></li>
+                 <li data-target="#landing-carousel" data-slide-to="1" class=""></li>
+            </ol>
+            <div class="carousel-inner">
+                <div class="item active" style="background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url({% static "img/landing/landing-1.jpg" %})">
+                    <!-- item 1 -->
+                    <div class="full-center item-description">
+                        <h1>Let's work together</h1>
+                        <h2>Start your project</h2>
+                        <a class="item-go" href="{% url "projects:new" %}">Start</a>
+                    </div>
                 </div>
-            </div>
-            <div class="item" style="background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url({% static "img/landing/landing-2.jpg" %})">
-                <!-- item 2 -->
-                <div class="full-center item-description">
-                    <h1>Community projects</h1>
-                    <h2>View projects</h2>
-                    <a class="item-go" href="{% url "projects:list" %}">View</a>
+                <div class="item" style="background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url({% static "img/landing/landing-2.jpg" %})">
+                    <!-- item 2 -->
+                    <div class="full-center item-description">
+                        <h1>Community projects</h1>
+                        <h2>View projects</h2>
+                        <a class="item-go" href="{% url "projects:list" %}">View</a>
+                    </div>
                 </div>
             </div>
         </div>
