@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'livereload',
     'django.contrib.staticfiles',
     'annoying',
     'compressor',
@@ -55,6 +56,7 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.locale.LocaleMiddleware',
+    'livereload.middleware.LiveReloadScript',
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -134,7 +136,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 COMPRESS_ROOT = 'static/'
-STATIC_ROOT = '/static_root/'
+STATIC_ROOT = 'static_root/'
 STATICFILES_DIRS = (
   os.path.join(BASE_DIR, 'static/'),
 )
