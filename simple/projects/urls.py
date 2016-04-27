@@ -2,7 +2,7 @@ from django.conf.urls import url
 
 from .views import ProjectDetail, ProjectList, ProjectNewView,\
     ProjectApproveList, ProjectApproveView, ProjectDenyView, \
-    ProjectContributeView
+    ProjectContributeView, ProjectPendingApproval
 
 urlpatterns = [
     # List of Projects
@@ -24,6 +24,13 @@ urlpatterns = [
         r'^\/new$',
         ProjectNewView.as_view(),
         name='new'
+    ),
+
+    # Pending approval
+    url(
+        r'^\/pending-approval',
+        ProjectPendingApproval.as_view(),
+        name='pending-approval'
     ),
 
     # Approve / deny projects

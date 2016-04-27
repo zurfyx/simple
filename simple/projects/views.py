@@ -1,9 +1,10 @@
 from annoying.functions import get_object_or_None
+from django.contrib import messages
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.views.generic import ListView
-from django.views.generic.base import RedirectView
+from django.views.generic.base import RedirectView, TemplateView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView
 
@@ -34,13 +35,18 @@ class ProjectDetail(DetailView):
 class ProjectNewView(CustomLoginRequiredMixin, CreateView):
     template_name = 'projects/new.html'
     form_class = ProjectNewForm
-    success_url = 'projects:list'
+    success_url = 'projects:pending-approval'
 
     def form_valid(self, form):
         project = form.save(commit=False)
         project.owner = self.request.user
         project.save()
+        messages.success(self.request, project.title)
         return HttpResponseRedirect(reverse(self.success_url))
+
+
+class ProjectPendingApproval(TemplateView):
+    template_name = 'projects/pending-approval.html'
 
 
 class ProjectApproveList(HeadOfDepartmentMixin, ListView):

@@ -1,0 +1,16 @@
+{% extends "projects/base.html" %}
+
+{% block menu_title %}
+<h1>New Project</h1>
+{% endblock %}
+
+{% block app_content %}
+    <div class="center center-text">
+        {% for message in messages %}
+            <p>Your project <b>{{ message }}</b> is now pending approval.</p>
+        {% endfor %}
+        <p>
+            <a href="{% url "projects:list" %}">Go back to projects</a>
+        </p>
+    </div>
+{% endblock %}
