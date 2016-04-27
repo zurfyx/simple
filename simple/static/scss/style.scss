@@ -61,11 +61,17 @@ a:link, a:visited, a:hover, a:active {
 form {
   padding: 10px 25px 10px 25px;
 
+  .form-label {
+    position:relative;
+    top: 14px;
+  }
+
   input {
+    background-color: transparent;
     display: block;
     padding: 10px 10px 5px 10px;
     border: none;
-    border-bottom: 1px solid #f3f3f3;
+    border-bottom: 1px solid #D8D8D8;
     font-size: 16px;
   }
 
@@ -80,7 +86,9 @@ form {
   }
 
   input[type=button], input[type=submit] {
+    margin-top: 40px;
     padding: 10px 20px 10px 20px;
+    background-color: #D8D8D8;
     border-radius: 3px;
 
     &:hover {

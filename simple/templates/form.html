@@ -9,16 +9,16 @@
 {% endif %}
 {% csrf_token %}
 {% for field in form %}
-    {% if not field.is_hidden %}
-        <div class="row">
-            {{ field.label_tag }}
-            {% if field.field.required %}
-                {{ required_mark }}
-            {% endif %}
-        </div>
-    {% endif %}
     <div class="row">
-         {{ field }}
+        {% if not field.is_hidden %}
+            <div class="form-label">
+                {{ field.label_tag }}
+                {% if field.field.required %}
+                    {{ required_mark }}
+                {% endif %}
+            </div>
+        {% endif %}
+        {{ field }}
     </div>
 {% endfor %}
 <input type="hidden" name="next" value="{{ next }}" />

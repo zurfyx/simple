@@ -1,19 +1,22 @@
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import redirect
 from django.views.generic import DetailView
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import CreateView
 
 from users.forms import UserCreationForm
+from users.mixins import NotLoginRequiredMixin
 from users.models import User
 
 
-class RegisterView(CreateView):
+class RegisterView(NotLoginRequiredMixin, CreateView):
     template_name = 'users/register.html'
     form_class = UserCreationForm
     success_url = '/'
 
 
-class LoginView(TemplateView):
+class LoginView(NotLoginRequiredMixin, TemplateView):
     """
     Login View, custom form handling related with a custom .html template
     Fields are email and password, both gathered by POST.
@@ -27,7 +30,6 @@ class LoginView(TemplateView):
         self.errors = []
 
     def get(self, request, *args, **kwargs):
-        # TODO redirect to success url if already-logged-in
         return super(LoginView, self).get(request, args, kwargs)
 
     def post(self, request, **kwargs):
@@ -38,6 +40,7 @@ class LoginView(TemplateView):
             self.errors.append('Credentials are invalid')
         else:
             login(request, user)
+            return redirect('/')
         return super(LoginView, self).get(request, **kwargs)
 
     def get_context_data(self, **kwargs):
@@ -46,7 +49,7 @@ class LoginView(TemplateView):
         return context
 
 
-class AccountView(DetailView):
+class AccountView(LoginRequiredMixin, DetailView):
     template_name = 'users/account.html'
     model = User
     context_object_name = 'user'
