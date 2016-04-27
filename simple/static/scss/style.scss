@@ -1,7 +1,8 @@
 /* CONSTANTS */
 $default-color: #00c6ff;
-$default-font-color: #000;
+$default-font-color: #444;
 $default-contrast-font-color: #fff;
+$create-color: #febd69;
 $light-grey: #ccc;
 $hyper-light-grey: #f9f9f9;
 $dark-grey: #444;
@@ -31,6 +32,32 @@ $dark-grey: #444;
   opacity: $opacity;
   line-height: $height;
   text-align: center;
+}
+
+@mixin vertical-shadow($vertical-length:4px) {
+  $horizontal-length: 0px;
+  $blur-radius: 17px;
+  $spread-radius: 0px;
+  $shadow-color: rgba(0,0,0,.14);
+
+  -webkit-box-shadow: $horizontal-length $vertical-length $blur-radius $spread-radius $shadow-color;
+  -moz-box-shadow: $horizontal-length $vertical-length $blur-radius $spread-radius $shadow-color;
+  box-shadow: $horizontal-length $vertical-length $blur-radius $spread-radius $shadow-color;
+}
+
+/* ANIMATIONS */
+
+@keyframes a180 {
+  from {
+    -ms-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  to {
+    -ms-transform: rotate(180deg);
+    -webkit-transform: rotate(180deg);
+    transform: rotate(180deg);
+  }
 }
 
 /* STYLES */
@@ -103,6 +130,32 @@ form {
   border-radius: 2px;
   box-shadow: 0 1px 0 rgba(0,0,0,.25);
   padding: 30px;
+}
+
+.corner-btn {
+  @include vertical-shadow(4px);
+  background-color: $create-color;
+  border-radius: 999px;
+  display: block;
+  font-size: 30px;
+  font-weight:100;
+  text-align: center;
+  width: 56px;
+  height:56px;
+  line-height: 56px;
+  position:fixed;
+  right: 15px;
+  bottom: 15px;
+
+  &:link, &:visited, &:hover, &:active {
+    color: #666;
+    text-decoration: none;
+  }
+
+  &:hover {
+    animation-name: a180;
+    animation-duration: 0.5s;
+  }
 }
 
 .center {
@@ -217,3 +270,4 @@ form {
 /* IMPORTS */
 
 @import 'home/base.scss';
+@import 'projects/base.scss';

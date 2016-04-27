@@ -1,0 +1,41 @@
+ul.projects-list {
+  margin: -10px 0px -10px -20px;
+}
+
+ul.projects-list li {
+  position: relative;
+  display: inline-block;
+  list-style-type: none;
+  background-color: #fff;
+  border-radius: 3px;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.14);
+  color: $default-font-color;
+  margin: 10px 20px 10px 20px;
+  height: 320px;
+  width: 260px;
+  overflow: hidden;
+
+  .project-header {
+    background-color: #ccc;
+    height: 130px;
+
+    a {
+      color: $default-font-color;
+      font-weight: bold;
+      padding: 10px 20px 10px 10px;
+      line-height: 200px;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+  }
+
+  .project-body {
+    padding: 10px;
+  }
+
+  .project-buttons {
+    height: 30px;
+    position: absolute;
+    bottom: 0px;
+  }
+}
