@@ -1,0 +1,18 @@
+.account-panels {
+  @extend .center, .page-width;
+
+  >div {
+    @extend .box;
+  }
+
+  h2:not(:first-child) {
+    margin-top: 50px;
+  }
+}
+
+.profile-picture {
+  border: 1px solid $light-grey;
+  border-radius: 999px;
+  width: 200px;
+  height: 200px;
+}

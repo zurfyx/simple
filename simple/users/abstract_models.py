@@ -1,10 +1,10 @@
 import datetime
 
 from django.contrib.auth.base_user import AbstractBaseUser
-from .managers import EmailUserManager
 from django.db import models
 from django.utils.timezone import utc
 
+from .managers import EmailUserManager
 from . import constants
 
 
@@ -41,7 +41,7 @@ class AbstractUser(AbstractBaseUser):
         return self.is_staff
 
     def get_full_name(self):
-        return '{0} {1}'.format(self.first_name, self.last_name)
+        return u'{0} {1}'.format(self.first_name, self.last_name)
 
     def get_short_name(self):
         return self.first_name
@@ -53,12 +53,7 @@ class AbstractUser(AbstractBaseUser):
         return dir(now - self.birthday)
 
     def get_role_str(self):
-        role = [
-            (1, 'Member'),
-            (2, 'Moderator'),
-            (3, 'Head of Department'),
-        ]
-        return role[self.role]
+        return constants.UserRoles.USER_ROLES[self.role-1][1]
 
     def has_perm(self, perm, obj=None):
         return True

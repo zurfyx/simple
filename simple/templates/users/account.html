@@ -1,8 +1,78 @@
 {% extends "users/base.html" %}
+{% load static %}
+
+{% block menu_title %}
+    <!-- <a href="#" class="right">Notifications (0)</a> -->
+    <h1>{{ user.get_full_name }}</h1>
+{% endblock %}
 
 {% block app_content %}
-    <h1>{{ user.get_full_name }}</h1>
-    {% if request.user.id == user.id %}
-        It's me!
-    {% endif %}
+    <div class="left-sidebar">
+        <ul>
+            <li class="selected"><span>View profile</span></li>
+            <li>
+                <ul>
+                    <li><span>Personal</span></li>
+                    <li><span>Stats</span></li>
+                    <li><span>About me</span></li>
+                </ul>
+            </li>
+            <li><span>Edit profile</span></li>
+            <li><span>My projects</span></li>
+            <li><span>Approve contributors</span></li>
+            <li><span>Approve projects</span></li>
+        </ul>
+    </div>
+
+    <div class="account-panels">
+        <h2>Personal</h2>
+        <div>
+            <div class="row">
+                <div class="col-md-4">
+                    <img class="profile-picture" src="{% static "img/users/default-user.png" %}" />
+                </div>
+                <div class="col-md-4">
+                    <div class="row">
+                        {{ user.occupation }}
+                    </div>
+                    <div class="row">
+                        {{ user.city }}, {{ user.country }}
+                    </div>
+                    <div class="row">
+                        {{ user.get_role_str }}
+                        {% if user.is_staff %}
+                            (Staff)
+                        {% endif %}
+                    </div>
+                    <div class="row">
+                        {% if request.user.id == user.id %}
+                            {{ user.email }}
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="row">
+                        Member since {{ user.date_joined }}
+                    </div>
+                    <div class="row">
+                        Last seen {{ user.last_login }}
+                    </div>
+                    <div class="row">
+                        X profile views
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h2>Stats</h2>
+        <div>
+            <i>Coming soon...</i>
+        </div>
+
+        <h2>About me</h2>
+        <div>
+            <i>Coming soon...</i>
+        </div>
+    </div>
+
 {% endblock %}

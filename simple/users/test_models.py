@@ -76,6 +76,15 @@ class TestDefaultUser(TestCase):
     def test_age_is_20_if_birthday_was_20_years_ago(self):
         pass
 
+    def test_role_str_return_member(self):
+        member = constants.UserRoles.MEMBER
+        member_str = None
+        for role in constants.UserRoles.USER_ROLES:
+            if role[0] == member:
+                member_str = role[1]
+
+        self.assertEqual(self.user.get_role_str(), member_str)
+
 
 class TestAdminUser(TestCase):
 

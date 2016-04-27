@@ -4,7 +4,7 @@ class ProjectRoles(object):
     SCIENTIFIC_CITIZEN = 3
 
     PROJECT_ROLES = (
-        (1, 'Scientist'),
-        (2, 'Student'),
-        (3, 'Scientist'),
+        (SCIENTIST, 'Scientist'),
+        (STUDENT, 'Student'),
+        (SCIENTIFIC_CITIZEN, 'Scientist'),
     )
