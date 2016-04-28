@@ -9,23 +9,24 @@
 {% block app_content %}
     <div class="left-sidebar">
         <ul>
-            <li class="selected"><span>View profile</span></li>
+            <li class="selected"><a href="{% url "users:account" user.id %}">View profile</a></li>
             <li>
                 <ul>
-                    <li><span>Personal</span></li>
-                    <li><span>Stats</span></li>
-                    <li><span>About me</span></li>
+                    <li><a href="#personal">Personal</a></li>
+                    <li><a href="#stats">Stats</a></li>
+                    <li><a href="#about-me">About me</a></li>
                 </ul>
             </li>
-            <li><span>Edit profile</span></li>
-            <li><span>My projects</span></li>
-            <li><span>Approve contributors</span></li>
-            <li><span>Approve projects</span></li>
+            <li><a href="#">Edit profile</a></li>
+            <li><a href="#">My projects</a></li>
+            <li><a href="#">Contributing to</a></li>
+            <li><a href="#">Approve contributors</a></li>
+            <li><a href="{% url "projects:approve-list" %}">Approve projects</a></li>
         </ul>
     </div>
 
     <div class="account-panels">
-        <h2>Personal</h2>
+        <h2 id="personal">Personal</h2>
         <div>
             <div class="row">
                 <div class="col-md-4">
@@ -64,12 +65,12 @@
             </div>
         </div>
 
-        <h2>Stats</h2>
+        <h2 id="stats">Stats</h2>
         <div>
             <i>Coming soon...</i>
         </div>
 
-        <h2>About me</h2>
+        <h2 id="about-me">About me</h2>
         <div>
             <i>Coming soon...</i>
         </div>

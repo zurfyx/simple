@@ -1,6 +1,6 @@
 /* CONSTANTS */
 $default-color: #00c6ff;
-$default-font-color: #444;
+$default-font-color: #333;
 $default-contrast-font-color: #fff;
 $create-color: #febd69;
 $light-grey: #ccc;
@@ -230,19 +230,21 @@ form {
     -webkit-flex: 1;
     flex: 1;
 
-    &>span {
+    &>a {
+      color: $default-font-color;
       display:block;
       padding: 10px 30px 10px 30px;
       border-radius: 3px;
       width: 200px;
     }
 
-    &:hover > span {
-      background-color: rgba(0,0,0,.02)
+    &:hover > a {
+      background-color: rgba(0,0,0,.02);
+      color: $default-font-color;
     }
 
-    &.selected > span {
-      background-color: rgba(0,0,0,.05)
+    &.selected > a {
+      background-color: rgba(0,0,0,.05);
     }
   }
 

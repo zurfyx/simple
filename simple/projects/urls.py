@@ -26,7 +26,7 @@ urlpatterns = [
         name='new'
     ),
 
-    # Pending approval
+    # Pending approval message view shown after project creation
     url(
         r'^\/pending-approval',
         ProjectPendingApproval.as_view(),
@@ -59,5 +59,5 @@ urlpatterns = [
         r'\/(?P<pk>\d+)/contribute$',
         ProjectContributeView.as_view(),
         name='contribute'
-    )
+    ),
 ]
