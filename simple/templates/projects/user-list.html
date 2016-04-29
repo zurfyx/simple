@@ -1,15 +1,35 @@
 {% extends "projects/base.html" %}
 
 {% block menu_title %}
-    <h1>User projects</h1>
+    <h1>{{ user.get_short_name }} projects</h1>
 {% endblock %}
 
 {% block app_content %}
-    <ul>
+    <a class="corner-btn" href="{% url "projects:new" %}">+</a>
+    <ul class="projects-list">
         {% for project in projects %}
+        {% if project.approved %}
             <li>
-                {{ project.title }}
+                <div class="project-header">
+                    <a href="{% url "projects:detail" project.id %}">
+                        {{ project.title }}
+                    </a>
+                </div>
+                <div class="project-body">
+                    <div class="project-description">
+                        {{ project.body | truncatechars:150 }}
+                    </div>
+                    <div class="project-author">
+                        Started by {{ project.owner.get_short_name }}
+                    </div>
+                    <div class="project-buttons">
+                        <a href="{% url "projects:detail" project.id %}">
+                            Explore
+                        </a>
+                    </div>
+                </div>
             </li>
+        {% endif %}
         {% endfor %}
     </ul>
 {% endblock %}
