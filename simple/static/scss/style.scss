@@ -1,4 +1,7 @@
 /* CONSTANTS */
+$PAGE_WIDTH: 1077px;
+$LEFT-SIDEBAR-STARTING-WIDTH: 1590px;
+
 $default-color: #00c6ff;
 $default-font-color: #333;
 $default-contrast-font-color: #fff;
@@ -218,7 +221,7 @@ form {
 }
 
 .page-width { // use on page width limited
-  width: 1077px;
+  width: $PAGE_WIDTH;
 }
 
 .sidebar {
@@ -265,6 +268,35 @@ form {
   @extend .sidebar;
   @extend .left;
 
+}
+
+@media (max-width: $LEFT-SIDEBAR-STARTING-WIDTH) {
+  .sidebar {
+    float: inherit;
+    margin: 0 auto;
+    width: $PAGE_WIDTH;
+  }
+
+  .sidebar ul {
+    margin-left: -50px;
+  }
+
+  .sidebar li {
+    display: inline-block;
+    list-style-type: none;
+
+    a {
+      width: auto;
+    }
+
+    li {
+      display:none;
+    }
+  }
+
+  .sidebar li + li {
+    margin: 0;
+  }
 }
 
 .right {
