@@ -1,0 +1,15 @@
+{% extends "projects/base.html" %}
+
+{% block menu_title %}
+    <h1>User projects</h1>
+{% endblock %}
+
+{% block app_content %}
+    <ul>
+        {% for project in projects %}
+            <li>
+                {{ project.title }}
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

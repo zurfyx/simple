@@ -2,7 +2,9 @@ from django.conf.urls import url
 
 from .views import ProjectDetail, ProjectList, ProjectNewView,\
     ProjectApproveList, ProjectApproveView, ProjectDenyView, \
-    ProjectContributeView, ProjectPendingApproval
+    ProjectContributeView, ProjectPendingApproval, \
+    ProjectApproveContributionList, UserProjectList, \
+    ProjectContributionApproveView, ProjectContributionDenyView
 
 urlpatterns = [
     # List of Projects
@@ -10,6 +12,13 @@ urlpatterns = [
         r'^$',
         ProjectList.as_view(),
         name='list'
+    ),
+
+    # List of Projects by User
+    url(
+        r'^\/user/(?P<user>\d+)$',
+        UserProjectList.as_view(),
+        name='user-list'
     ),
 
     # Project details
@@ -33,7 +42,7 @@ urlpatterns = [
         name='pending-approval'
     ),
 
-    # Approve / deny projects
+    # Approve / deny projects list
     url(
         r'^\/approve$',
         ProjectApproveList.as_view(),
@@ -59,5 +68,26 @@ urlpatterns = [
         r'\/(?P<pk>\d+)/contribute$',
         ProjectContributeView.as_view(),
         name='contribute'
+    ),
+
+    # Approve / deny contribution list
+    url(
+        r'\/approve-contributions$',
+        ProjectApproveContributionList.as_view(),
+        name='approve-contributions-list'
+    ),
+
+    # Approve contribution
+    url(
+        r'\/approve-contribution/project/(?P<pk>\d+)/user/(?P<user>\d+)/$',
+        ProjectContributionApproveView.as_view(),
+        name='approve-contribution'
+    ),
+
+    # Deny contribution
+    url(
+        r'\/deny-contribution/project/(?P<pk>\d+)/user/(?P<user>\d+)$',
+        ProjectContributionDenyView.as_view(),
+        name='deny-contribution'
     ),
 ]

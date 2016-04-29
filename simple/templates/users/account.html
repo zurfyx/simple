@@ -18,9 +18,9 @@
                 </ul>
             </li>
             <li><a href="#">Edit profile</a></li>
-            <li><a href="#">My projects</a></li>
+            <li><a href="{% url "projects:user-list" user.id %}">My projects</a></li>
             <li><a href="#">Contributing to</a></li>
-            <li><a href="#">Approve contributors</a></li>
+            <li><a href="{% url "projects:approve-contributions-list" %}">Approve contributors</a></li>
             <li><a href="{% url "projects:approve-list" %}">Approve projects</a></li>
         </ul>
     </div>
