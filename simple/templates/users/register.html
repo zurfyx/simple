@@ -4,12 +4,11 @@
 <h1>Sign up</h1>
 {% endblock %}
 
-{% block app_content %}
+{% block content_ %}
     <div class="center box" style="width:500px">
         <form method="post" action="">
             {% include "form.html" with required_mark="*" %}
             <input type="submit" value="Register" />
         </form>
     </div>
-
 {% endblock %}

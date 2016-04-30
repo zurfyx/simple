@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% block content_ %}
+    {% include "users/left-sidebar.html" with selection="account" %}
     {% block app_content %}
     {% endblock %}
 {% endblock %}

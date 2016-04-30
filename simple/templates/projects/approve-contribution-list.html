@@ -1,19 +1,34 @@
-<h1>Approve contribution petitions</h1>
+{% extends "projects/base.html" %}
 
-{% regroup projectroles by project as projects %}
+{% block menu_title %}
+    <h1>Approve contribution petitions</h1>
+{% endblock %}
 
-<ul>
-    {% for project in projects %}
-        <h2>{{ project.grouper }}</h2>
-        {% for role in project.list %}
-            <ul>
-                <li>
-                    {{ role.user }}
-                    {{ role.get_role_str }}
-                    <a href="{% url "projects:approve-contribution" role.project.id role.user.id %}">Approve</a>
-                    <a href="{% url "projects:deny-contribution" role.project.id role.user.id %}">Deny</a>
-                </li>
-            </ul>
-        {% endfor %}
-    {% endfor %}
-</ul>
+{% block app_content %}
+    {% regroup projectroles by project as projects %}
+    <div class="center page-width">
+        <ul>
+            {% for project in projects %}
+                <h2>
+                    <a href="{% url "projects:detail" project.grouper.id %}" target="_blank">
+                        {{ project.grouper | truncatechars:50 }}
+                        <i class="fa fa-external-link fa-1" aria-hidden="true" style="font-size:16px;"></i>
+                    </a>
+                </h2>
+
+                {% for role in project.list %}
+                    <div class="box">
+                        <ul>
+                            <li>
+                                {{ role.user }}
+                                {{ role.get_role_str }}
+                                <a href="{% url "projects:approve-contribution" role.project.id role.user.id %}">Approve</a>
+                                <a href="{% url "projects:deny-contribution" role.project.id role.user.id %}">Deny</a>
+                            </li>
+                        </ul>
+                    </div>
+                {% endfor %}
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

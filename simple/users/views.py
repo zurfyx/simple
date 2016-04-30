@@ -49,7 +49,7 @@ class LoginView(NotLoginRequiredMixin, TemplateView):
         return context
 
 
-class AccountView(LoginRequiredMixin, DetailView):
+class AccountView(DetailView):
     template_name = 'users/account.html'
     model = User
-    context_object_name = 'user'
+    context_object_name = 'context_user'

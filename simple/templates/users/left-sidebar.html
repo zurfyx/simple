@@ -1,0 +1,51 @@
+<div class="left-sidebar">
+    <ul>
+        <li class="{% if selection == "account" %}selected{% endif %}">
+            <a href="{% url "users:account" context_user.id %}">View profile</a>
+        </li>
+        {% if selection == "account" %}
+            <li>
+                <ul>
+                    <li><a href="#personal">Personal</a></li>
+                    <li><a href="#stats">Stats</a></li>
+                    <li><a href="#about-me">About me</a></li>
+                </ul>
+            </li>
+        {% endif %}
+
+        <li class="{% if selection == "edit-account" %}selected{% endif %}">
+            <a href="#">Edit profile</a>
+        </li>
+
+        <li class="{% if selection == "user-projects" %}selected{% endif %}">
+            <a href="{% url "projects:user-list" context_user.id %}">
+                {% if context_user == request.user %}
+                    My projects
+                {% else %}
+                    {{ context_user.get_short_name }} projects
+                {% endif %}
+            </a>
+        </li>
+
+        <li class="{% if selection == "contributing-to" %}selected{% endif %}">
+            <a href="#">Contributing to</a>
+        </li>
+        {% if selection == "contributing-to" %}
+            <li>
+                <ul>
+                    <li><a href="#">Membership</a></li>
+                </ul>
+            </li>
+        {% endif %}
+
+        <li class="{% if selection == "approve-contributors" %}selected{% endif %}">
+            <a href="{% url "projects:approve-contributions-list" %}">Approve contributors</a>
+        </li>
+
+        <li class="{% if selection == "approve-projects" %}selected{% endif %}">
+            <a href="{% url "projects:approve-list" %}">Approve projects</a>
+        </li>
+
+        <li><a href="#">Log Out</a></li>
+    </ul>
+</div>

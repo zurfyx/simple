@@ -2,30 +2,10 @@
 {% load static %}
 
 {% block menu_title %}
-    <!-- <a href="#" class="right">Notifications (0)</a> -->
-    <h1>{{ user.get_full_name }}</h1>
+    <h1>{{ context_user.get_full_name }}</h1>
 {% endblock %}
 
 {% block app_content %}
-    <div class="left-sidebar">
-        <ul>
-            <li class="selected"><a href="{% url "users:account" user.id %}">View profile</a></li>
-            <li>
-                <ul>
-                    <li><a href="#personal">Personal</a></li>
-                    <li><a href="#stats">Stats</a></li>
-                    <li><a href="#about-me">About me</a></li>
-                </ul>
-            </li>
-            <li><a href="#">Edit profile</a></li>
-            <li><a href="{% url "projects:user-list" user.id %}">My projects</a></li>
-            <li><a href="#">Contributing to</a></li>
-            <li><a href="{% url "projects:approve-contributions-list" %}">Approve contributors</a></li>
-            <li><a href="{% url "projects:approve-list" %}">Approve projects</a></li>
-            <li><a href="#">Log Out</a></li>
-        </ul>
-    </div>
-
     <div class="account-panels">
         <h2 id="personal">Personal</h2>
         <div>
@@ -35,29 +15,29 @@
                 </div>
                 <div class="col-md-4">
                     <div class="row">
-                        {{ user.occupation }}
+                        {{ context_user.occupation }}
                     </div>
                     <div class="row">
-                        {{ user.city }}, {{ user.country }}
+                        {{ context_user.city }}, {{ context_user.country }}
                     </div>
                     <div class="row">
-                        {{ user.get_role_str }}
-                        {% if user.is_staff %}
+                        {{ context_user.get_role_str }}
+                        {% if context_user.is_staff %}
                             (Staff)
                         {% endif %}
                     </div>
                     <div class="row">
-                        {% if request.user.id == user.id %}
-                            {{ user.email }}
+                        {% if request.user.id == context_user.id %}
+                            {{ context_user.email }}
                         {% endif %}
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="row">
-                        Member since {{ user.date_joined }}
+                        Member since {{ context_user.date_joined }}
                     </div>
                     <div class="row">
-                        Last seen {{ user.last_login }}
+                        Last seen {{ context_user.last_login }}
                     </div>
                     <div class="row">
                         X profile views

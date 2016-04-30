@@ -110,6 +110,14 @@ h1, h2 {
   padding: 10px 0 10px 0;
 }
 
+h1 > a, h2 > a {
+  color: #333;
+
+  &:link, &:visited, &:hover, &:active {
+    color: #333;
+  }
+}
+
 input[type="button"], input[type="submit"] {
   text-transform: uppercase;
 }
@@ -360,6 +368,10 @@ form {
     li {
       display:inline;
       list-style-type: none;
+    }
+
+    li + li {
+      margin-left: 6px;
     }
   }
 }
