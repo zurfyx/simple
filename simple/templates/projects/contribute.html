@@ -1,17 +1,23 @@
 {% extends "projects/base.html" %}
 
-{% block app_content %}
-    {% if project_role %}
-        {% if project_role.approved %}
-            <p>{{ project_role.get_role_str }}</p>
+{% block menu_title %}
+    <h1>Request membership</h1>
+{% endblock %}
+
+{% block content_ %}
+    <div class="center box" style="width:400px">
+        {% if project_role %}
+            {% if project_role.approved %}
+                <p>{{ project_role.get_role_str }}</p>
+            {% else %}
+                <p>{{ project_role.get_role_str }} role petition is awaiting for approval</p>
+            {% endif %}
+            <a href="#">Revoke role</a> <!-- TODO -->
         {% else %}
-            <p>{{ project_role.get_role_str }} role petition is awaiting for approval</p>
+            <form method="post">
+                {% include "form.html" %}
+                <input type="submit" value="Request" />
+            </form>
         {% endif %}
-        <a href="#">Revoke role</a> <!-- TODO -->
-    {% else %}
-        <form method="post">
-            {% include "form.html" %}
-            <input type="submit" value="Request" />
-        </form>
-    {% endif %}
+    </div>
 {% endblock %}

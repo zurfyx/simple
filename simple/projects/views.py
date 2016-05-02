@@ -118,7 +118,7 @@ class ProjectContributeView(CustomLoginRequiredMixin,
     """
     template_name = 'projects/contribute.html'
     form_class = ProjectContributeForm
-    success_url = 'projects:detail'
+    success_url = 'projects:contribute'
 
     def get_initial(self):
         return {

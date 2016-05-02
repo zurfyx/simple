@@ -169,6 +169,18 @@ form {
       background-color: #e9e9e9;
     }
   }
+
+  select {
+    background-color: #FFF;
+    margin-top: 20px;
+    padding: 10px 20px 10px 20px;
+  }
+
+  select:focus {
+    outline: none;
+    border: none;
+    border: 1px solid $default-color;
+  }
 }
 
 .box {
