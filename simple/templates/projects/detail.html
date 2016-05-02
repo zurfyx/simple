@@ -1,7 +1,39 @@
 {% extends "projects/base.html" %}
 
+{% block menu %}
+{% endblock %}
+
 {% block app_content %}
-    <h1>{{ project.title }}</h1>
-    <a href="{% url "projects:contribute" project.id %}">Contribute</a>
-    <p>{{ project.body }}</p>
+    <div class="project-detail container-fluid">
+        <div class="project-detail-header row">
+            <div class="project-image col-xs-6" style="background-image: url()">
+                <!-- project image -->
+            </div>
+            <div class="project-info col-xs-6">
+                <div class="container-fluid">
+                    <div class="row">
+                        <h1>{{ project.title }}</h1>
+                    </div>
+                    <div class="row">
+                        <i>Last modified: {{ project.modified }}</i>
+                    </div>
+                    <div class="row">
+                        <i>Created: {{ project.created }}</i>
+                    </div>
+                    <div class="row">
+                        <i>Author: {{ project.owner.get_short_name }}</i>
+                    </div>
+                    <div class="tools">
+                        <!-- <a href="#">Activities</a> -->
+                        <a href="#">Members</a>
+                        <a href="#">Contributors</a>
+                        <a href="{% url "projects:contribute" project.id %}">Request membership</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="page-detail-description">
+            {{ project.body }}
+        </div>
+    </div>
 {% endblock %}

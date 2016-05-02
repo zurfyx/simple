@@ -336,6 +336,10 @@ ul.enumerateless li {
   list-style-type: none;
 }
 
+.long-text {
+  word-wrap: break-word;
+}
+
 #header {
   @extend .min-page-padding;
   @extend .clear;
