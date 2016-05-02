@@ -332,6 +332,10 @@ form {
   color: #f00;
 }
 
+ul.enumerateless li {
+  list-style-type: none;
+}
+
 #header {
   @extend .min-page-padding;
   @extend .clear;

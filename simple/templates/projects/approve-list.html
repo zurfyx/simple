@@ -1,11 +1,21 @@
-<h1>Approve project proposals</h1>
+{% extends "projects/base.html" %}
 
-<ul>
-    {% for project in projects %}
-        <li>
-            {{ project.title }}
-            <a href="{% url "projects:approve-project" project.id %}">Approve</a>
-            <a href="{% url "projects:deny-project" project.id %}">Deny</a>
-        </li>
-    {% endfor %}
-</ul>
+{% block menu_title %}
+    <h1>Approve project proposals</h1>
+{% endblock %}
+
+{% block app_content %}
+    <div class="center page-width">
+        {% for project in projects %}
+            <div class="box">
+                <ul class="enumerateless">
+                    <li>
+                        {{ project.title }}
+                        <a href="{% url "projects:approve-project" project.id %}">Approve</a>
+                        <a href="{% url "projects:deny-project" project.id %}">Deny</a>
+                    </li>
+                </ul>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
