@@ -8,3 +8,17 @@ class ProjectRoles(object):
         (STUDENT, 'Student'),
         (SCIENTIFIC_CITIZEN, 'Scientist'),
     )
+
+
+class ProjectLogTypes(object):
+    PROJECT_CREATE = 1
+    PROJECT_EDIT = 2
+    COMMENT_CREATE = 3
+    COMMENT_EDIT = 4
+
+    PROJECT_LOG_TYPES = (
+        (PROJECT_CREATE, 'Project creation'),
+        (PROJECT_EDIT, 'Project edition'),
+        (COMMENT_CREATE, 'Comment addition'),
+        (COMMENT_EDIT, 'Comment edition'),
+    )

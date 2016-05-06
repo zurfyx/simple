@@ -11,3 +11,11 @@ class UserRoles(object):
         (MODERATOR, 'Moderator'),
         (HEAD_OF_DEPARTMENT, 'Head of Department')
     )
+
+
+class UserLogTypes(object):
+    ACTIVITY_AVAILABLE = 1
+
+    USER_LOG_TYPES = (
+        (ACTIVITY_AVAILABLE, 'Activity available'),
+    )

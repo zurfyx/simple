@@ -21,7 +21,7 @@
                         <i>Created: {{ project.created }}</i>
                     </div>
                     <div class="row">
-                        <i>Author: {{ project.owner.get_short_name }}</i>
+                        <i>Author: <a href="{% url "users:account" project.owner.id %}">{{ project.owner.get_short_name }}</a></i>
                     </div>
                     <div class="tools">
                         <!-- <a href="#">Activities</a> -->

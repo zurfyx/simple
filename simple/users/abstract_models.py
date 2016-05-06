@@ -4,6 +4,8 @@ from django.contrib.auth.base_user import AbstractBaseUser
 from django.db import models
 from django.utils.timezone import utc
 
+from config import constants as globalConstants
+from users.constants import UserLogTypes
 from .managers import EmailUserManager
 from . import constants
 
@@ -23,6 +25,11 @@ class AbstractUser(AbstractBaseUser):
     occupation = models.CharField(max_length=100, null=True, blank=True)
     role = models.PositiveIntegerField(default=1)
     is_staff = models.BooleanField(default=False)
+    avatar = models.ImageField(upload_to=globalConstants.FilePath.USER_AVATAR,
+                               blank=True, null=True)
+
+    # analytics
+    views = models.PositiveIntegerField(default=0)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['first_name', 'last_name']
@@ -63,6 +70,30 @@ class AbstractUser(AbstractBaseUser):
 
     def __str__(self):
         return '{0}'.format(self.email)
+
+    class Meta:
+        abstract = True
+
+
+class AbstractUserLog(models.Model):
+    """
+    Project log (saves all occurred events in a project).
+    type = i.e. 'ACTIVITY_AVAILABLE' (see user constants)
+    description = text description of the event
+    reference = <id> of the type
+    """
+    user = models.ForeignKey('User')
+    type = models.IntegerField(choices=UserLogTypes.USER_LOG_TYPES)
+    description = models.CharField(max_length=500, blank=True, null=True)
+    reference = models.CharField(max_length=255, blank=True, null=True)
+
+    def get_type_str(self):
+        return UserLogTypes.USER_LOG_TYPES[self.type][1]
+
+    def __str__(self):
+        return '({0}, {1}) -> {2}' \
+            .format(self.user, self.project,
+                    UserLogTypes.USER_LOG_TYPES[self.type][1])
 
     class Meta:
         abstract = True
