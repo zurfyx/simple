@@ -1,7 +1,7 @@
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect
-from django.views.generic import DetailView
+from django.views.generic import DetailView, UpdateView
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import CreateView
 
@@ -53,3 +53,4 @@ class AccountView(DetailView):
     template_name = 'users/account.html'
     model = User
     context_object_name = 'context_user'
+

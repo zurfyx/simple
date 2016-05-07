@@ -1,4 +1,8 @@
 from django.conf.urls import url
+from models import Project
+from forms import ProjectNewForm
+from django.views.generic import UpdateView
+
 
 from .views import ProjectDetail, ProjectList, ProjectNewView,\
     ProjectApproveList, ProjectApproveView, ProjectDenyView, \
@@ -89,5 +93,17 @@ urlpatterns = [
         r'\/deny-contribution/project/(?P<pk>\d+)/user/(?P<user>\d+)$',
         ProjectContributionDenyView.as_view(),
         name='deny-contribution'
+    ),
+    # Project details
+    url(
+        r'^\/(?P<pk>\d+)/edit$',
+        UpdateView.as_view(
+            model = Project,
+            template_name = 'projects/form.html',
+            form_class = ProjectNewForm,
+            success_url = 'projects:user-list'
+
+        ),
+        name='edit'
     ),
 ]
