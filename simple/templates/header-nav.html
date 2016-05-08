@@ -1,6 +1,6 @@
 <ul>
     <li><a href="{% url "projects:list" %}">Projects</a></li>
-    <li><a href="#">Search</a></li>
+    <li><a href="{% url "users:user-list" %}">Users</a></li>
     {% if user.is_authenticated %}
         <li><a href="#">Notifications (0)</a></li>
         <li><a href="{% url "users:account" user.id %}">{{ user.first_name }}</a></li>

@@ -1,14 +1,11 @@
 from django.conf.urls import url
-from models import Project
-from forms import ProjectNewForm
-from django.views.generic import UpdateView
-
 
 from .views import ProjectDetail, ProjectList, ProjectNewView,\
     ProjectApproveList, ProjectApproveView, ProjectDenyView, \
     ProjectContributeView, ProjectPendingApproval, \
     ProjectApproveContributionList, UserProjectList, \
-    ProjectContributionApproveView, ProjectContributionDenyView
+    ProjectContributionApproveView, ProjectContributionDenyView,\
+    SearchProjectList
 
 urlpatterns = [
     # List of Projects
@@ -24,6 +21,7 @@ urlpatterns = [
         UserProjectList.as_view(),
         name='user-list'
     ),
+
 
     # Project details
     url(
@@ -94,16 +92,11 @@ urlpatterns = [
         ProjectContributionDenyView.as_view(),
         name='deny-contribution'
     ),
-    # Project details
-    url(
-        r'^\/(?P<pk>\d+)/edit$',
-        UpdateView.as_view(
-            model = Project,
-            template_name = 'projects/form.html',
-            form_class = ProjectNewForm,
-            success_url = 'projects:user-list'
 
-        ),
-        name='edit'
-    ),
+    #Search Project
+    url(
+        r'^\/search/(?P<title>.*)/$',
+        SearchProjectList.as_view(),
+        name='search-project'
+    )
 ]

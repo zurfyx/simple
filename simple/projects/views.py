@@ -26,6 +26,16 @@ class ProjectList(ListView):
     context_object_name = 'projects'
     ordering = ['-created']
 
+class SearchProjectList(ListView):
+    model = Project
+    template_name = 'projects/list.html'
+    context_object_name = 'projects'
+    ordering = ['-created']
+
+    def get_queryset(self):
+        filter_name = self.kwargs['title']
+        return Project.objects.filter(title__icontains=filter_name)
+
 
 class UserProjectList(ProjectList):
     """
@@ -222,3 +232,14 @@ class ProjectContributionDenyView(ProjectContributionApproveDeny):
             .get_redirect_url(**kwargs)
         self.projectrole.delete()
         return redirect
+
+class SearchProject(ListView):
+    model = Project
+    context_object_name = 'projects'
+    template_name = '/projects/list.html'
+
+
+    def get_queryset(self):
+        filter = self.kwargs['title']
+        search= self.model.objects.filter(title__icontains = filter)
+        return search

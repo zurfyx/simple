@@ -1,7 +1,7 @@
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect
-from django.views.generic import DetailView, UpdateView
+from django.views.generic import DetailView, ListView
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import CreateView
 
@@ -54,3 +54,24 @@ class AccountView(DetailView):
     model = User
     context_object_name = 'context_user'
 
+
+class UserList(ListView):
+    template_name = 'users/list.html'
+    model = User
+    context_object_name = 'user-list'
+
+
+    def get_queryset(self):
+        queryset = User.objects.all()
+        return queryset
+
+class SearchUser(ListView):
+    model = User
+    context_object_name = 'users'
+    template_name = '/users/list.html'
+
+
+    def get_queryset(self):
+        filter = self.kwargs['firstname']
+        search= self.model.objects.filter(firstname__icontains = filter)
+        return search
