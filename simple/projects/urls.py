@@ -5,7 +5,7 @@ from .views import ProjectDetail, ProjectList, ProjectNewView,\
     ProjectContributeView, ProjectPendingApproval, \
     ProjectApproveContributionList, UserProjectList, \
     ProjectContributionApproveView, ProjectContributionDenyView,\
-    SearchProjectList
+    SearchProjects
 
 urlpatterns = [
     # List of Projects
@@ -35,6 +35,13 @@ urlpatterns = [
         r'^\/new$',
         ProjectNewView.as_view(),
         name='new'
+    ),
+
+    #Search Project
+    url(
+        r'^\/search/(?P<title>.*)/$',
+        SearchProjects.as_view(),
+        name='search-project'
     ),
 
     # Pending approval message view shown after project creation
@@ -93,10 +100,5 @@ urlpatterns = [
         name='deny-contribution'
     ),
 
-    #Search Project
-    url(
-        r'^\/search/(?P<title>.*)/$',
-        SearchProjectList.as_view(),
-        name='search-project'
-    )
+
 ]

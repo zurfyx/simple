@@ -56,22 +56,27 @@ class AccountView(DetailView):
 
 
 class UserList(ListView):
-    template_name = 'users/list.html'
+    """
+    Display user's lists.
+    Everybody can see all users.
+    """
     model = User
-    context_object_name = 'user-list'
+    template_name = 'users/list.html'
+    context_object_name = 'users'
 
 
-    def get_queryset(self):
-        queryset = User.objects.all()
-        return queryset
 
 class SearchUser(ListView):
+    """
+    Display user search.
+    If an user input a user's firstname, it shows users with this name. Else if shows No Results
+    """
     model = User
     context_object_name = 'users'
     template_name = '/users/list.html'
 
 
     def get_queryset(self):
-        filter = self.kwargs['firstname']
+        filter = self.kwargs['first-name']
         search= self.model.objects.filter(firstname__icontains = filter)
         return search
