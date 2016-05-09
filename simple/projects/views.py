@@ -51,7 +51,7 @@ class ProjectDetail(DetailView):
     context_object_name = 'project'
 
 
-class SearchProjects(ListView):
+class SearchProject(ListView):
     """
     Display project search.
     If an user input a project's tittle, it shows the project. Else if shows No Results
@@ -59,7 +59,6 @@ class SearchProjects(ListView):
     model = Project
     context_object_name = 'projects'
     template_name = 'projects/list.html'
-
 
     def get_queryset(self):
         filter = self.kwargs['title']

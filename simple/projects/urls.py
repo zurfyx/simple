@@ -5,7 +5,7 @@ from .views import ProjectDetail, ProjectList, ProjectNewView,\
     ProjectContributeView, ProjectPendingApproval, \
     ProjectApproveContributionList, UserProjectList, \
     ProjectContributionApproveView, ProjectContributionDenyView,\
-    SearchProjects
+    SearchProject
 
 urlpatterns = [
     # List of Projects
@@ -40,7 +40,7 @@ urlpatterns = [
     #Search Project
     url(
         r'^\/search/(?P<title>.*)/$',
-        SearchProjects.as_view(),
+        SearchProject.as_view(),
         name='search-project'
     ),
 
