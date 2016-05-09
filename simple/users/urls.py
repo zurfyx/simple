@@ -10,7 +10,7 @@ urlpatterns = [
 
     # Search User
     url(
-        r'^\/search/(?P<first_sname>.*)/$',
+        r'^\/search/(?P<first_name>.*)/$',
         SearchUser.as_view(),
         name='search-user'
     )

@@ -72,10 +72,10 @@ class SearchUser(ListView):
     """
     model = User
     context_object_name = 'users'
-    template_name = '/users/list.html'
+    template_name = 'users/list.html'
 
 
     def get_queryset(self):
-        filter = self.kwargs['first-name']
-        search= self.model.objects.filter(firstname__icontains = filter)
+        filter = self.kwargs['first_name']
+        search= self.model.objects.filter(first_name__icontains = filter)
         return search
