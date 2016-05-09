@@ -65,11 +65,10 @@ class UserList(ListView):
     context_object_name = 'users'
 
 
-
 class SearchUser(ListView):
     """
     Display user search.
-    If an user input a user's firstname, it shows users with this name. Else if shows No Results
+    If an user input the user's firstname, it shows users with this name. Else if, it shows No Results
     """
     model = User
     context_object_name = 'users'

@@ -54,7 +54,7 @@ class ProjectDetail(DetailView):
 class SearchProject(ListView):
     """
     Display project search.
-    If an user input a project's tittle, it shows the project. Else if shows No Results
+    If an user input a project's title, it shows the project. Else if, it shows No Results
     """
     model = Project
     context_object_name = 'projects'

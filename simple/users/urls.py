@@ -7,6 +7,7 @@ urlpatterns = [
     url(r'^\/signup$', RegisterView.as_view(), name='signup'),
     url(r'^\/(?P<pk>\d+)$', AccountView.as_view(), name='account'),
     url(r'^$', UserList.as_view(), name='list'),
+
     # Search User
     url(
         r'^\/search/(?P<first_sname>.*)/$',
