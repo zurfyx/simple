@@ -24,5 +24,6 @@ class CommentEditMixin(OwnerRequiredMixin, UpdateView):
         return super(CommentEditMixin, self).form_valid(form)
 
 
-class CommentDeleteMixin(DeleteView):
-    pass
+class CommentDeleteMixin(OwnerRequiredMixin, DeleteView):
+    model = Comment
+

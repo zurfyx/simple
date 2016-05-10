@@ -1,6 +1,6 @@
 from django.conf.urls import url
 
-from .views import CommentAdd, CommentEdit
+from .views import CommentAdd, CommentEdit, CommentDelete
 
 urlpatterns = [
     # Create new comment
@@ -15,5 +15,12 @@ urlpatterns = [
         r'^\/(?P<pk>\d+)/edit$',
         CommentEdit.as_view(),
         name='comment_edit'
+    ),
+
+    # Delete a specific comment
+    url(
+        r'^\/(?P<pk>\d+)/delete$',
+        CommentDelete.as_view(),
+        name='comment_delete'
     ),
 ]

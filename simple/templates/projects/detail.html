@@ -41,10 +41,15 @@
             {% for comment in object.comments.all %}
                 <div id="comment_{{ comment.id }}">
                     <div>
-                        User: {{ comment.user.username }}
+                        User: {{ comment.user.first_name }}
                         {% if comment.user == request.user %}
                             <a href = "{% url 'projects:comments:comment_edit' project.id comment.id %}">Edit</a>
+                            <a href = "{% url 'projects:comments:comment_delete' project.id comment.id %}">Delete</a>
                         {% endif %}
+                    <div>
+                        Published: {{ comment.created }}
+                        Modified: {{ comment.modified }}
+                    </div>
                     </div>
                     <div>
                         {% if comment.is_removed %}
