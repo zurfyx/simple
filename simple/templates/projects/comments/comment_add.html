@@ -1,0 +1,8 @@
+{% extends "projects/comments/base.html" %}
+{% block app_content %}
+<h1>Add Comment</h1>
+    <form method="post" action="">
+        {% include "form.html" %}
+        <input type="submit" value="Create" />
+    </form>
+{% endblock %}

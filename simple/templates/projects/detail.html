@@ -35,5 +35,26 @@
         <div class="page-detail-description">
             {{ project.body }}
         </div>
+        <div>
+            <h2>Comments</h2>
+            <a href = "{% url 'projects:comments:comment_add' project.id %}">New Comment</a>
+            {% for comment in object.comments.all %}
+                <div id="comment_{{ comment.id }}">
+                    <div>
+                        User: {{ comment.user.username }}
+                    </div>
+                    <div>
+                        {% if comment.is_removed %}
+                            <i>Removed</i>
+                        {% else %}
+                            {{ comment.content }}
+                        {% endif %}
+                    </div>
+                </div>
+                <hr>
+            {% empty %}
+                No comments - be the first one to post!
+            {% endfor %}
+        </div>
     </div>
 {% endblock %}

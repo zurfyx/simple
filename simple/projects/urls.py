@@ -1,4 +1,4 @@
-from django.conf.urls import url
+from django.conf.urls import url, include
 
 from .views import ProjectDetail, ProjectList, ProjectNewView,\
     ProjectApproveList, ProjectApproveView, ProjectDenyView, \
@@ -8,6 +8,12 @@ from .views import ProjectDetail, ProjectList, ProjectNewView,\
     SearchProject
 
 urlpatterns = [
+    # Include comments application
+    url(
+        r'^\/(?P<project>\d+)/comments',
+        include('projects.comments.urls', namespace='comments')
+    ),
+
     # List of Projects
     url(
         r'^$',
@@ -37,7 +43,7 @@ urlpatterns = [
         name='new'
     ),
 
-    #Search Project
+    # Search Project
     url(
         r'^\/search/(?P<title>.*)/$',
         SearchProject.as_view(),
