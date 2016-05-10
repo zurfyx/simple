@@ -42,6 +42,9 @@
                 <div id="comment_{{ comment.id }}">
                     <div>
                         User: {{ comment.user.username }}
+                        {% if comment.user == request.user %}
+                            <a href = "{% url 'projects:comments:comment_edit' project.id comment.id %}">Edit</a>
+                        {% endif %}
                     </div>
                     <div>
                         {% if comment.is_removed %}
