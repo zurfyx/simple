@@ -1,12 +1,19 @@
-from django.conf.urls import url
+from django.conf.urls import url, include
 
 from .views import ProjectDetail, ProjectList, ProjectNewView,\
     ProjectApproveList, ProjectApproveView, ProjectDenyView, \
     ProjectContributeView, ProjectPendingApproval, \
     ProjectApproveContributionList, UserProjectList, \
-    ProjectContributionApproveView, ProjectContributionDenyView
+    ProjectContributionApproveView, ProjectContributionDenyView,\
+    SearchProject
 
 urlpatterns = [
+    # Include comments application
+    url(
+        r'^\/(?P<project>\d+)/comments',
+        include('projects.comments.urls', namespace='comments')
+    ),
+
     # List of Projects
     url(
         r'^$',
@@ -21,6 +28,7 @@ urlpatterns = [
         name='user-list'
     ),
 
+
     # Project details
     url(
         r'^\/(?P<pk>\d+)$',
@@ -33,6 +41,13 @@ urlpatterns = [
         r'^\/new$',
         ProjectNewView.as_view(),
         name='new'
+    ),
+
+    # Search Project
+    url(
+        r'^\/search/(?P<title>.*)/$',
+        SearchProject.as_view(),
+        name='search-project'
     ),
 
     # Pending approval message view shown after project creation
@@ -90,4 +105,6 @@ urlpatterns = [
         ProjectContributionDenyView.as_view(),
         name='deny-contribution'
     ),
+
+
 ]

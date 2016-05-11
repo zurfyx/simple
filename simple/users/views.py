@@ -1,7 +1,7 @@
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect
-from django.views.generic import DetailView
+from django.views.generic import DetailView, ListView
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import CreateView
 
@@ -53,3 +53,29 @@ class AccountView(DetailView):
     template_name = 'users/account.html'
     model = User
     context_object_name = 'context_user'
+
+
+class UserList(ListView):
+    """
+    Display user's lists.
+    Everybody can see all users.
+    """
+    model = User
+    template_name = 'users/list.html'
+    context_object_name = 'users'
+
+
+class SearchUser(ListView):
+    """
+    Display user search.
+    If an user input the user's firstname, it shows users with this name. Else if, it shows No Results
+    """
+    model = User
+    context_object_name = 'users'
+    template_name = 'users/list.html'
+
+
+    def get_queryset(self):
+        filter = self.kwargs['first_name']
+        search= self.model.objects.filter(first_name__icontains = filter)
+        return search

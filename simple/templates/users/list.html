@@ -1,0 +1,47 @@
+{% extends "users/base.html" %}
+
+{% block menu_title %}
+    <h1>Users</h1>
+{% endblock %}
+
+{% block app_content %}
+
+    <script type="text/javascript">
+        function search(event, user) {
+            if (event.which == 13 || event.keyCode == 13){
+                location.href= '/users/search/' + user;
+            }
+        }
+    </script>
+
+    <div class="row search">
+        <div class="input-group">
+            <span class="input-group-addon">
+                <i class="glyphicon glyphicon-search"></i>
+            </span>
+            <input id="txtSearch" type="text" class="form-control" placeholder="Search for name..." onkeypress="if(this.value)search(event,this.value)"/>
+        </div>
+    </div>
+
+    <ul class="user-list">
+        {% for user in users %}
+            <li>
+                <div class="user-header">
+
+                        {{ user.first_name }}
+                        {{ user.last_name }}
+
+                </div>
+
+            </li>
+            {% empty %}
+                 <div class='alert alert-info alert-dismissible error-search' role= 'alert'>
+                        <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hideen='true'>&times;</span></button>
+                        <strong>No results</strong> Your search returned no matches.
+                 </div>
+        {% endfor %}
+
+    </ul>
+
+
+{% endblock %}

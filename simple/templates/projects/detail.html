@@ -12,7 +12,7 @@
             <div class="project-info col-xs-6">
                 <div class="container-fluid">
                     <div class="row">
-                        <h1>{{ project.title }}</h1>
+                      <h1>{{ project.title }}</h1>
                     </div>
                     <div class="row">
                         <i>Last modified: {{ project.modified }}</i>
@@ -34,6 +34,35 @@
         </div>
         <div class="page-detail-description">
             {{ project.body }}
+        </div>
+        <div>
+            <h2>Comments</h2>
+            <a href = "{% url 'projects:comments:comment_add' project.id %}">New Comment</a>
+            {% for comment in object.comments.all %}
+                <div id="comment_{{ comment.id }}">
+                    <div>
+                        User: {{ comment.user.first_name }}
+                        {% if comment.user == request.user %}
+                            <a href = "{% url 'projects:comments:comment_edit' project.id comment.id %}">Edit</a>
+                            <a href = "{% url 'projects:comments:comment_delete' project.id comment.id %}">Delete</a>
+                        {% endif %}
+                    <div>
+                        Published: {{ comment.created }}
+                        Modified: {{ comment.modified }}
+                    </div>
+                    </div>
+                    <div>
+                        {% if comment.is_removed %}
+                            <i>Removed</i>
+                        {% else %}
+                            {{ comment.content }}
+                        {% endif %}
+                    </div>
+                </div>
+                <hr>
+            {% empty %}
+                No comments - be the first one to post!
+            {% endfor %}
         </div>
     </div>
 {% endblock %}

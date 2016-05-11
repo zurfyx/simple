@@ -1,4 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.exceptions import PermissionDenied
 from django.http import Http404
 
 
@@ -19,3 +20,12 @@ class HeadOfDepartmentMixin(CustomLoginRequiredMixin):
                 and user.role != 3 and user.is_staff is False:
             raise Http404('Not a Head of Department')
         return super(HeadOfDepartmentMixin, self).dispatch(request, **kwargs)
+
+
+class OwnerRequiredMixin(CustomLoginRequiredMixin):
+
+    def get_object(self, *args, **kwargs):
+        obj = super(OwnerRequiredMixin, self).get_object(*args, **kwargs)
+        if not obj.user == self.request.user:
+            raise PermissionDenied('Not the owner')
+        return obj

@@ -51,6 +51,21 @@ class ProjectDetail(DetailView):
     context_object_name = 'project'
 
 
+class SearchProject(ListView):
+    """
+    Display project search.
+    If an user input a project's title, it shows the project. Else if, it shows No Results
+    """
+    model = Project
+    context_object_name = 'projects'
+    template_name = 'projects/list.html'
+
+    def get_queryset(self):
+        filter = self.kwargs['title']
+        search= self.model.objects.filter(title__icontains = filter)
+        return search
+
+
 class ProjectNewView(CustomLoginRequiredMixin, CreateView):
     template_name = 'projects/new.html'
     form_class = ProjectNewForm
@@ -222,3 +237,4 @@ class ProjectContributionDenyView(ProjectContributionApproveDeny):
             .get_redirect_url(**kwargs)
         self.projectrole.delete()
         return redirect
+
