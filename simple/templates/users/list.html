@@ -4,12 +4,12 @@
     <h1>Users</h1>
 {% endblock %}
 
-{% block app_content %}
+{% block content_ %}
 
     <script type="text/javascript">
         function search(event, user) {
             if (event.which == 13 || event.keyCode == 13){
-                location.href= '/users/search/' + user;
+                location.href= '/users/search/' + user; // TODO hardcoded
             }
         }
     </script>

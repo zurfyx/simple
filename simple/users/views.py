@@ -68,14 +68,14 @@ class UserList(ListView):
 class SearchUser(ListView):
     """
     Display user search.
-    If an user input the user's firstname, it shows users with this name. Else if, it shows No Results
+    If an user input the user's firstname, it shows users with this name.
+    Else if, it shows No Results
     """
     model = User
     context_object_name = 'users'
     template_name = 'users/list.html'
 
-
     def get_queryset(self):
         filter = self.kwargs['first_name']
-        search= self.model.objects.filter(first_name__icontains = filter)
+        search = self.model.objects.filter(first_name__icontains=filter)
         return search

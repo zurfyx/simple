@@ -5,7 +5,7 @@ from .models import Project, ProjectRole, ProjectActivityResponse, \
 
 
 class ProjectAdmin(admin.ModelAdmin):
-    list_display = ('title', 'owner', 'created')
+    list_display = ('title', 'user', 'created')
 
 
 class ProjectRoleAdmin(admin.ModelAdmin):
@@ -25,7 +25,7 @@ class ProjectTechnicalRequestAdmin(admin.ModelAdmin):
 
 
 class ProjectActivityAdmin(admin.ModelAdmin):
-    list_display = ('project', 'owner', 'title', 'start_date', 'due_date')
+    list_display = ('project', 'user', 'title', 'start_date', 'due_date')
 
 
 class ProjectActivityResponseAdmin(admin.ModelAdmin):

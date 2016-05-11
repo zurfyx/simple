@@ -37,7 +37,7 @@
                         {{ project.body | truncatechars:150 }}
                     </div>
                     <div class="project-author">
-                        Started by {{ project.owner.get_short_name }}
+                        Started by {{ project.user.get_short_name }}
                     </div>
                     <div class="project-buttons">
                         <a href="{% url "projects:detail" project.id %}">

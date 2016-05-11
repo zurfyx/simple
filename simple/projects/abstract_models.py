@@ -20,7 +20,7 @@ class AbstractProject(AbstractTimeStamped):
     """
     Defines a Project Model.
     """
-    owner = models.ForeignKey(User)
+    user = models.ForeignKey(User)
     title = models.CharField(max_length=200, unique=True)
     body = models.CharField(max_length=20000)
     language = models.CharField(max_length=50, blank=True, null=True)
@@ -153,7 +153,7 @@ class AbstractProjectActivity(AbstractTimeStamped):
     reply before their due date.
     """
     project = models.ForeignKey('Project')
-    owner = models.ForeignKey(User)
+    user = models.ForeignKey(User)
     title = models.CharField(max_length=200)
     body = models.CharField(max_length=2000, blank=True, null=True)
     start_date = models.DateTimeField()

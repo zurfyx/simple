@@ -14,6 +14,7 @@ class CommentAdd(CommentAddMixin):
 
 
 class CommentEdit(CommentEditMixin):
+    # TODO not edit user
     template_name = 'projects/comments/comment_edit.html'
     form_class = CommentEditForm
 
