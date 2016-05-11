@@ -2,15 +2,10 @@ from __future__ import unicode_literals
 
 from .abstract_models import AbstractProject, AbstractProjectRole, \
     AbstractProjectRating, AbstractProjectLog, AbstractProjectTechnicalRequest, \
-    AbstractProjectActivity, AbstractProjectActivityResponse, \
-    AbstractProjectComment
+    AbstractProjectActivity, AbstractProjectActivityResponse
 
 
 class Project(AbstractProject):
-    pass
-
-
-class ProjectComment(AbstractProjectComment):
     pass
 
 

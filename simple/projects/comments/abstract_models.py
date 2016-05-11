@@ -5,6 +5,9 @@ from projects.abstract_models import AbstractTimeStamped
 
 
 class AbstractComment(AbstractTimeStamped):
+    """
+    Representation of the Project Comment (feedback).
+    """
     user = models.ForeignKey(User)
     project = models.ForeignKey('projects.Project', related_name='comments')
     content = models.CharField(max_length=10000)

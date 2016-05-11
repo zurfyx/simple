@@ -51,18 +51,6 @@ class AbstractProject(AbstractTimeStamped):
         abstract = True
 
 
-class AbstractProjectComment(AbstractTimeStamped):
-    """
-    Representation of the Project Comment (feedback).
-    """
-    user = models.ForeignKey(User)
-    project = models.ForeignKey('Project')
-    body = models.CharField(max_length=1000)
-
-    class Meta:
-        abstract = True
-
-
 class AbstractProjectRole(models.Model):
     """
     Special user roles for projects.
