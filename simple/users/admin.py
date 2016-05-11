@@ -3,12 +3,12 @@ from django.contrib.auth.models import Group
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
 from .models import User, UserLog
-from .forms import UserCreationForm, UserChangeForm
+from .forms import UserCreationAdminForm, UserChangeAdminForm
 
 
 class UserAdmin(BaseUserAdmin):
-    form = UserChangeForm
-    add_form = UserCreationForm
+    form = UserChangeAdminForm
+    add_form = UserCreationAdminForm
 
     list_display = ('id', 'first_name', 'email', 'last_login')
     list_filter = ('is_staff',)

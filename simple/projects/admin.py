@@ -1,5 +1,6 @@
 from django.contrib import admin
 
+from projects.forms import ProjectRoleNewAdminForm, ProjectRoleEditAdminForm
 from .models import Project, ProjectRole, ProjectActivityResponse, \
     ProjectActivity, ProjectTechnicalRequest, ProjectLog, ProjectRating
 
@@ -9,6 +10,8 @@ class ProjectAdmin(admin.ModelAdmin):
 
 
 class ProjectRoleAdmin(admin.ModelAdmin):
+    form = ProjectRoleEditAdminForm
+    add_form = ProjectRoleNewAdminForm
     list_display = ('user', 'project', 'role')
 
 
