@@ -164,6 +164,7 @@ class AbstractProjectActivity(AbstractTimeStamped):
 
     class Meta:
         abstract = True
+        verbose_name_plural = 'project activities'
 
 
 class AbstractProjectActivityResponse(AbstractTimeStamped):
