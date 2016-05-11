@@ -1,7 +1,7 @@
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect
-from django.views.generic import DetailView, ListView
+from django.views.generic import DetailView, ListView, UpdateView
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import CreateView
 
