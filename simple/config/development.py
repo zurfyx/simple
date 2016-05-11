@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'compressor',
     'users',
     'projects',
+    'projects.comments',
 ]
 
 MIDDLEWARE_CLASSES = [

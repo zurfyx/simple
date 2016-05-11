@@ -1,6 +1,6 @@
 from django.conf.urls import url
 
-from .views import CommentAdd, CommentEdit, CommentDelete
+from projects.comments.views import CommentAdd, CommentEdit, CommentDelete
 
 urlpatterns = [
     # Create new comment

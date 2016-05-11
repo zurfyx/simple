@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.models import Group
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
-from .models import User
+from .models import User, UserLog
 from .forms import UserCreationForm, UserChangeForm
 
 
@@ -34,5 +34,10 @@ class UserAdmin(BaseUserAdmin):
     ordering = ('id',)
     filter_horizontal = ()
 
+
+class UserLogAdmin(admin.ModelAdmin):
+    list_display = ('user', 'type')
+
 admin.site.register(User, UserAdmin)
+admin.site.register(UserLog, UserLogAdmin)
 admin.site.unregister(Group)

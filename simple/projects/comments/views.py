@@ -1,7 +1,7 @@
 from django.core.urlresolvers import reverse
 
-from .mixins import CommentAddMixin, CommentEditMixin, CommentDeleteMixin
-from .forms import CommentAddForm, CommentEditForm
+from projects.comments.forms import CommentAddForm, CommentEditForm
+from projects.comments.mixins import CommentAddMixin, CommentEditMixin, CommentDeleteMixin
 
 
 class CommentAdd(CommentAddMixin):

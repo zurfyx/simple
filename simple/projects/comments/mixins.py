@@ -1,9 +1,8 @@
 from django.views.generic import CreateView, UpdateView, DeleteView
 
-
-from projects.models import Project
-from .models import Comment
 from core.mixins import CustomLoginRequiredMixin, OwnerRequiredMixin
+from projects.comments.models import Comment
+from projects.models import Project
 
 
 class CommentAddMixin(CustomLoginRequiredMixin, CreateView):
