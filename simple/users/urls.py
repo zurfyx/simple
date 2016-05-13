@@ -2,10 +2,9 @@ from django.conf.urls import url
 from models import User
 from forms import UserCreationForm
 from django.views.generic import UpdateView
-from users.views import RegisterView, LoginView, AccountView, UserList, SearchUser
 
-from users.views import RegisterView, LoginView, AccountView, UserList, \
-    SearchUser, LogoutView
+from .views import RegisterView, LoginView, AccountView, UserList, SearchUser, \
+    LogoutView
 
 urlpatterns = [
     # login
@@ -51,12 +50,12 @@ urlpatterns = [
     ),
 
     # edit user
-    url(r'^\/(?P<pk>\d+)/edit$',
+    url(
+        r'^\/(?P<pk>\d+)/edit$',
         UpdateView.as_view(
-            model = User,
-            template_name = 'users/form.html',
-            form_class = UserCreationForm,
-
+            model=User,
+            template_name='users/form.html',
+            form_class=UserCreationForm,
         ),
         name='edit-user'
     ),
