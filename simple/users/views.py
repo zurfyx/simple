@@ -1,8 +1,8 @@
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect
 from django.views.generic import DetailView, ListView
-from django.views.generic.base import TemplateView
+from django.views.generic.base import TemplateView, RedirectView
 from django.views.generic.edit import CreateView
 from django.core.urlresolvers import reverse
 from forms import UserCreationForm
@@ -10,12 +10,6 @@ from mixins import UserEditMixin
 from users.forms import UserCreationForm
 from users.mixins import NotLoginRequiredMixin
 from users.models import User
-
-
-class RegisterView(NotLoginRequiredMixin, CreateView):
-    template_name = 'users/register.html'
-    form_class = UserCreationForm
-    success_url = '/'
 
 
 class LoginView(NotLoginRequiredMixin, TemplateView):
@@ -51,6 +45,24 @@ class LoginView(NotLoginRequiredMixin, TemplateView):
         return context
 
 
+class LogoutView(RedirectView):
+    """
+    Logout will logout and redirect to login view, regardless of the user having
+    been logged in.
+    """
+    pattern_name = 'users:login'
+
+    def get_redirect_url(self, *args, **kwargs):
+        logout(self.request)
+        return super(LogoutView, self).get_redirect_url(*args, **kwargs)
+
+
+class RegisterView(NotLoginRequiredMixin, CreateView):
+    template_name = 'users/register.html'
+    form_class = UserCreationForm
+    success_url = '/'
+
+
 class AccountView(DetailView):
     template_name = 'users/account.html'
     model = User
@@ -84,7 +96,7 @@ class SearchUser(ListView):
 
 class EditView(UserEditMixin):
     # TODO not edit user
-    template_name = 'projects/form.html'
+    template_name = 'users/form.html'
     form_class = UserCreationForm
 
     def get_success_url(self):
