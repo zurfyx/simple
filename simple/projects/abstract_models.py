@@ -37,12 +37,12 @@ class AbstractProject(AbstractTimeStamped):
     # Rating
     ratings = models.ManyToManyField(User, through='ProjectRating',
                                      related_name='rated_projects')
-    upvotes = models.PositiveIntegerField()
-    downvotes = models.PositiveIntegerField()
+    upvotes = models.PositiveIntegerField(default=0)
+    downvotes = models.PositiveIntegerField(default=0)
 
     # Analytics
-    visits = models.PositiveIntegerField()
-    unique_visits = models.PositiveIntegerField()
+    visits = models.PositiveIntegerField(default=0)
+    unique_visits = models.PositiveIntegerField(default=0)
 
     def __str__(self):
         return '{0}'.format(self.title)
