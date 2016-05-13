@@ -1,17 +1,48 @@
 from django.conf.urls import url
 
-from users.views import RegisterView, LoginView, AccountView, UserList, SearchUser
+from users.views import RegisterView, LoginView, AccountView, UserList, \
+    SearchUser, LogoutView
 
 urlpatterns = [
-    url(r'^\/login$', LoginView.as_view(), name='login'),
-    url(r'^\/signup$', RegisterView.as_view(), name='signup'),
-    url(r'^\/(?P<pk>\d+)$', AccountView.as_view(), name='account'),
-    url(r'^$', UserList.as_view(), name='list'),
+    # login
+    url(
+        r'^\/login$',
+        LoginView.as_view(),
+        name='login'
+    ),
 
-    # Search User
+    # logout
+    url(
+        r'^\/logout$',
+        LogoutView.as_view(),
+        name='logout'
+    ),
+
+    # sign up
+    url(
+        r'^\/signup$',
+        RegisterView.as_view(),
+        name='signup'
+    ),
+
+    # user account
+    url(
+        r'^\/(?P<pk>\d+)$',
+        AccountView.as_view(),
+        name='account'
+    ),
+
+    # user list
+    url(
+        r'^$',
+        UserList.as_view(),
+        name='list'
+    ),
+
+    # search user
     url(
         r'^\/search/(?P<first_name>.*)/$',
         SearchUser.as_view(),
         name='search-user'
-    )
+    ),
 ]
