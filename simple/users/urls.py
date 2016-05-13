@@ -17,12 +17,7 @@ urlpatterns = [
         name='search-user'
     ),
     url(r'^\/(?P<pk>\d+)/edit-user$',
-        UpdateView.as_view(
-            model = User,
-            template_name = 'users/form.html',
-            form_class = UserCreationForm,
-
-        ),
+        EditView.as_view(),
         name='edit-user'
     ),
   

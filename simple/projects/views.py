@@ -14,7 +14,7 @@ from projects.forms import ProjectNewForm, ProjectContributeForm
 from projects.mixins import ApprovedProjectRequiredMixin
 from users.models import User
 from .models import Project, ProjectRole
-
+from mixins import ProjectEditMixin
 
 class ProjectList(ListView):
     """
@@ -239,3 +239,11 @@ class ProjectContributionDenyView(ProjectContributionApproveDeny):
         self.projectrole.delete()
         return redirect
 
+class ProjectEdit(ProjectEditMixin):
+    # TODO not edit user
+    template_name = 'projects/form.html'
+    form_class = ProjectNewForm
+
+    def get_success_url(self):
+        return reverse('projects:detail', args=[self.kwargs['pk']]) + \
+               '#project_' + str(self.object.id)

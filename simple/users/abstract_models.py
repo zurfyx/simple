@@ -67,9 +67,6 @@ class AbstractUser(AbstractBaseUser):
 
     def has_module_perms(self, app_label):
         return True
-    
-    def get_absolute_url(self):
-        return reverse('users:account', kwargs={'pk':self.pk})
 
     def __str__(self):
         return '{0}'.format(self.email)

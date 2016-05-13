@@ -68,3 +68,5 @@ class OwnerRequiredOrModeratorMixin(OwnerRequiredMixin, ModeratorRequiredMixin):
         except PermissionDenied:
             pass
         raise PermissionDenied('Not the Owner nor Moderator')
+
+

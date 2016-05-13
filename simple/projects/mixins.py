@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404
-
+from core.mixins import OwnerRequiredMixin
 from projects.models import Project
-
+from django.views.generic import UpdateView
 
 class ProjectRequiredMixin(object):
     """
@@ -22,3 +22,11 @@ class ApprovedProjectRequiredMixin(ProjectRequiredMixin):
     def dispatch(self, request, *args, **kwargs):
         get_object_or_404(Project, id=kwargs['pk'], approved=True)
         return super(ApprovedProjectRequiredMixin, self).dispatch(request, **kwargs)
+
+class ProjectEditMixin(OwnerRequiredMixin, UpdateView):
+    model = Project
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        form.instance.project = Project.objects.get(id=self.kwargs['pk'])
+        return super(ProjectEditMixin, self).form_valid(form)
