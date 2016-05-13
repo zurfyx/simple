@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.core.urlresolvers import reverse
 from config import constants as globalConstants
 from users.models import User
 from .constants import ProjectRoles, ProjectLogTypes
@@ -46,6 +46,9 @@ class AbstractProject(AbstractTimeStamped):
 
     def __str__(self):
         return '{0}'.format(self.title)
+
+    def get_absolute_url(self):
+        return reverse('projects:user-list', kwargs={'user':self.pk})
 
     class Meta:
         abstract = True
