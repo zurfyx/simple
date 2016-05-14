@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.core.urlresolvers import reverse
 from config import constants as globalConstants
 from users.models import User
 from .constants import ProjectRoles, ProjectLogTypes
@@ -20,7 +20,7 @@ class AbstractProject(AbstractTimeStamped):
     """
     Defines a Project Model.
     """
-    owner = models.ForeignKey(User)
+    user = models.ForeignKey(User)
     title = models.CharField(max_length=200, unique=True)
     body = models.CharField(max_length=20000)
     language = models.CharField(max_length=50, blank=True, null=True)
@@ -37,12 +37,12 @@ class AbstractProject(AbstractTimeStamped):
     # Rating
     ratings = models.ManyToManyField(User, through='ProjectRating',
                                      related_name='rated_projects')
-    upvotes = models.PositiveIntegerField()
-    downvotes = models.PositiveIntegerField()
+    upvotes = models.PositiveIntegerField(default=0)
+    downvotes = models.PositiveIntegerField(default=0)
 
     # Analytics
-    visits = models.PositiveIntegerField()
-    unique_visits = models.PositiveIntegerField()
+    visits = models.PositiveIntegerField(default=0)
+    unique_visits = models.PositiveIntegerField(default=0)
 
     def __str__(self):
         return '{0}'.format(self.title)
@@ -153,7 +153,7 @@ class AbstractProjectActivity(AbstractTimeStamped):
     reply before their due date.
     """
     project = models.ForeignKey('Project')
-    owner = models.ForeignKey(User)
+    user = models.ForeignKey(User)
     title = models.CharField(max_length=200)
     body = models.CharField(max_length=2000, blank=True, null=True)
     start_date = models.DateTimeField()

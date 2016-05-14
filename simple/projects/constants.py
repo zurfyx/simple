@@ -6,7 +6,7 @@ class ProjectRoles(object):
     PROJECT_ROLES = (
         (SCIENTIST, 'Scientist'),
         (STUDENT, 'Student'),
-        (SCIENTIFIC_CITIZEN, 'Scientist'),
+        (SCIENTIFIC_CITIZEN, 'Citizens Science'),
     )
 
 
@@ -22,3 +22,10 @@ class ProjectLogTypes(object):
         (COMMENT_CREATE, 'Comment addition'),
         (COMMENT_EDIT, 'Comment edition'),
     )
+
+
+def project_constants(request):
+    return {
+        'PROJECT_ROLES': ProjectRoles,
+        'PROJECT_LOG_TYPES': ProjectLogTypes,
+    }

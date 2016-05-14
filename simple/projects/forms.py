@@ -1,8 +1,30 @@
 from django import forms
-from django.db import models
 
 from projects.constants import ProjectRoles
 from projects.models import Project, ProjectRole
+
+
+class ProjectRoleNewAdminForm(forms.ModelForm):
+    """
+    Form for creating a new Project on the admin panel
+    """
+    role = forms.ChoiceField(choices=ProjectRoles.PROJECT_ROLES)
+
+    class Meta:
+        model = ProjectRole
+        fields = ('user', 'project', 'role', 'approved_role',)
+
+
+class ProjectRoleEditAdminForm(forms.ModelForm):
+    """
+    Form for creating a new Project on the admin panel
+    """
+    role = forms.ChoiceField(choices=ProjectRoles.PROJECT_ROLES)
+
+    class Meta:
+        model = ProjectRole
+        fields = ('user', 'project', 'role', 'approved_role',)
+        readonly_fields = ('user', 'project',)
 
 
 class ProjectNewForm(forms.ModelForm):

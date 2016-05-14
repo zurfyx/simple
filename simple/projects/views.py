@@ -14,7 +14,7 @@ from projects.forms import ProjectNewForm, ProjectContributeForm
 from projects.mixins import ApprovedProjectRequiredMixin
 from users.models import User
 from .models import Project, ProjectRole
-
+from mixins import ProjectEditMixin
 
 class ProjectList(ListView):
     """
@@ -36,7 +36,7 @@ class UserProjectList(ProjectList):
     template_name = 'projects/user-list.html'
 
     def get_queryset(self):
-        return self.model.objects.filter(owner=self.kwargs['user'])
+        return self.model.objects.filter(user=self.kwargs['user'])
 
 
 class ProjectDetail(DetailView):
@@ -73,7 +73,7 @@ class ProjectNewView(CustomLoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         project = form.save(commit=False)
-        project.owner = self.request.user
+        project.user = self.request.user
         project.save()
         messages.success(self.request, project.title)
         return HttpResponseRedirect(reverse(self.success_url))
@@ -176,6 +176,7 @@ class ProjectApproveContributionList(CustomLoginRequiredMixin, UserProjectList):
     Displays a list of current logged in user projects, that have users who
     are pending a contribution approval.
     """
+    # TODO project owner required
     template_name = 'projects/approve-contribution-list.html'
     context_object_name = 'projectroles'
 
@@ -238,3 +239,11 @@ class ProjectContributionDenyView(ProjectContributionApproveDeny):
         self.projectrole.delete()
         return redirect
 
+class ProjectEdit(ProjectEditMixin):
+    # TODO not edit user
+    template_name = 'projects/form.html'
+    form_class = ProjectNewForm
+
+    def get_success_url(self):
+        return reverse('projects:detail', args=[self.kwargs['pk']]) + \
+               '#project_' + str(self.object.id)

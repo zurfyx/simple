@@ -1,7 +1,7 @@
-from django.conf.urls import url
+from django.conf.urls import url, include
 from models import Project
 from forms import ProjectNewForm
-from django.views.generic import UpdateView
+from views import ProjectEdit
 from .views import ProjectDetail, ProjectList, ProjectNewView,\
     ProjectApproveList, ProjectApproveView, ProjectDenyView, \
     ProjectContributeView, ProjectPendingApproval, \
@@ -10,6 +10,12 @@ from .views import ProjectDetail, ProjectList, ProjectNewView,\
     SearchProject
 
 urlpatterns = [
+    # Include comments application
+    url(
+        r'^\/(?P<project>\d+)/comments',
+        include('projects.comments.urls', namespace='comments')
+    ),
+
     # List of Projects
     url(
         r'^$',
@@ -39,25 +45,12 @@ urlpatterns = [
         name='new'
     ),
 
-    #Search Project
+    # Search Project
     url(
         r'^\/search/(?P<title>.*)/$',
         SearchProject.as_view(),
         name='search-project'
     ),
-
-    #Project details
-    url(
-        r'^\/(?P<pk>\d+)/edit$',
-        UpdateView.as_view(
-            model = Project,
-            template_name = 'projects/form.html',
-            form_class = ProjectNewForm,
-            success_url = 'projects:user-list',
-        ),
-        name = 'edit'
-    ),
-
 
     # Pending approval message view shown after project creation
     url(
@@ -115,5 +108,11 @@ urlpatterns = [
         name='deny-contribution'
     ),
 
+    # Edit Project
+    url(
+        r'^\/(?P<pk>\d+)/edit$',
+        ProjectEdit.as_view(),
+        name='edit'
+    ),
 
 ]

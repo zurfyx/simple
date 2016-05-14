@@ -3,7 +3,7 @@ import datetime
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.db import models
 from django.utils.timezone import utc
-
+from django.core.urlresolvers import reverse
 from config import constants as globalConstants
 from users.constants import UserLogTypes
 from .managers import EmailUserManager

@@ -19,3 +19,9 @@ class UserLogTypes(object):
     USER_LOG_TYPES = (
         (ACTIVITY_AVAILABLE, 'Activity available'),
     )
+
+
+def user_constants(request):
+    return {
+        'USER_ROLES': UserRoles,
+    }

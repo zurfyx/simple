@@ -21,7 +21,7 @@
                         <i>Created: {{ project.created }}</i>
                     </div>
                     <div class="row">
-                        <i>Author: <a href="{% url "users:account" project.owner.id %}">{{ project.owner.get_short_name }}</a></i>
+                        <i>Author: <a href="{% url "users:account" project.user.id %}">{{ project.user.get_short_name }}</a></i>
                     </div>
                     <div class="tools">
                         <!-- <a href="#">Activities</a> -->
@@ -44,6 +44,8 @@
                         User: {{ comment.user.first_name }}
                         {% if comment.user == request.user %}
                             <a href = "{% url 'projects:comments:comment_edit' project.id comment.id %}">Edit</a>
+                        {% endif %}
+                        {% if comment.user == request.user or request.user.role == USER_ROLES.MODERATOR %}
                             <a href = "{% url 'projects:comments:comment_delete' project.id comment.id %}">Delete</a>
                         {% endif %}
                     <div>
