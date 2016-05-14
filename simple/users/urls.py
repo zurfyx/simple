@@ -2,7 +2,7 @@ from django.conf.urls import url
 from models import User
 from forms import UserCreationForm
 from django.views.generic import UpdateView
-from views import EditView
+from views import UserEditView
 
 from .views import RegisterView, LoginView, AccountView, UserList, SearchUser, \
     LogoutView
@@ -46,14 +46,14 @@ urlpatterns = [
     # search user
     url(
         r'^\/search/(?P<first_name>.*)/$',
-        SearchUser.as_view(),
+        SearchUser.as_view,
         name='search-user'
     ),
 
     # edit user
     url(
         r'^\/(?P<pk>\d+)/edit$',
-        EditView.as_view(),
+       UserEditView.as_view(),
 
         name='edit-user'
     ),

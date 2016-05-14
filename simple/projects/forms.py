@@ -34,7 +34,7 @@ class ProjectNewForm(forms.ModelForm):
 
     class Meta:
         model = Project
-        fields = ('title', 'body',)
+        fields = ('title', 'body','picture',)
 
 
 class ProjectContributeForm(forms.ModelForm):

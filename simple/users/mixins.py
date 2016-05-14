@@ -9,9 +9,4 @@ class NotLoginRequiredMixin(object):
             return redirect('/')
         return super(NotLoginRequiredMixin, self).dispatch(request, **kwargs)
 
-class UserEditMixin(CustomLoginRequiredMixin, UpdateView):
-    model = User
 
-    def form_valid(self, form):
-        form.instance.user = self.request.user
-        return super(UserEditMixin, self).form_valid(form)
