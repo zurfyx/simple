@@ -7,7 +7,7 @@ from .views import ProjectDetail, ProjectList, ProjectNewView,\
     ProjectContributeView, ProjectPendingApproval, \
     ProjectApproveContributionList, UserProjectList, \
     ProjectContributionApproveView, ProjectContributionDenyView,\
-    SearchProject
+    SearchProject, ProjectQuestions, ProjectQuestionAdd
 
 urlpatterns = [
     # Include comments application
@@ -114,5 +114,17 @@ urlpatterns = [
         ProjectEdit.as_view(),
         name='edit'
     ),
+    # Include comments application
+    url(
+        r'^\/(?P<project>\d+)/questions',
+        ProjectQuestions.as_view(),
+        name='questions'
+    ),
+    url(
+        r'^\/questions/new',
+        ProjectQuestionAdd.as_view(),
+        name='question_add'
+    ),
+
 
 ]

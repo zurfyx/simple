@@ -1,7 +1,7 @@
 from django import forms
 
 from projects.constants import ProjectRoles
-from projects.models import Project, ProjectRole
+from projects.models import Project, ProjectRole, ProjectTechnicalRequest
 
 
 class ProjectRoleNewAdminForm(forms.ModelForm):
@@ -46,3 +46,12 @@ class ProjectContributeForm(forms.ModelForm):
         model = ProjectRole
         fields = ('project', 'role')
         widgets = {'project': forms.HiddenInput()}
+
+class ProjectQuestionForm(forms.ModelForm):
+    """
+    A form for editing comments.
+    """
+
+    class Meta:
+        model = ProjectTechnicalRequest
+        fields = ['question']

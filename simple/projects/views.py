@@ -1,19 +1,20 @@
 from annoying.functions import get_object_or_None
 from django.contrib import messages
 from django.core.urlresolvers import reverse
+from django.shortcuts import render
 from django.db.models import Q
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import get_object_or_404
 from django.views.generic import ListView
 from django.views.generic.base import RedirectView, TemplateView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView
-
+from django.http import request
 from core.mixins import CustomLoginRequiredMixin, HeadOfDepartmentMixin
-from projects.forms import ProjectNewForm, ProjectContributeForm
+from projects.forms import ProjectNewForm, ProjectContributeForm, ProjectQuestionForm
 from projects.mixins import ApprovedProjectRequiredMixin
 from users.models import User
-from .models import Project, ProjectRole
+from .models import Project, ProjectRole, ProjectTechnicalRequest
 from mixins import ProjectEditMixin
 
 class ProjectList(ListView):
@@ -247,3 +248,18 @@ class ProjectEdit(ProjectEditMixin):
     def get_success_url(self):
         return reverse('projects:detail', args=[self.kwargs['pk']]) + \
                '#project_' + str(self.object.id)
+
+class ProjectQuestions(ListView):
+    model = Project
+    template_name = 'projects/questions.html'
+    context_object_name = 'projects'
+    ordering = ['-created']
+
+class ProjectQuestionAdd(CreateView):
+    template_name = 'projects/question_add.html'
+    form_class = ProjectQuestionForm
+
+    def get_success_url(self):
+        return reverse('projects:questions', args=[self.kwargs['pk']]) + \
+               '#project_' + str(self.object.id)
+
