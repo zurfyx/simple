@@ -14,7 +14,7 @@
         {% endif %}
 
         <li class="{% if selection == "edit-account" %}selected{% endif %}">
-            {# <a href="{% url "users:edit-user" context_user.id %}">Edit profile</a> #}
+            <a href="{% url "users:edit-user" context_user.id %}">Edit profile</a>
         </li>
 
         <li class="{% if selection == "user-projects" %}selected{% endif %}">

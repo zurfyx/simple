@@ -33,6 +33,7 @@
                         <!-- <a href="#">Activities</a> -->
                         <a href="#">Members</a>
                         <a href="#">Contributors</a>
+                        <a href="{% url "projects:questions" project.id %}">Questions</a>
                         <a href="{% url "projects:contribute" project.id %}">Request membership</a>
                     </div>
                 </div>
@@ -74,6 +75,9 @@
                         User: {{ comment.user.first_name }}
                         {% if comment.user == request.user %}
                             <a href = "{% url 'projects:comments:comment_edit' project.id comment.id %}">Edit</a>
+                        {% endif %}
+
+                        {% if comment.user == request.user or request.user.role == USER_ROLES.MODERATOR %}
                             <a href = "{% url 'projects:comments:comment_delete' project.id comment.id %}">Delete</a>
                         {% endif %}
                     <div>

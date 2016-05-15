@@ -67,9 +67,6 @@ class AbstractUser(AbstractBaseUser):
 
     def has_module_perms(self, app_label):
         return True
-    
-    def get_absolute_url(self):
-        return reverse('users:account', kwargs={'pk':self.pk})
 
     def __str__(self):
         return '{0}'.format(self.email)
@@ -93,12 +90,10 @@ class AbstractUserLog(models.Model):
     def get_type_str(self):
         return UserLogTypes.USER_LOG_TYPES[self.type][1]
 
-
     def __str__(self):
         return '({0}, {1}) -> {2}' \
             .format(self.user, self.project,
                     UserLogTypes.USER_LOG_TYPES[self.type][1])
-
 
     class Meta:
         abstract = True

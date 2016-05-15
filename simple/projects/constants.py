@@ -22,3 +22,10 @@ class ProjectLogTypes(object):
         (COMMENT_CREATE, 'Comment addition'),
         (COMMENT_EDIT, 'Comment edition'),
     )
+
+
+def project_constants(request):
+    return {
+        'PROJECT_ROLES': ProjectRoles,
+        'PROJECT_LOG_TYPES': ProjectLogTypes,
+    }

@@ -1,13 +1,14 @@
 from django.conf.urls import url, include
 from models import Project
 from forms import ProjectNewForm
-from django.views.generic import UpdateView
+from views import ProjectEdit
 from .views import ProjectDetail, ProjectList, ProjectNewView,\
     ProjectApproveList, ProjectApproveView, ProjectDenyView, \
     ProjectContributeView, ProjectPendingApproval, \
     ProjectApproveContributionList, UserProjectList, \
     ProjectContributionApproveView, ProjectContributionDenyView,\
-    SearchProject, UpvoteView, DownvoteView
+    SearchProject, UpvoteView, DownvoteView, ProjectQuestions, \
+    ProjectQuestionAdd
 
 urlpatterns = [
     # Include comments application
@@ -111,15 +112,21 @@ urlpatterns = [
     # Edit Project
     url(
         r'^\/(?P<pk>\d+)/edit$',
-        UpdateView.as_view(
-            model = Project,
-            template_name = 'projects/form.html',
-            form_class = ProjectNewForm,
-
-
-        ),
+        ProjectEdit.as_view(),
         name='edit'
     ),
+    # Include comments application
+    url(
+        r'^\/(?P<project>\d+)/questions',
+        ProjectQuestions.as_view(),
+        name='questions'
+    ),
+    url(
+        r'^\/questions/new',
+        ProjectQuestionAdd.as_view(),
+        name='question_add'
+    ),
+
 
     # Vote up project
     url(

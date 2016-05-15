@@ -3,6 +3,7 @@ from django.core.exceptions import PermissionDenied
 from django.http import Http404
 
 from users import constants
+from projects import constants
 
 
 class CustomLoginRequiredMixin(LoginRequiredMixin):
@@ -43,6 +44,20 @@ class ModeratorRequiredMixin(CustomLoginRequiredMixin):
         return super(ModeratorRequiredMixin, self).dispatch(request, **kwargs)
 
 
+class ScientistRequiredMixin(CustomLoginRequiredMixin):
+    """
+    Either a Scientist or Administrator is required to be logged in.
+    Otherwise, it will return a 404 response.
+    """
+    def dispatch(self, request, **kwargs):
+        user = request.user
+        if user.is_authenticated() \
+                and user.role != constants.ProjectRoles.SCIENTIST \
+                and user.is_staff is False:
+            raise Http404('Not a Scientist')
+        return super(ScientistRequiredMixin, self).dispatch(request, **kwargs)
+
+
 class OwnerRequiredMixin(CustomLoginRequiredMixin):
     """
     The owner of the object is required to view THIS object.
@@ -68,3 +83,5 @@ class OwnerRequiredOrModeratorMixin(OwnerRequiredMixin, ModeratorRequiredMixin):
         except PermissionDenied:
             pass
         raise PermissionDenied('Not the Owner nor Moderator')
+
+

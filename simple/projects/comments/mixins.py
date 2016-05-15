@@ -1,6 +1,6 @@
 from django.views.generic import CreateView, UpdateView, DeleteView
 
-from core.mixins import CustomLoginRequiredMixin, OwnerRequiredOrModeratorMixin
+from core.mixins import CustomLoginRequiredMixin, OwnerRequiredOrModeratorMixin, OwnerRequiredMixin
 from projects.comments.models import Comment
 from projects.models import Project
 
@@ -14,7 +14,7 @@ class CommentAddMixin(CustomLoginRequiredMixin, CreateView):
         return super(CommentAddMixin, self).form_valid(form)
 
 
-class CommentEditMixin(OwnerRequiredOrModeratorMixin, UpdateView):
+class CommentEditMixin(OwnerRequiredMixin, UpdateView):
     model = Comment
 
     def form_valid(self, form):

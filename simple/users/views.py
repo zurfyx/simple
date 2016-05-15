@@ -3,9 +3,9 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect
 from django.views.generic import DetailView, ListView
 from django.views.generic.base import TemplateView, RedirectView
-from django.views.generic.edit import CreateView
-
-from users.forms import UserCreationForm
+from django.views.generic.edit import CreateView, UpdateView
+from django.core.urlresolvers import reverse
+from forms import UserChangeForm, UserCreationForm
 from users.mixins import NotLoginRequiredMixin
 from users.models import User
 
@@ -91,3 +91,12 @@ class SearchUser(ListView):
         filter = self.kwargs['first_name']
         search = self.model.objects.filter(first_name__icontains=filter)
         return search
+
+class UserEditView(UpdateView):
+    # TODO not edit user
+    model = User
+    template_name = 'users/form.html'
+    form_class = UserCreationForm
+
+    def get_success_url(self):
+        return reverse('users:account', args=[self.kwargs['pk']])

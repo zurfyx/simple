@@ -47,9 +47,6 @@ class AbstractProject(AbstractTimeStamped):
     def __str__(self):
         return '{0}'.format(self.title)
 
-    def get_absolute_url(self):
-        return reverse('projects:user-list', kwargs={'user':self.pk})
-
     class Meta:
         abstract = True
 
