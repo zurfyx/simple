@@ -82,7 +82,8 @@ class AbstractProjectRole(models.Model):
 class AbstractProjectRating(models.Model):
     """
     Project rating (either upvote or downvote).
-    Use the upvote() downvote() methods to set the rate.
+    Use the upvote() downvote() methods to set the rate, is_upvoted()
+    is_downvoted() to get the current rate.
     Internally, a positive vote will have rating == True, else rating == False.
     If the user has not voted on the project, this model will not exist.
     """
@@ -90,6 +91,12 @@ class AbstractProjectRating(models.Model):
     project = models.ForeignKey('Project')
     rate_date = models.DateTimeField(auto_now=True)
     rating = models.BooleanField()
+
+    def is_upvoted(self):
+        return self.rating
+
+    def is_downvoted(self):
+        return not self.rating
 
     def upvote(self):
         self.rating = True

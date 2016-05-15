@@ -7,7 +7,7 @@ from .views import ProjectDetail, ProjectList, ProjectNewView,\
     ProjectContributeView, ProjectPendingApproval, \
     ProjectApproveContributionList, UserProjectList, \
     ProjectContributionApproveView, ProjectContributionDenyView,\
-    SearchProject
+    SearchProject, UpvoteView, DownvoteView
 
 urlpatterns = [
     # Include comments application
@@ -121,4 +121,17 @@ urlpatterns = [
         name='edit'
     ),
 
+    # Vote up project
+    url(
+        r'^\/(?P<pk>\d+)/vote/up$',
+        UpvoteView.as_view(),
+        name='upvote'
+    ),
+
+    # Vote down project
+    url(
+        r'^\/(?P<pk>\d+)/vote/down$',
+        DownvoteView.as_view(),
+        name='downvote'
+    ),
 ]

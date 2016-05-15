@@ -1,11 +1,15 @@
 from annoying.functions import get_object_or_None
 from django.contrib import messages
 from django.core.urlresolvers import reverse
+from django.db import transaction
 from django.db.models import Q
 from django.http import HttpResponseRedirect
+from django.http.response import JsonResponse
 from django.shortcuts import get_object_or_404
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_protect
 from django.views.generic import ListView
-from django.views.generic.base import RedirectView, TemplateView
+from django.views.generic.base import RedirectView, TemplateView, View
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView
 
@@ -13,7 +17,7 @@ from core.mixins import CustomLoginRequiredMixin, HeadOfDepartmentMixin
 from projects.forms import ProjectNewForm, ProjectContributeForm
 from projects.mixins import ApprovedProjectRequiredMixin
 from users.models import User
-from .models import Project, ProjectRole
+from .models import Project, ProjectRole, ProjectRating
 
 
 class ProjectList(ListView):
@@ -49,6 +53,14 @@ class ProjectDetail(DetailView):
     model = Project
     template_name = 'projects/detail.html'
     context_object_name = 'project'
+
+    def get_context_data(self, **kwargs):
+        context = super(ProjectDetail, self).get_context_data(**kwargs)
+        context['user_project_rating'] = \
+            get_object_or_None(ProjectRating,
+                               project=self.kwargs['pk'],
+                               user=self.request.user)
+        return context
 
 
 class SearchProject(ListView):
@@ -239,3 +251,73 @@ class ProjectContributionDenyView(ProjectContributionApproveDeny):
         self.projectrole.delete()
         return redirect
 
+
+class VoteView(CustomLoginRequiredMixin, ApprovedProjectRequiredMixin,
+               RedirectView):
+    """
+    Handles a project vote (either up or down).
+    """
+    pattern_name = 'projects:detail'
+
+    def get_vote(self):
+        self.project = get_object_or_404(Project, id=self.kwargs['pk'])
+        self.user = self.request.user
+
+        current_project_rating = get_object_or_None(ProjectRating,
+                                                    project=self.project,
+                                                    user=self.user)
+
+        return current_project_rating if current_project_rating is not None \
+            else ProjectRating(project=self.project, user=self.user)
+
+    def post(self, request, *args, **kwargs):
+        project = get_object_or_404(Project, id=self.kwargs['pk'])
+        return JsonResponse({'upvotes': project.upvotes,
+                             'downvotes': project.downvotes})
+
+    def get_redirect_url(self, *args, **kwargs):
+        return reverse(self.pattern_name, args=[self.kwargs['pk']])
+
+
+class UpvoteView(VoteView):
+
+    @method_decorator(csrf_protect)
+    @transaction.atomic
+    def post(self, request, *args, **kwargs):
+        project_rating = self.get_vote()
+        if project_rating.rating is None:
+            # new vote => +1 total upvotes
+            self.project.upvotes += 1
+            self.project.save()
+        elif project_rating.is_downvoted():
+            # old vote => -1 total downvotes +1 total upvotes
+            self.project.downvotes -= 1
+            self.project.upvotes += 1
+            self.project.save()
+
+        project_rating.upvote()
+        project_rating.save()
+
+        return super(UpvoteView, self).post(request, *args, **kwargs)
+
+
+class DownvoteView(VoteView):
+
+    @method_decorator(csrf_protect)
+    @transaction.atomic
+    def post(self, request, *args, **kwargs):
+        project_rating = self.get_vote()
+        if project_rating.rating is None:
+            # new vote => +1 total downvotes
+            self.project.downvotes += 1
+            self.project.save()
+        elif project_rating.is_upvoted():
+            # old vote => -1 total upvotes +1 total downvotes
+            self.project.upvotes -= 1
+            self.project.downvotes += 1
+            self.project.save()
+
+        project_rating.downvote()
+        project_rating.save()
+
+        return super(DownvoteView, self).post(request, *args, **kwargs)
