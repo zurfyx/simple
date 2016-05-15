@@ -3,6 +3,7 @@ from core.mixins import OwnerRequiredMixin, ScientistRequiredMixin
 from projects.models import Project
 from django.views.generic import UpdateView
 
+
 class ProjectRequiredMixin(object):
     """
     Checks if the project exists on the database. Otherwise, throws a 404.
@@ -22,6 +23,7 @@ class ApprovedProjectRequiredMixin(ProjectRequiredMixin):
     def dispatch(self, request, *args, **kwargs):
         get_object_or_404(Project, id=kwargs['pk'], approved=True)
         return super(ApprovedProjectRequiredMixin, self).dispatch(request, **kwargs)
+
 
 class ProjectEditMixin(OwnerRequiredMixin,ScientistRequiredMixin, UpdateView):
     model = Project

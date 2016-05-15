@@ -1,6 +1,4 @@
 from django.conf.urls import url, include
-from models import Project
-from forms import ProjectNewForm
 from views import ProjectEdit
 from .views import ProjectDetail, ProjectList, ProjectNewView,\
     ProjectApproveList, ProjectApproveView, ProjectDenyView, \

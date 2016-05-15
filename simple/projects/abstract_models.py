@@ -1,5 +1,4 @@
 from django.db import models
-from django.core.urlresolvers import reverse
 from config import constants as globalConstants
 from users.models import User
 from .constants import ProjectRoles, ProjectLogTypes
