@@ -44,7 +44,7 @@
             <div class="page-detail-stats-inner">
                 <div class="likes">
                     <div class="like">
-                        {% if user_project_rating.rating %}
+                        {% if user_project_rating and user_project_rating.is_upvoted %}
                             <i class="like-btn fa fa-thumbs-up fa-3 selected"></i>
                         {% else %}
                             <i class="like-btn fa fa-thumbs-up fa-3"></i>
@@ -52,7 +52,7 @@
                         <span class="likes-res">{{ project.upvotes }}</span>
                     </div>
                     <div class="dislike">
-                        {% if not user_project_rating.rating %}
+                        {% if user_project_rating and user_project_rating.rating.is_downvoted %}
                             <i class="dislike-btn fa fa-thumbs-down fa-2 selected"></i>
                         {% else %}
                             <i class="dislike-btn fa fa-thumbs-down fa-2"></i>
