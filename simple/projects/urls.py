@@ -113,18 +113,20 @@ urlpatterns = [
         ProjectEdit.as_view(),
         name='edit'
     ),
-    # Include comments application
+
+    # Question list
     url(
         r'^\/(?P<project>\d+)/questions',
         ProjectQuestions.as_view(),
-        name='questions'
+        name='question'
     ),
+
+    # Add question
     url(
-        r'^\/questions/new',
+        r'^\/(?P<project>\d+)/questions/new',
         ProjectQuestionAdd.as_view(),
         name='question_add'
     ),
-
 
     # Vote up project
     url(

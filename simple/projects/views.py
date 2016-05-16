@@ -255,6 +255,7 @@ class ProjectContributionDenyView(ProjectContributionApproveDeny):
         self.projectrole.delete()
         return redirect
 
+
 class ProjectEdit(ProjectEditMixin):
     # TODO not edit user
     template_name = 'projects/form.html'
@@ -264,18 +265,31 @@ class ProjectEdit(ProjectEditMixin):
         return reverse('projects:detail', args=[self.kwargs['pk']]) + \
                '#project_' + str(self.object.id)
 
+
 class ProjectQuestions(ListView):
     model = Project
     template_name = 'projects/questions.html'
     context_object_name = 'projects'
     ordering = ['-created']
 
+
+def get_success_url(self):
+    return reverse('projects:question', args=[self.kwargs['pk']]) + \
+           '#project_' + str(self.object.id)
+
+
 class ProjectQuestionAdd(CreateView):
+    model = ProjectTechnicalRequest
     template_name = 'projects/question_add.html'
     form_class = ProjectQuestionForm
 
+    def form_valid(self, form):
+        form.instance.from_user = self.request.user
+        form.instance.project = Project.objects.get(id=self.kwargs['project'])
+        return super(ProjectQuestionAdd, self).form_valid(form)
+
     def get_success_url(self):
-        return reverse('projects:questions', args=[self.kwargs['pk']]) + \
+        return reverse('projects:question', args=[self.kwargs['project']]) + \
                '#project_' + str(self.object.id)
 
 

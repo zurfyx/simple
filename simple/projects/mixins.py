@@ -25,7 +25,7 @@ class ApprovedProjectRequiredMixin(ProjectRequiredMixin):
         return super(ApprovedProjectRequiredMixin, self).dispatch(request, **kwargs)
 
 
-class ProjectEditMixin(OwnerRequiredMixin,ScientistRequiredMixin, UpdateView):
+class ProjectEditMixin(OwnerRequiredMixin, ScientistRequiredMixin, UpdateView):
     model = Project
 
     def form_valid(self, form):

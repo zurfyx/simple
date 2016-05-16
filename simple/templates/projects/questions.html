@@ -5,7 +5,7 @@
 
         <div>
             <h2>Questions</h2>
-            <a href = "{% url 'projects:question_add' %}">New Question</a>
+            <a href = "{% url 'projects:question_add' project.id %}">New Question</a>
             {% for question in object.questionns.all %}
                 <div id="question_{{ question.id }}">
                     <div>
