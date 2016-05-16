@@ -1,5 +1,6 @@
 from django.db import models
 from config import constants as globalConstants
+from core.fields import RestrictedNonAnimatedImageField
 from users.models import User
 from .constants import ProjectRoles, ProjectLogTypes
 
@@ -24,8 +25,10 @@ class AbstractProject(AbstractTimeStamped):
     body = models.CharField(max_length=20000)
     language = models.CharField(max_length=50, blank=True, null=True)
     website = models.URLField(blank=True, null=True)
-    picture = models.ImageField(upload_to=globalConstants.FilePath.PROJECT_PICTURE,
-                                blank=True, null=True)
+    picture = RestrictedNonAnimatedImageField(
+        upload_to=globalConstants.MediaFile.PROJECT_PICTURE.path,
+        max_upload_size=globalConstants.MediaFile.PROJECT_PICTURE.max_size,
+        blank=True, null=True)
 
     # Roles
     roles = models.ManyToManyField(User, through='ProjectRole',

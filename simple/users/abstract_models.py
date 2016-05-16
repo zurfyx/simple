@@ -5,6 +5,7 @@ from django.db import models
 from django.utils.timezone import utc
 from django.core.urlresolvers import reverse
 from config import constants as globalConstants
+from core.fields import RestrictedNonAnimatedImageField
 from users.constants import UserLogTypes
 from .managers import EmailUserManager
 from . import constants
@@ -25,8 +26,10 @@ class AbstractUser(AbstractBaseUser):
     occupation = models.CharField(max_length=100, null=True, blank=True)
     role = models.PositiveIntegerField(default=1)
     is_staff = models.BooleanField(default=False)
-    avatar = models.ImageField(upload_to=globalConstants.FilePath.USER_AVATAR,
-                               blank=True, null=True)
+    avatar = RestrictedNonAnimatedImageField(
+        upload_to=globalConstants.MediaFile.USER_AVATAR.path,
+        max_upload_size=globalConstants.MediaFile.USER_AVATAR.max_size,
+        blank=True, null=True)
 
     # analytics
     views = models.PositiveIntegerField(default=0)

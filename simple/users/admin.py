@@ -18,7 +18,7 @@ class UserAdmin(BaseUserAdmin):
         ('Personal info', {'fields': ('first_name', 'last_name', 'birthday',
                                       'country', 'city', 'occupation')}),
         ('Permissions', {'fields': ('is_staff',)}),
-        ('Platform', {'fields': ('role',)})
+        ('Platform', {'fields': ('role', 'avatar',)})
     )
     add_fieldsets = (
         (None, {'fields': ('id', 'email', 'password',
@@ -26,7 +26,7 @@ class UserAdmin(BaseUserAdmin):
         ('Personal info', {'fields': ('first_name', 'last_name', 'birthday',
                                       'country', 'city', 'occupation')}),
         ('Permissions', {'fields': ('is_staff',)}),
-        ('Platform', {'fields': ('role',)})
+        ('Platform', {'fields': ('role', 'avatar',)})
     )
     readonly_fields = ('id', 'date_joined', 'last_login',)
 

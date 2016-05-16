@@ -1,10 +1,15 @@
 PROJECT_NAME = 'Simple'
 
 
-class FilePath(object):
-    USER_AVATAR = '/uploads/avatar/'
-    PROJECT_PICTURE = '/uploads/project/picture'
-    PROJECT_DOCUMENTATION = '/uploads/project/documentation'
+class MediaFile(object):
+    class File(object):
+        def __init__(self, path, max_size):
+            self.path = path
+            self.max_size = max_size
+
+    USER_AVATAR = File('users/avatar', 2 * 1024 * 1024)  # 2 MB
+    PROJECT_PICTURE = File('projects/picture', 2 * 1024 * 1024)
+    PROJECT_ATTACHMENT = File('projects/attachment', 20 * 1024 * 1024)
 
 
 def app_constants(request):
