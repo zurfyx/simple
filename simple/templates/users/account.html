@@ -1,6 +1,7 @@
 {% extends "users/base.html" %}
 {% load static %}
 
+
 {% block menu_title %}
     <h1>{{ context_user.get_full_name }}</h1>
 {% endblock %}
@@ -11,7 +12,7 @@
         <div>
             <div class="row">
                 <div class="col-md-4">
-                    <img class="profile-picture" src="{% static "img/users/default-user.png" %}" />
+                    <img class="profile-picture" src="{{ MEDIA_URL }}{{context_user.avatar }}" />
                 </div>
                 <div class="col-md-4">
                     <div class="row">

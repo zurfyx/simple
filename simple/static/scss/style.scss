@@ -7,6 +7,7 @@ $default-font-color: #333;
 $default-contrast-font-color: #fff;
 $create-color: #febd69;
 $light-grey: #ccc;
+$lighter-grey: #dfdfdf;
 $hyper-light-grey: #f9f9f9;
 $dark-grey: #444;
 
@@ -338,6 +339,10 @@ form {
 
 .min-page-padding {
   padding: 25px 30px 25px 30px;
+}
+
+.light-grey {
+  color: $light-grey;
 }
 
 .error {

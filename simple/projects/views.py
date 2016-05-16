@@ -1,20 +1,29 @@
 from annoying.functions import get_object_or_None
 from django.contrib import messages
 from django.core.urlresolvers import reverse
+from django.shortcuts import render
+from django.db import transaction
 from django.db.models import Q
 from django.http import HttpResponseRedirect
+from django.http.response import JsonResponse
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import get_object_or_404
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_protect
 from django.views.generic import ListView
-from django.views.generic.base import RedirectView, TemplateView
+from django.views.generic.base import RedirectView, TemplateView, View
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView
-
+from django.http import request
 from core.mixins import CustomLoginRequiredMixin, HeadOfDepartmentMixin
-from projects.forms import ProjectNewForm, ProjectContributeForm
+from projects import constants
+from projects.forms import ProjectNewForm, ProjectContributeForm, ProjectQuestionForm
 from projects.mixins import ApprovedProjectRequiredMixin
 from users.models import User
-from .models import Project, ProjectRole
+from .models import Project, ProjectRole, ProjectTechnicalRequest
 from mixins import ProjectEditMixin
+from .models import Project, ProjectRole, ProjectRating
+
 
 class ProjectList(ListView):
     """
@@ -50,6 +59,14 @@ class ProjectDetail(DetailView):
     template_name = 'projects/detail.html'
     context_object_name = 'project'
 
+    def get_context_data(self, **kwargs):
+        context = super(ProjectDetail, self).get_context_data(**kwargs)
+        context['user_project_rating'] = \
+            get_object_or_None(ProjectRating,
+                               project=self.kwargs['pk'],
+                               user=self.request.user)
+        return context
+
 
 class SearchProject(ListView):
     """
@@ -71,10 +88,20 @@ class ProjectNewView(CustomLoginRequiredMixin, CreateView):
     form_class = ProjectNewForm
     success_url = 'projects:pending-approval'
 
+    def _create_owner_role(self, project, user):
+        """
+        Owner is always a scientist of the project
+        """
+        project_role = ProjectRole(project=project, user=user,
+                                   role=constants.ProjectRoles.SCIENTIST,
+                                   approved_role=True)
+        project_role.save()
+
     def form_valid(self, form):
         project = form.save(commit=False)
         project.user = self.request.user
         project.save()
+        self._create_owner_role(project, project.user)
         messages.success(self.request, project.title)
         return HttpResponseRedirect(reverse(self.success_url))
 
@@ -173,8 +200,8 @@ class ProjectContributeView(CustomLoginRequiredMixin,
 
 class ProjectApproveContributionList(CustomLoginRequiredMixin, UserProjectList):
     """
-    Displays a list of current logged in user projects, that have users who
-    are pending a contribution approval.
+    Displays a list of user projects, that have users who are pending a
+    contribution approval.
     """
     # TODO project owner required
     template_name = 'projects/approve-contribution-list.html'
@@ -239,6 +266,7 @@ class ProjectContributionDenyView(ProjectContributionApproveDeny):
         self.projectrole.delete()
         return redirect
 
+
 class ProjectEdit(ProjectEditMixin):
     # TODO not edit user
     template_name = 'projects/form.html'
@@ -247,3 +275,101 @@ class ProjectEdit(ProjectEditMixin):
     def get_success_url(self):
         return reverse('projects:detail', args=[self.kwargs['pk']]) + \
                '#project_' + str(self.object.id)
+
+
+class ProjectQuestions(ListView):
+    model = Project
+    template_name = 'projects/questions.html'
+    context_object_name = 'projects'
+    ordering = ['-created']
+
+
+def get_success_url(self):
+    return reverse('projects:question', args=[self.kwargs['pk']]) + \
+           '#project_' + str(self.object.id)
+
+
+class ProjectQuestionAdd(CreateView):
+    model = ProjectTechnicalRequest
+    template_name = 'projects/question_add.html'
+    form_class = ProjectQuestionForm
+
+    def form_valid(self, form):
+        form.instance.from_user = self.request.user
+        form.instance.project = Project.objects.get(id=self.kwargs['project'])
+        return super(ProjectQuestionAdd, self).form_valid(form)
+
+    def get_success_url(self):
+        return reverse('projects:question', args=[self.kwargs['project']]) + \
+               '#project_' + str(self.object.id)
+
+
+class VoteView(CustomLoginRequiredMixin, ApprovedProjectRequiredMixin,
+               RedirectView):
+    """
+    Handles a project vote (either up or down).
+    """
+    pattern_name = 'projects:detail'
+
+    def get_vote(self):
+        self.project = get_object_or_404(Project, id=self.kwargs['pk'])
+        self.user = self.request.user
+
+        current_project_rating = get_object_or_None(ProjectRating,
+                                                    project=self.project,
+                                                    user=self.user)
+
+        return current_project_rating if current_project_rating is not None \
+            else ProjectRating(project=self.project, user=self.user)
+
+    def post(self, request, *args, **kwargs):
+        project = get_object_or_404(Project, id=self.kwargs['pk'])
+        return JsonResponse({'upvotes': project.upvotes,
+                             'downvotes': project.downvotes})
+
+    def get_redirect_url(self, *args, **kwargs):
+        return reverse(self.pattern_name, args=[self.kwargs['pk']])
+
+
+class UpvoteView(VoteView):
+
+    @method_decorator(csrf_protect)
+    @transaction.atomic
+    def post(self, request, *args, **kwargs):
+        project_rating = self.get_vote()
+        if project_rating.rating is None:
+            # new vote => +1 total upvotes
+            self.project.upvotes += 1
+            self.project.save()
+        elif project_rating.is_downvoted():
+            # old vote => -1 total downvotes +1 total upvotes
+            self.project.downvotes -= 1
+            self.project.upvotes += 1
+            self.project.save()
+
+        project_rating.upvote()
+        project_rating.save()
+
+        return super(UpvoteView, self).post(request, *args, **kwargs)
+
+
+class DownvoteView(VoteView):
+
+    @method_decorator(csrf_protect)
+    @transaction.atomic
+    def post(self, request, *args, **kwargs):
+        project_rating = self.get_vote()
+        if project_rating.rating is None:
+            # new vote => +1 total downvotes
+            self.project.downvotes += 1
+            self.project.save()
+        elif project_rating.is_upvoted():
+            # old vote => -1 total upvotes +1 total downvotes
+            self.project.upvotes -= 1
+            self.project.downvotes += 1
+            self.project.save()
+
+        project_rating.downvote()
+        project_rating.save()
+
+        return super(DownvoteView, self).post(request, *args, **kwargs)

@@ -6,3 +6,4 @@ simple/.coverage
 simple/.sass-cache/
 simple/static/CACHE/
 simple/static_root/
+simple/media/

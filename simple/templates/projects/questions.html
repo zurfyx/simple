@@ -1,0 +1,30 @@
+{% extends "projects/base.html" %}
+
+{% block content_ %}
+    {% block app_content %}
+
+        <div>
+            <h2>Questions</h2>
+            <a href = "{% url 'projects:question_add' project.id %}">New Question</a>
+            {% for question in object.questionns.all %}
+                <div id="question_{{ question.id }}">
+                    <div>
+                        User: {{ question.user.first_name }}
+                    <div>
+                        Published: {{ question.created }}
+                    </div>
+                    </div>
+                    <div>
+                            {{ question.question }}
+
+                    </div>
+                </div>
+                <hr>
+            {% empty %}
+                No questions
+            {% endfor %}
+        </div>
+    </div>
+
+    {% endblock %}
+{% endblock %}

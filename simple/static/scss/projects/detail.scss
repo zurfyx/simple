@@ -22,3 +22,35 @@
   padding-top: 50px;
   padding-bottom: 50px;
 }
+
+.page-detail-stats {
+  background-color: $lighter-grey;
+}
+
+.page-detail-stats .page-detail-stats-inner {
+  @extend .center, .page-width, .long-text;
+  padding-top: 30px;
+  padding-bottom: 30px;
+
+  .likes {
+    font-size: 16px;
+    margin: 0 auto;
+    width: 100px;
+
+    .like, .dislike {
+      display: inline;
+    }
+
+    .dislike {
+      margin-left: 10px;
+    }
+
+    .like > i.selected {
+      color: #008000;
+    }
+
+    .dislike > i.selected {
+      color: #800000;
+    }
+  }
+}

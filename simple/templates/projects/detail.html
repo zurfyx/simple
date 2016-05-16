@@ -1,10 +1,16 @@
 {% extends "projects/base.html" %}
+{% load static %}
+
+{% block local_scripts %}
+<script src="{% static "js/projects/vote.js" %}"></script>
+{% endblock %}
 
 {% block menu %}
 {% endblock %}
 
 {% block app_content %}
     <div class="project-detail container-fluid">
+        <input type="hidden" id="project_id" value="{{ project.id }}" />
         <div class="project-detail-header row">
             <div class="project-image col-xs-6" style="background-image: url()">
                 <!-- project image -->
@@ -27,11 +33,36 @@
                         <!-- <a href="#">Activities</a> -->
                         <a href="#">Members</a>
                         <a href="#">Contributors</a>
+                        <a href="{% url "projects:question" project.id %}">Questions</a>
                         <a href="{% url "projects:contribute" project.id %}">Request membership</a>
                     </div>
                 </div>
             </div>
         </div>
+
+        <div class="page-detail-stats row">
+            <div class="page-detail-stats-inner">
+                <div class="likes">
+                    <div class="like">
+                        {% if user_project_rating and user_project_rating.is_upvoted %}
+                            <i class="like-btn fa fa-thumbs-up fa-3 selected"></i>
+                        {% else %}
+                            <i class="like-btn fa fa-thumbs-up fa-3"></i>
+                        {% endif %}
+                        <span class="likes-res">{{ project.upvotes }}</span>
+                    </div>
+                    <div class="dislike">
+                        {% if user_project_rating and user_project_rating.rating.is_downvoted %}
+                            <i class="dislike-btn fa fa-thumbs-down fa-2 selected"></i>
+                        {% else %}
+                            <i class="dislike-btn fa fa-thumbs-down fa-2"></i>
+                        {% endif %}
+                        <span class="dislikes-res">{{ project.downvotes }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="page-detail-description">
             {{ project.body }}
         </div>
@@ -45,6 +76,7 @@
                         {% if comment.user == request.user %}
                             <a href = "{% url 'projects:comments:comment_edit' project.id comment.id %}">Edit</a>
                         {% endif %}
+
                         {% if comment.user == request.user or request.user.role == USER_ROLES.MODERATOR %}
                             <a href = "{% url 'projects:comments:comment_delete' project.id comment.id %}">Delete</a>
                         {% endif %}

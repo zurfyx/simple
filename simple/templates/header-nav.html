@@ -1,9 +1,9 @@
 <ul>
     <li><a href="{% url "projects:list" %}">Projects</a></li>
     <li><a href="{% url "users:list" %}">Users</a></li>
-    {% if user.is_authenticated %}
+    {% if request.user.is_authenticated %}
         <li><a href="#">Notifications (0)</a></li>
-        <li><a href="{% url "users:account" user.id %}">{{ user.first_name }}</a></li>
+        <li><a href="{% url "users:account" user.id %}">{{ request.user.first_name }}</a></li>
     {% else %}
         <li><a href="{% url "users:login" %}">Log In</a></li>
         <li><a href="{% url "users:signup" %}">Sign Up</a></li>
