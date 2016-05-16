@@ -16,6 +16,7 @@ from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView
 from django.http import request
 from core.mixins import CustomLoginRequiredMixin, HeadOfDepartmentMixin
+from projects import constants
 from projects.forms import ProjectNewForm, ProjectContributeForm, ProjectQuestionForm
 from projects.mixins import ApprovedProjectRequiredMixin
 from users.models import User
@@ -87,10 +88,20 @@ class ProjectNewView(CustomLoginRequiredMixin, CreateView):
     form_class = ProjectNewForm
     success_url = 'projects:pending-approval'
 
+    def _create_owner_role(self, project, user):
+        """
+        Owner is always a scientist of the project
+        """
+        project_role = ProjectRole(project=project, user=user,
+                                   role=constants.ProjectRoles.SCIENTIST,
+                                   approved_role=True)
+        project_role.save()
+
     def form_valid(self, form):
         project = form.save(commit=False)
         project.user = self.request.user
         project.save()
+        self._create_owner_role(project, project.user)
         messages.success(self.request, project.title)
         return HttpResponseRedirect(reverse(self.success_url))
 
@@ -189,8 +200,8 @@ class ProjectContributeView(CustomLoginRequiredMixin,
 
 class ProjectApproveContributionList(CustomLoginRequiredMixin, UserProjectList):
     """
-    Displays a list of current logged in user projects, that have users who
-    are pending a contribution approval.
+    Displays a list of user projects, that have users who are pending a
+    contribution approval.
     """
     # TODO project owner required
     template_name = 'projects/approve-contribution-list.html'

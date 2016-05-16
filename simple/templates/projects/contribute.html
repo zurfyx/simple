@@ -7,12 +7,23 @@
 {% block content_ %}
     <div class="center box" style="width:400px">
         {% if project_role %}
-            {% if project_role.approved %}
-                <p>{{ project_role.get_role_str }}</p>
+            {% if project_role.approved_role %}
+                <p>
+                    You are a <b>{{ project_role.get_role_str }}</b>
+                    {% if project_role.user == project_role.project.user %}
+                        <b>(and owner)</b>
+                    {% endif %}
+                    in {{ project_role.project }}
+                </p>
             {% else %}
                 <p>{{ project_role.get_role_str }} role petition is awaiting for approval</p>
             {% endif %}
-            <a href="#">Revoke role</a> <!-- TODO -->
+
+            {% if project_role.user == project_role.project.user %}
+                <i class="light-grey">Transfer the project to be able to revoke your role</i>
+            {% else %}
+                <a href="#">Revoke role</a> <!-- TODO -->
+            {% endif %}
         {% else %}
             <form method="post">
                 {% include "form.html" %}
