@@ -2,7 +2,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
 from django.http import Http404
 
-from users import constants
+from users import constants as user_constants
 from projects import constants
 
 
@@ -24,7 +24,7 @@ class HeadOfDepartmentMixin(CustomLoginRequiredMixin):
     def dispatch(self, request, **kwargs):
         user = request.user
         if user.is_authenticated() \
-                and user.role != constants.UserRoles.HEAD_OF_DEPARTMENT \
+                and user.role != user_constants.UserRoles.HEAD_OF_DEPARTMENT \
                 and user.is_staff is False:
             raise Http404('Not a Head of Department')
         return super(HeadOfDepartmentMixin, self).dispatch(request, **kwargs)
@@ -38,7 +38,7 @@ class ModeratorRequiredMixin(CustomLoginRequiredMixin):
     def dispatch(self, request, **kwargs):
         user = request.user
         if user.is_authenticated() \
-                and user.role != constants.UserRoles.MODERATOR \
+                and user.role != user_constants.UserRoles.MODERATOR \
                 and user.is_staff is False:
             raise Http404('Not a Moderator')
         return super(ModeratorRequiredMixin, self).dispatch(request, **kwargs)

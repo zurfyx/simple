@@ -189,8 +189,8 @@ class ProjectContributeView(CustomLoginRequiredMixin,
 
 class ProjectApproveContributionList(CustomLoginRequiredMixin, UserProjectList):
     """
-    Displays a list of current logged in user projects, that have users who
-    are pending a contribution approval.
+    Displays a list of user projects, that have users who are pending a
+    contribution approval.
     """
     # TODO project owner required
     template_name = 'projects/approve-contribution-list.html'

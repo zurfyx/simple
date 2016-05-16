@@ -71,11 +71,11 @@ class AbstractProjectRole(models.Model):
     approved_role = models.BooleanField(default=False)
 
     def get_role_str(self):
-        return ProjectRoles.PROJECT_ROLES[self.role][1]
+        return ProjectRoles.PROJECT_ROLES[self.role-1][1]
 
     def __str__(self):
         return '({0}, {1}) -> {2}'\
-            .format(self.user, self.project, ProjectRoles.PROJECT_ROLES[self.role][1])
+            .format(self.user, self.project, ProjectRoles.PROJECT_ROLES[self.role-1][1])
 
     class Meta:
         abstract = True
