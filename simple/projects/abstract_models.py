@@ -82,7 +82,7 @@ class AbstractProjectRole(models.Model):
         unique_together = ('user', 'project')
 
 
-class AbstractProjectRating(models.Model):
+class AbstractProjectRating(AbstractTimeStamped):
     """
     Project rating (either upvote or downvote).
     Use the upvote() downvote() methods to set the rate, is_upvoted()
@@ -92,7 +92,6 @@ class AbstractProjectRating(models.Model):
     """
     user = models.ForeignKey(User)
     project = models.ForeignKey('Project')
-    rate_date = models.DateTimeField(auto_now=True)
     rating = models.BooleanField()
 
     def is_upvoted(self):
