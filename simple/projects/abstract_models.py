@@ -42,6 +42,10 @@ class AbstractProject(AbstractTimeStamped):
     upvotes = models.PositiveIntegerField(default=0)
     downvotes = models.PositiveIntegerField(default=0)
 
+    # Favorites
+    favorites = models.ManyToManyField(User, through='ProjectFavorite',
+                                       related_name='favorited_projects')
+
     # Analytics
     visits = models.PositiveIntegerField(default=0)
     unique_visits = models.PositiveIntegerField(default=0)
@@ -102,6 +106,18 @@ class AbstractProjectRating(models.Model):
 
     def downvote(self):
         self.rating = False
+
+    class Meta:
+        abstract = True
+        unique_together = ('user', 'project')
+
+
+class AbstractProjectFavorite(AbstractTimeStamped):
+    """
+    Project favorited by an User
+    """
+    user = models.ForeignKey(User)
+    project = models.ForeignKey('Project')
 
     class Meta:
         abstract = True
