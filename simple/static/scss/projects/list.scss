@@ -15,17 +15,13 @@ ul.projects-list li {
   width: 260px;
   overflow: hidden;
 
-  .image-header{
-    width: 260px;
-    height: 130px
-  }
-
   .project-header {
+    @include fullsize-background;
     background-color: #ccc;
     height: 130px;
 
     a {
-      color: $default-font-color;
+      color: #fff;
       font-weight: bold;
       padding: 10px 20px 10px 10px;
       line-height: 200px;
