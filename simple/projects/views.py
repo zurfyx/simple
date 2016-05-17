@@ -1,28 +1,24 @@
 from annoying.functions import get_object_or_None
 from django.contrib import messages
 from django.core.urlresolvers import reverse
-from django.shortcuts import render
 from django.db import transaction
 from django.db.models import Q
-from django.http import HttpResponseRedirect
 from django.http.response import JsonResponse
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_protect
 from django.views.generic import ListView
-from django.views.generic.base import RedirectView, TemplateView, View
+from django.views.generic.base import RedirectView, TemplateView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView
-from django.http import request
 from core.mixins import CustomLoginRequiredMixin, HeadOfDepartmentMixin
 from projects import constants
 from projects.forms import ProjectNewForm, ProjectContributeForm, ProjectQuestionForm
 from projects.mixins import ApprovedProjectRequiredMixin
 from users.models import User
-from .models import Project, ProjectRole, ProjectTechnicalRequest
 from mixins import ProjectEditMixin
-from .models import Project, ProjectRole, ProjectRating
+from .models import Project, ProjectRole, ProjectRating, ProjectTechnicalRequest
 
 
 class ProjectList(ListView):

@@ -1,11 +1,10 @@
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect
 from django.views.generic import DetailView, ListView
 from django.views.generic.base import TemplateView, RedirectView
 from django.views.generic.edit import CreateView, UpdateView
 from django.core.urlresolvers import reverse
-from forms import UserChangeForm, UserCreationForm
+from forms import UserCreationForm
 from users.mixins import NotLoginRequiredMixin
 from users.models import User
 
@@ -91,6 +90,7 @@ class SearchUser(ListView):
         filter = self.kwargs['first_name']
         search = self.model.objects.filter(first_name__icontains=filter)
         return search
+
 
 class UserEditView(UpdateView):
     # TODO not edit user

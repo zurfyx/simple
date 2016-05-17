@@ -1,11 +1,7 @@
 from django.conf.urls import url
-from models import User
-from forms import UserCreationForm
-from django.views.generic import UpdateView
-from views import UserEditView
 
 from .views import RegisterView, LoginView, AccountView, UserList, SearchUser, \
-    LogoutView
+    LogoutView, UserEditView
 
 urlpatterns = [
     # login
