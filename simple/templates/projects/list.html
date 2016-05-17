@@ -27,8 +27,8 @@
         {% for project in projects %}
         {% if project.approved %}
             <li>
-                <div class="project-header">
-                    <img class ="image-header" src="{{ MEDIA_URL }}{{project.picture }}" />
+                <div class="project-header"
+                     style="background-image:url({{ MEDIA_URL }}{{ project.picture }})">
                     <a href="{% url "projects:detail" project.id %}">
                         {{ project.title }}
                     </a>
