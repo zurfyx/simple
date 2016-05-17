@@ -38,7 +38,7 @@ class AbstractProject(AbstractTimeStamped):
 
     # Rating
     ratings = models.ManyToManyField(User, through='ProjectRating',
-                                     related_name='rated_projects')
+                                     related_name='rates_projects')
     upvotes = models.PositiveIntegerField(default=0)
     downvotes = models.PositiveIntegerField(default=0)
 

@@ -370,9 +370,11 @@ class DownvoteView(VoteView):
 
         return super(DownvoteView, self).post(request, *args, **kwargs)
 
+
 class FavoritesView(ListView):
     template_name = 'projects/favorites.html'
     model = ProjectFavorite
     context_object_name = 'favorites'
+
     def queryset(self):
         return self.model.objects.filter(user=self.request.user)
