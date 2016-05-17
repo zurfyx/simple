@@ -14,7 +14,8 @@ from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView
 from core.mixins import CustomLoginRequiredMixin, HeadOfDepartmentMixin
 from projects import constants
-from projects.forms import ProjectNewForm, ProjectContributeForm, ProjectQuestionForm
+from projects.forms import ProjectNewForm, ProjectContributeForm, ProjectQuestionForm, \
+    ProjectEditForm
 from projects.mixins import ApprovedProjectRequiredMixin
 from users.models import User
 from mixins import ProjectEditMixin
@@ -60,7 +61,9 @@ class ProjectDetail(DetailView):
         context['user_project_rating'] = \
             get_object_or_None(ProjectRating,
                                project=self.kwargs['pk'],
-                               user=self.request.user)
+                               user=self.request.user) \
+            if self.request.user.is_authenticated() else None
+
         return context
 
 
@@ -265,12 +268,11 @@ class ProjectContributionDenyView(ProjectContributionApproveDeny):
 
 class ProjectEdit(ProjectEditMixin):
     # TODO not edit user
-    template_name = 'projects/form.html'
-    form_class = ProjectNewForm
+    template_name = 'projects/edit.html'
+    form_class = ProjectEditForm
 
     def get_success_url(self):
-        return reverse('projects:detail', args=[self.kwargs['pk']]) + \
-               '#project_' + str(self.object.id)
+        return reverse('projects:detail', args=[self.kwargs['pk']])
 
 
 class ProjectQuestions(ListView):

@@ -148,6 +148,10 @@ form {
     border: none;
     border-bottom: 1px solid #D8D8D8;
     font-size: 16px;
+
+     &[name="picture-clear"] {
+      display: inline;
+    }
   }
 
   input + input {
@@ -181,6 +185,12 @@ form {
     outline: none;
     border: none;
     border: 1px solid $default-color;
+  }
+
+  .row > label {
+    // clear upload label
+    font-size: 12px;
+    font-weight: inherit;
   }
 }
 

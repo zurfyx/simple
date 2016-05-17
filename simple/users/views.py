@@ -95,7 +95,7 @@ class SearchUser(ListView):
 class UserEditView(UpdateView):
     # TODO not edit user
     model = User
-    template_name = 'users/form.html'
+    template_name = 'users/edit.html'
     form_class = UserCreationForm
 
     def get_success_url(self):

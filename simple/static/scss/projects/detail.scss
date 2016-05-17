@@ -16,17 +16,6 @@
   }
 }
 
-.page-detail-description {
-  @extend .center, .page-width, .long-text;
-  font-size: 16px;
-  padding-top: 50px;
-  padding-bottom: 50px;
-}
-
-.page-detail-stats {
-  background-color: $lighter-grey;
-}
-
 .page-detail-stats .page-detail-stats-inner {
   @extend .center, .page-width, .long-text;
   padding-top: 30px;
@@ -53,4 +42,19 @@
       color: #800000;
     }
   }
+}
+
+.page-detail-description {
+  @extend .center, .page-width, .long-text;
+  font-size: 16px;
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+.page-detail-stats {
+  background-color: $lighter-grey;
+}
+
+.page-detail-comments {
+  @extend .center, .page-width, .long-text;
 }

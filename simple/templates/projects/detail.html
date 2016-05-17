@@ -12,8 +12,9 @@
     <div class="project-detail container-fluid">
         <input type="hidden" id="project_id" value="{{ project.id }}" />
         <div class="project-detail-header row">
-            <div class="project-image col-xs-6" style="background-image: url()">
-                <!-- project image -->
+            <div class="project-image col-xs-6"
+                 style="background-image: url({{ MEDIA_URL }}{{ project.picture }})">
+                {# project image as bg #}
             </div>
             <div class="project-info col-xs-6">
                 <div class="container-fluid">
@@ -66,7 +67,7 @@
         <div class="page-detail-description">
             {{ project.body }}
         </div>
-        <div>
+        <div class="page-detail-comments">
             <h2>Comments</h2>
             <a href = "{% url 'projects:comments:comment_add' project.id %}">New Comment</a>
             {% for comment in object.comments.all %}

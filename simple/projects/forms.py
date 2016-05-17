@@ -34,7 +34,17 @@ class ProjectNewForm(forms.ModelForm):
 
     class Meta:
         model = Project
-        fields = ('title', 'body','picture',)
+        fields = ('title', 'body', 'picture',)
+
+
+class ProjectEditForm(forms.ModelForm):
+    """
+    Form for editing a Project
+    """
+
+    class Meta:
+        model = Project
+        fields = ('title', 'body', 'picture',)
 
 
 class ProjectContributeForm(forms.ModelForm):

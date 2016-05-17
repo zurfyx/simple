@@ -1,14 +1,14 @@
-{% extends "projects/comments/base.html" %}
+{% extends "projects/base.html" %}
 
 {% block menu_title %}
-    <h1>Edit comment</h1>
+    <h1>Edit project</h1>
 {% endblock %}
 
 {% block app_content %}
     <div class="center box" style="width:400px">
         <form method="post" action="">
             {% include "form.html" %}
-            <input type="submit" value="Edit" />
+            <input type="submit" value="Edit"/>
         </form>
     </div>
 {% endblock %}
