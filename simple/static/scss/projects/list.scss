@@ -16,6 +16,7 @@ ul.projects-list li {
   overflow: hidden;
 
   .project-header {
+    @include fullsize-background;
     background-color: #ccc;
     height: 130px;
 
