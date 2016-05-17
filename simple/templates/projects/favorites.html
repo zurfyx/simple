@@ -1,7 +1,7 @@
 {% extends "projects/base.html" %}
 
 {% block menu_title %}
-    <h1>Projects</h1>
+    <h1>My Favorites Projects</h1>
 {% endblock %}
 
 {% block app_content %}
@@ -24,13 +24,13 @@
     </div>
     <a class="corner-btn" href="{% url "projects:new" %}">+</a>
     <ul class="projects-list">
-        {% for project in projects %}
-        {% if project.approved %}
+        {% for project in favorites %}
+        {% if project.project.approved %}
             <li>
                 <div class="project-header">
                     <img class ="image-header" src="{{ MEDIA_URL }}{{project.picture }}" />
                     <a href="{% url "projects:detail" project.id %}">
-                        {{ project.title }}
+                        {{ project.project.title }}
                     </a>
                 </div>
                 <div class="project-body">
@@ -44,12 +44,9 @@
                         <a href="{% url "projects:detail" project.id %}">
                             Explore
                         </a>
-
                         {% if project.user == request.user %}
                             <a href = "{% url "projects:edit" project.id %}">Edit</a>
-
                         {% endif %}
-
                     </div>
                 </div>
             </li>

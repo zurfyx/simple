@@ -42,7 +42,7 @@ urlpatterns = [
     # search user
     url(
         r'^\/search/(?P<first_name>.*)/$',
-        SearchUser.as_view,
+        SearchUser.as_view(),
         name='search-user'
     ),
 
@@ -53,4 +53,6 @@ urlpatterns = [
 
         name='edit-user'
     ),
+
+
 ]

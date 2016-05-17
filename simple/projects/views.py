@@ -18,7 +18,7 @@ from projects.forms import ProjectNewForm, ProjectContributeForm, ProjectQuestio
 from projects.mixins import ApprovedProjectRequiredMixin
 from users.models import User
 from mixins import ProjectEditMixin
-from .models import Project, ProjectRole, ProjectRating, ProjectTechnicalRequest
+from .models import Project, ProjectRole, ProjectRating, ProjectTechnicalRequest, ProjectFavorite
 
 
 class ProjectList(ListView):
@@ -369,3 +369,10 @@ class DownvoteView(VoteView):
         project_rating.save()
 
         return super(DownvoteView, self).post(request, *args, **kwargs)
+
+class FavoritesView(ListView):
+    template_name = 'projects/favorites.html'
+    model = ProjectFavorite
+    context_object_name = 'favorites'
+    def queryset(self):
+        return self.model.objects.filter(user=self.request.user)

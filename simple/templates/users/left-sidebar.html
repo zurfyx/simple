@@ -38,6 +38,10 @@
             </li>
         {% endif %}
 
+        <li class="{% if selection == "favorites" %}selected{% endif %}">
+            <a href="{% url "projects:favorites" %}">My favorites</a>
+        </li>
+
         <li class="{% if selection == "approve-contributors" %}selected{% endif %}">
             <a href="{% url "projects:approve-contributions-list" %}">Approve contributors</a>
         </li>

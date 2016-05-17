@@ -44,7 +44,7 @@ class AbstractProject(AbstractTimeStamped):
 
     # Favorites
     favorites = models.ManyToManyField(User, through='ProjectFavorite',
-                                       related_name='favorited_projects')
+                                       related_name='favorites_projects')
 
     # Analytics
     visits = models.PositiveIntegerField(default=0)

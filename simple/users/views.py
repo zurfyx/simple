@@ -100,3 +100,5 @@ class UserEditView(UpdateView):
 
     def get_success_url(self):
         return reverse('users:account', args=[self.kwargs['pk']])
+
+
