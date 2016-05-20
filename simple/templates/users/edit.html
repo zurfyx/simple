@@ -6,9 +6,15 @@
 
 {% block app_content %}
     <div class="center box" style="width:400px">
-        <form method="post" action="">
+        <form method="post" enctype="multipart/form-data" action="">
             {# TODO 2 columns on large displays #}
-            {% include "form.html" %}
+            <div class="row">
+                <div class="form-label">
+                    <label for="id_email">Email:</label>
+                </div>
+                {{ user.email }}
+            </div>
+            {% include "form.html" with required_mark="*" %}
             <input type="submit" value="Edit"/>
         </form>
     </div>

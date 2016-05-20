@@ -269,6 +269,7 @@ class ProjectContributionDenyView(ProjectContributionApproveDeny):
 class ProjectEdit(ProjectEditMixin):
     # TODO not edit user
     template_name = 'projects/edit.html'
+    context_object_name = 'project'
     form_class = ProjectEditForm
 
     def get_success_url(self):
@@ -277,8 +278,8 @@ class ProjectEdit(ProjectEditMixin):
 
 class ProjectQuestions(ListView):
     model = Project
+    context_object_name = 'project'
     template_name = 'projects/questions.html'
-    context_object_name = 'projects'
     ordering = ['-created']
 
 

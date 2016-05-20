@@ -4,7 +4,7 @@ from django.views.generic import DetailView, ListView
 from django.views.generic.base import TemplateView, RedirectView
 from django.views.generic.edit import CreateView, UpdateView
 from django.core.urlresolvers import reverse
-from forms import UserCreationForm
+from forms import UserCreationForm, UserChangeForm
 from users.mixins import NotLoginRequiredMixin
 from users.models import User
 
@@ -95,8 +95,9 @@ class SearchUser(ListView):
 class UserEditView(UpdateView):
     # TODO not edit user
     model = User
+    context_object_name = 'user'
     template_name = 'users/edit.html'
-    form_class = UserCreationForm
+    form_class = UserChangeForm
 
     def get_success_url(self):
         return reverse('users:account', args=[self.kwargs['pk']])

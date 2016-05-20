@@ -6,8 +6,8 @@
 
 {% block app_content %}
     <div class="center box" style="width:400px">
-        <form method="post" action="">
-            {% include "form.html" %}
+        <form method="post" enctype="multipart/form-data" action="">
+            {% include "form.html" with required_mark="*" %}
             <input type="submit" value="Edit"/>
         </form>
     </div>

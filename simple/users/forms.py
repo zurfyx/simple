@@ -93,13 +93,11 @@ class UserChangeForm(forms.ModelForm):
     """
     A form for updating users.
     """
-    password = ReadOnlyPasswordHashField()
 
     class Meta:
         model = User
         fields = ('first_name', 'last_name', 'birthday', 'country',
                   'city', 'occupation', 'avatar',)
-        readonly_fields = ('email', 'date_joined', 'last_login',)
+        readonly_fields = ('date_joined', 'last_login',)
 
-    def clean_password(self):
-        return self.initial["password"]
+
