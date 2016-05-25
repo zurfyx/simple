@@ -16,7 +16,7 @@ class UserAdmin(BaseUserAdmin):
         (None, {'fields': ('id', 'email', 'password',
                            'date_joined', 'last_login')}),
         ('Personal info', {'fields': ('first_name', 'last_name', 'birthday',
-                                      'country', 'city', 'occupation')}),
+                                      'country', 'city', 'occupation', 'about_me')}),
         ('Permissions', {'fields': ('is_staff',)}),
         ('Platform', {'fields': ('role', 'avatar',)})
     )
@@ -24,7 +24,7 @@ class UserAdmin(BaseUserAdmin):
         (None, {'fields': ('id', 'email', 'password',
                            'date_joined', 'last_login')}),
         ('Personal info', {'fields': ('first_name', 'last_name', 'birthday',
-                                      'country', 'city', 'occupation')}),
+                                      'country', 'city', 'occupation', 'about_me')}),
         ('Permissions', {'fields': ('is_staff',)}),
         ('Platform', {'fields': ('role', 'avatar',)})
     )

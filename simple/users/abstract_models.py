@@ -30,6 +30,7 @@ class AbstractUser(AbstractBaseUser):
         upload_to=globalConstants.MediaFile.USER_AVATAR.path,
         max_upload_size=globalConstants.MediaFile.USER_AVATAR.max_size,
         blank=True, null=True)
+    about_me = models.CharField(max_length=50000, null=True, blank=True)
 
     # analytics
     views = models.PositiveIntegerField(default=0)

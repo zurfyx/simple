@@ -51,7 +51,7 @@ class UserChangeAdminForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ('first_name', 'last_name', 'birthday', 'country',
-                  'city', 'occupation', 'role', 'avatar',)
+                  'city', 'occupation', 'about_me', 'role', 'avatar',)
         readonly_fields = ('email', 'date_joined', 'last_login',)
 
     def clean_password(self):
@@ -70,7 +70,7 @@ class UserCreationForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ('email', 'first_name', 'last_name', 'birthday', 'country',
-                  'city', 'occupation', 'password1', 'password2', 'avatar')
+                  'city', 'occupation', 'about_me', 'password1', 'password2', 'avatar')
 
     def clean_password2(self):
         # Check that the two password entries match
@@ -97,7 +97,7 @@ class UserChangeForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ('first_name', 'last_name', 'birthday', 'country',
-                  'city', 'occupation', 'avatar',)
+                  'city', 'occupation', 'about_me', 'avatar',)
         readonly_fields = ('date_joined', 'last_login',)
 
 
