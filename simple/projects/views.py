@@ -16,7 +16,7 @@ from core.mixins import CustomLoginRequiredMixin, HeadOfDepartmentMixin
 from projects import constants
 from projects.forms import ProjectNewForm, ProjectEditForm,ProjectContributeForm, ProjectQuestionForm,ProjectAnswerForm \
 
-from projects.mixins import ApprovedProjectRequiredMixin
+from projects.mixins import ApprovedProjectRequiredMixin, ProjectQuestionMixin
 from users.models import User
 from mixins import ProjectEditMixin
 from .models import Project, ProjectRole, ProjectRating, ProjectTechnicalRequest, ProjectFavorite
@@ -283,8 +283,7 @@ class ProjectQuestions(ListView):
     ordering = ['-created']
 
 
-class ProjectQuestionAdd(CreateView):
-    model = ProjectTechnicalRequest
+class ProjectQuestionAdd(ProjectQuestionMixin):
 
     def form_valid(self, form, **kwargs):
         question = form.save(commit=False)

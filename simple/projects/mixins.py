@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404
 from core.mixins import OwnerRequiredMixin, ScientistRequiredMixin
-from projects.models import Project
-from django.views.generic import UpdateView
+from projects.models import Project, ProjectTechnicalRequest
+from django.views.generic import UpdateView, CreateView
 
 
 class ProjectRequiredMixin(object):
@@ -27,6 +27,14 @@ class ApprovedProjectRequiredMixin(ProjectRequiredMixin):
 
 class ProjectEditMixin(OwnerRequiredMixin, ScientistRequiredMixin, UpdateView):
     model = Project
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        form.instance.project = Project.objects.get(id=self.kwargs['pk'])
+        return super(ProjectEditMixin, self).form_valid(form)
+
+class ProjectQuestionMixin(OwnerRequiredMixin,CreateView):
+    model = ProjectTechnicalRequest
 
     def form_valid(self, form):
         form.instance.user = self.request.user
