@@ -1,12 +1,15 @@
 from django.conf.urls import url, include
 from views import ProjectEdit
+from django.views.generic.edit import UpdateView
+from models import ProjectTechnicalRequest
+from forms import ProjectQuestionForm, ProjectAnswerForm
 from .views import ProjectDetail, ProjectList, ProjectNewView,\
     ProjectApproveList, ProjectApproveView, ProjectDenyView, \
     ProjectContributeView, ProjectPendingApproval, \
     ProjectApproveContributionList, UserProjectList, \
     ProjectContributionApproveView, ProjectContributionDenyView,\
     SearchProject, UpvoteView, DownvoteView, ProjectQuestions, \
-    ProjectQuestionAdd, FavoritesView
+    ProjectQuestionAdd, FavoritesView,ProjectAnswer, ProjectAddAnswer
 
 urlpatterns = [
     # Include comments application
@@ -116,17 +119,31 @@ urlpatterns = [
 
     # Question list
     url(
-        r'^\/(?P<project>\d+)/questions',
+        r'^\/(?P<project>\d+)/questions/$',
         ProjectQuestions.as_view(),
         name='question'
     ),
 
     # Add question
     url(
-        r'^\/(?P<project>\d+)/questions/new',
-        ProjectQuestionAdd.as_view(),
+        r'^\/(?P<project>\d+)/questions/add/$',
+        ProjectQuestionAdd.as_view(template_name = 'projects/question_add.html',form_class = ProjectQuestionForm),
         name='question_add'
     ),
+
+    #See answer
+    url(
+        r'^\/(?P<project>\d+)/questions/(?P<pk>\d+)$',
+        ProjectAnswer.as_view(),
+        name='answer'
+    ),
+        #See answer
+    url(
+        r'^\/(?P<project>\d+)/questions/(?P<pk>\d+)/addanswer$',
+        ProjectAddAnswer.as_view(),
+        name='answer_add'
+    ),
+
 
     # Vote up project
     url(

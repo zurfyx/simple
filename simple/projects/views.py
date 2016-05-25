@@ -11,11 +11,11 @@ from django.views.decorators.csrf import csrf_protect
 from django.views.generic import ListView
 from django.views.generic.base import RedirectView, TemplateView
 from django.views.generic.detail import DetailView
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView
 from core.mixins import CustomLoginRequiredMixin, HeadOfDepartmentMixin
 from projects import constants
-from projects.forms import ProjectNewForm, ProjectContributeForm, ProjectQuestionForm, \
-    ProjectEditForm
+from projects.forms import ProjectNewForm, ProjectEditForm,ProjectContributeForm, ProjectQuestionForm,ProjectAnswerForm \
+
 from projects.mixins import ApprovedProjectRequiredMixin
 from users.models import User
 from mixins import ProjectEditMixin
@@ -277,30 +277,40 @@ class ProjectEdit(ProjectEditMixin):
 
 
 class ProjectQuestions(ListView):
-    model = Project
-    context_object_name = 'project'
+    model = ProjectTechnicalRequest
+    context_object_name = 'questions'
     template_name = 'projects/questions.html'
     ordering = ['-created']
 
 
-def get_success_url(self):
-    return reverse('projects:question', args=[self.kwargs['pk']]) + \
-           '#project_' + str(self.object.id)
-
-
 class ProjectQuestionAdd(CreateView):
     model = ProjectTechnicalRequest
-    template_name = 'projects/question_add.html'
-    form_class = ProjectQuestionForm
 
-    def form_valid(self, form):
-        form.instance.from_user = self.request.user
-        form.instance.project = Project.objects.get(id=self.kwargs['project'])
-        return super(ProjectQuestionAdd, self).form_valid(form)
+    def form_valid(self, form, **kwargs):
+        question = form.save(commit=False)
+        question.project = Project.objects.get(pk=self.kwargs['project'])
+        question.from_user= self.request.user
+        question.save()
+        return HttpResponseRedirect("../")
+
+class ProjectAnswer(DetailView):
+    model = ProjectTechnicalRequest
+    template_name = 'projects/answer.html'
+    context_object_name = 'question'
+
+    def get_context_data(self, **kwargs):
+        context = super(ProjectAnswer, self).get_context_data(**kwargs)
+        return context
+
+
+class ProjectAddAnswer(UpdateView):
+    template_name = 'projects/answer_add.html'
+    context_object_name = 'question'
+    form_class = ProjectAnswerForm
 
     def get_success_url(self):
-        return reverse('projects:question', args=[self.kwargs['project']]) + \
-               '#project_' + str(self.object.id)
+        return HttpResponseRedirect('../')
+
 
 
 class VoteView(CustomLoginRequiredMixin, ApprovedProjectRequiredMixin,
@@ -381,3 +391,6 @@ class FavoritesView(ListView):
 
     def queryset(self):
         return self.model.objects.filter(user=self.request.user)
+
+
+

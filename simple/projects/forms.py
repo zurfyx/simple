@@ -59,9 +59,19 @@ class ProjectContributeForm(forms.ModelForm):
 
 class ProjectQuestionForm(forms.ModelForm):
     """
-    A form for editing comments.
+    A form for add questions.
     """
 
     class Meta:
         model = ProjectTechnicalRequest
-        fields = ['question']
+        fields = ['question','to_user']
+
+
+class ProjectAnswerForm(forms.ModelForm):
+    """
+    A form for add answers.
+    """
+
+    class Meta:
+        model = ProjectTechnicalRequest
+        fields = ['answer']

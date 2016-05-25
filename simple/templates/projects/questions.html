@@ -5,20 +5,27 @@
 
         <div>
             <h2>Questions</h2>
-            <a href = "{% url 'projects:question_add' project.id %}">New Question</a>
-            {% for question in object.questionns.all %}
-                <div id="question_{{ question.id }}">
+            <a href = "add/">New Question</a>
+            {% for question in questions %}
+
                     <div>
-                        User: {{ question.user.first_name }}
-                    <div>
-                        Published: {{ question.created }}
-                    </div>
-                    </div>
-                    <div>
-                            {{ question.question }}
+                        From: {{ question.from_user.first_name }}
+                        To:   {{ question.to_user.first_name }}
 
                     </div>
-                </div>
+                    <div>
+                         Question:   {{ question.question }}
+
+                    </div>
+                    <div>
+                        Published: {{ question.created }}
+
+                    </div>
+                    <div>
+                        <a href="{{ question.id}}">See</a>
+                    </div>
+
+
                 <hr>
             {% empty %}
                 No questions
