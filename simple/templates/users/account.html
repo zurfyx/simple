@@ -21,6 +21,11 @@
                     <div class="row">
                         {{ context_user.city }}, {{ context_user.country }}
                     </div>
+                    <div>
+                        {% if request.user.id == context_user.id %}
+                            {{ context_user.birthday }}
+                        {% endif %}
+                    </div>
                     <div class="row">
                         {{ context_user.get_role_str }}
                         {% if context_user.is_staff %}
