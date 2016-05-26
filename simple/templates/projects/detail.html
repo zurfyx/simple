@@ -14,12 +14,18 @@
         <div class="project-detail-header row">
             <div class="project-image col-xs-6"
                  style="background-image: url({{ MEDIA_URL }}{{ project.picture }})">
+
                 {# project image as bg #}
             </div>
             <div class="project-info col-xs-6">
                 <div class="container-fluid">
                     <div class="row">
                       <h1>{{ project.title }}</h1>
+                    </div>
+                    <div class = "row">
+                        <i><a href="{{ MEDIA_URL }}{{project.picture }}"
+                        onclick="window.open(this.href,'resizable=yes,location=yes,toolbar=no,status=no,fullscreen=yes,dependent=no,status');
+                        return false"><span class="glyphicon glyphicon-zoom-in"></span></a></i>
                     </div>
                     <div class="row">
                         <i>Last modified: {{ project.modified }}</i>
