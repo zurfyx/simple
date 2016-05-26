@@ -1,8 +1,6 @@
 from django.conf.urls import url, include
 from views import ProjectEdit
-from django.views.generic.edit import UpdateView
-from models import ProjectTechnicalRequest
-from forms import ProjectQuestionForm, ProjectAnswerForm
+from forms import ProjectQuestionForm
 from .views import ProjectDetail, ProjectList, ProjectNewView,\
     ProjectApproveList, ProjectApproveView, ProjectDenyView, \
     ProjectContributeView, ProjectPendingApproval, \
@@ -131,13 +129,14 @@ urlpatterns = [
         name='question_add'
     ),
 
-    #See answer
+    # See answer
     url(
         r'^\/(?P<project>\d+)/questions/(?P<pk>\d+)$',
         ProjectAnswer.as_view(),
         name='answer'
     ),
-        #See answer
+
+    # Add answer
     url(
         r'^\/(?P<project>\d+)/questions/(?P<pk>\d+)/addanswer$',
         ProjectAddAnswer.as_view(),

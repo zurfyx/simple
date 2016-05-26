@@ -57,6 +57,7 @@ class ProjectContributeForm(forms.ModelForm):
         fields = ('project', 'role')
         widgets = {'project': forms.HiddenInput()}
 
+
 class ProjectQuestionForm(forms.ModelForm):
     """
     A form for add questions.
