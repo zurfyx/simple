@@ -15,7 +15,7 @@ from django.views.generic.edit import CreateView, UpdateView
 from core.mixins import CustomLoginRequiredMixin, HeadOfDepartmentMixin
 
 from projects import constants
-from projects.forms import ProjectNewForm, ProjectEditForm, ProjectContributeForm, ProjectAnswerForm
+from projects.forms import ProjectNewForm, ProjectEditForm, ProjectContributeForm, ProjectQuestionForm,ProjectAnswerForm
 from projects.mixins import ApprovedProjectRequiredMixin, ProjectQuestionMixin
 from users.models import User
 from mixins import ProjectEditMixin
