@@ -127,7 +127,7 @@ urlpatterns = [
     # Add question
     url(
         r'^\/(?P<project>\d+)/questions/add/$',
-        ProjectQuestionAdd.as_view(template_name = 'projects/question_add.html',form_class = ProjectQuestionForm),
+        ProjectQuestionAdd.as_view(),
         name='question_add'
     ),
 

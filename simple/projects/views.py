@@ -284,7 +284,8 @@ class ProjectQuestions(ListView):
 
 
 class ProjectQuestionAdd(ProjectQuestionMixin):
-
+    template_name = 'projects/question_add.html'
+    form_class = ProjectQuestionForm
     def form_valid(self, form, **kwargs):
         question = form.save(commit=False)
         question.project = Project.objects.get(pk=self.kwargs['project'])
