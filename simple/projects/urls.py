@@ -18,6 +18,12 @@ urlpatterns = [
         include('projects.comments.urls', namespace='comments')
     ),
 
+    # Include activities application
+    url(
+       r'^\/(?P<project>\d+)/activities',
+       include('projects.activities.urls', namespace='activities')
+    ),
+
     # List of Projects
     url(
         r'^$',

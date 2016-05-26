@@ -63,6 +63,10 @@ class ProjectDetail(DetailView):
                                project=self.kwargs['pk'],
                                user=self.request.user) \
             if self.request.user.is_authenticated() else None
+        context['user_project_role'] = \
+            get_object_or_None(ProjectRole,
+                               project=self.kwargs['pk'],
+                               user=self.request.user)
 
         return context
 

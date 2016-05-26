@@ -1,0 +1,17 @@
+{% extends "projects/activities/base.html" %}
+
+{% block app_content %}
+    <div class="center page-width">
+    {% for activity in activities %}
+        <div class="box">
+            <ul class="enumerateless">
+                <li>
+                    {{ activity.title }}
+                    {{ activity.start_date }}
+                    {{ activity.due_date }}
+                </li>
+            </ul>
+        </div>
+    {% endfor %}
+    </div>
+{% endblock %}
