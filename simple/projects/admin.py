@@ -1,9 +1,8 @@
 from django.contrib import admin
 
 from projects.forms import ProjectRoleNewAdminForm, ProjectRoleEditAdminForm
-from .models import Project, ProjectRole, ProjectActivityResponse, \
-    ProjectActivity, ProjectTechnicalRequest, ProjectLog, ProjectRating, \
-    ProjectFavorite
+from .models import Project, ProjectRole, ProjectTechnicalRequest, ProjectLog, \
+    ProjectRating, ProjectFavorite
 
 
 class ProjectAdmin(admin.ModelAdmin):
@@ -31,19 +30,9 @@ class ProjectLogAdmin(admin.ModelAdmin):
 class ProjectTechnicalRequestAdmin(admin.ModelAdmin):
     list_display = ('project', 'question')
 
-
-class ProjectActivityAdmin(admin.ModelAdmin):
-    list_display = ('project', 'user', 'title', 'start_date', 'due_date')
-
-
-class ProjectActivityResponseAdmin(admin.ModelAdmin):
-    list_display = ('user', 'activity')
-
 admin.site.register(Project, ProjectAdmin)
 admin.site.register(ProjectRole, ProjectRoleAdmin)
 admin.site.register(ProjectRating, ProjectRatingAdmin)
 admin.site.register(ProjectFavorite, ProjectFavoriteAdmin)
 admin.site.register(ProjectLog, ProjectLogAdmin)
 admin.site.register(ProjectTechnicalRequest, ProjectTechnicalRequestAdmin)
-admin.site.register(ProjectActivity, ProjectActivityAdmin)
-admin.site.register(ProjectActivityResponse, ProjectActivityResponseAdmin)

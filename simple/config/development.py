@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'compressor',
     'users',
     'projects',
+    'projects.activities',
     'projects.comments',
 ]
 

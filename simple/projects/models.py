@@ -2,7 +2,6 @@ from __future__ import unicode_literals
 
 from .abstract_models import AbstractProject, AbstractProjectRole, \
     AbstractProjectRating, AbstractProjectLog, AbstractProjectTechnicalRequest, \
-    AbstractProjectActivity, AbstractProjectActivityResponse, \
     AbstractProjectFavorite
 
 
@@ -27,12 +26,4 @@ class ProjectLog(AbstractProjectLog):
 
 
 class ProjectTechnicalRequest(AbstractProjectTechnicalRequest):
-    pass
-
-
-class ProjectActivity(AbstractProjectActivity):
-    pass
-
-
-class ProjectActivityResponse(AbstractProjectActivityResponse):
     pass
