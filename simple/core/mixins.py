@@ -44,20 +44,6 @@ class ModeratorRequiredMixin(CustomLoginRequiredMixin):
         return super(ModeratorRequiredMixin, self).dispatch(request, **kwargs)
 
 
-class ScientistRequiredMixin(CustomLoginRequiredMixin):
-    """
-    Either a Scientist or Administrator is required to be logged in.
-    Otherwise, it will return a 404 response.
-    """
-    def dispatch(self, request, **kwargs):
-        user = request.user
-        if user.is_authenticated() \
-                and user.role != constants.ProjectRoles.SCIENTIST \
-                and user.is_staff is False:
-            raise Http404('Not a Scientist')
-        return super(ScientistRequiredMixin, self).dispatch(request, **kwargs)
-
-
 class OwnerRequiredMixin(CustomLoginRequiredMixin):
     """
     The owner of the object is required to view THIS object.

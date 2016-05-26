@@ -202,6 +202,15 @@ form {
   padding: 30px;
 }
 
+.box-header {
+  padding: 15px 30px 15px 30px;
+  background-color: #f3f3f3;
+}
+
+.box.row {
+  margin: 0;
+}
+
 .corner-btn {
   @include vertical-shadow(4px);
   background-color: $create-color;
