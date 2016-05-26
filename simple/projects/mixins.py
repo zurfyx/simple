@@ -49,7 +49,7 @@ class ProjectRoleRequiredMixin(CustomLoginRequiredMixin):
     def dispatch(self, request, **kwargs):
         user = request.user
         project = kwargs['video'] if 'video' in kwargs else kwargs['pk']
-        project_obj = Project(id=project)
+        project_obj = get_object_or_404(Project, id=project)
 
         if user.is_authenticated():
             project_role = \
