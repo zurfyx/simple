@@ -29,28 +29,61 @@ class ApprovedProjectRequiredMixin(ProjectRequiredMixin):
         return super(ApprovedProjectRequiredMixin, self).dispatch(request, **kwargs)
 
 
-class ScientistRequiredMixin(CustomLoginRequiredMixin):
+class ProjectRoleRequiredMixin(CustomLoginRequiredMixin):
     """
-    Either a Project Scientist or Administrator is required. Project has to be
+    Either Project Role X or Administrator is required. Project has to be
     passed through a <video> or <pk> kwargs (<video> if <video> is not None else
     <pk>)
     Otherwise, it will return a 404 response.
     """
+    project_roles_allowed = []  # i.e constants.ProjectRoles.SCIENTIST
+
+    def _allowed_role(self, project_role):
+        """
+        Verifies is the user is allowed to interact with the project given
+         a project role instance.
+        """
+        return False if project_role is None \
+            else project_role.role in self.project_roles_allowed
+
     def dispatch(self, request, **kwargs):
         user = request.user
         project = kwargs['video'] if 'video' in kwargs else kwargs['pk']
+        project_obj = Project(id=project)
 
         if user.is_authenticated():
             project_role = \
-                get_object_or_None(ProjectRole, user=user, project=project)
-            scientist = constants.ProjectRoles.SCIENTIST
-            if user.is_staff is False \
-               and (project_role is None or project_role.role != scientist):
+                get_object_or_None(ProjectRole, user=user, project=project_obj)
+            if not (user.is_staff or self._allowed_role(project_role)):
                 raise Http404('Not a Scientist')
-        return super(ScientistRequiredMixin, self).dispatch(request, **kwargs)
+        return super(ProjectRoleRequiredMixin, self).dispatch(request, **kwargs)
 
 
-class ProjectEditMixin(OwnerRequiredMixin, ScientistRequiredMixin, UpdateView):
+class ScientistRequiredMixin(ProjectRoleRequiredMixin):
+    """
+    Either a Project Scientist or Administrator is required.
+    """
+    project_roles_allowed = [constants.ProjectRoles.SCIENTIST]
+
+
+class StudentRequiredMixin(ProjectRoleRequiredMixin):
+    """
+    Either a Student or Administrator is required
+    """
+    project_roles_allowed = [constants.ProjectRoles.STUDENT]
+
+
+class ScientistOrStudentRequiredMixin(ProjectRoleRequiredMixin):
+    """
+    Either a Scientist or Student or Administrator is required
+    """
+    project_roles_allowed = [
+        constants.ProjectRoles.SCIENTIST,
+        constants.ProjectRoles.STUDENT,
+    ]
+
+
+class ProjectEditMixin(ScientistRequiredMixin, UpdateView):
     model = Project
 
     def form_valid(self, form):
