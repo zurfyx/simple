@@ -33,6 +33,7 @@ class ProjectEditMixin(OwnerRequiredMixin, ScientistRequiredMixin, UpdateView):
         form.instance.project = Project.objects.get(id=self.kwargs['pk'])
         return super(ProjectEditMixin, self).form_valid(form)
 
+
 class ProjectQuestionMixin(OwnerRequiredMixin,CreateView):
     model = ProjectTechnicalRequest
 
