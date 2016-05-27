@@ -285,7 +285,8 @@ class ProjectQuestions(ListView):
     context_object_name = 'questions'
     template_name = 'projects/questions.html'
     ordering = ['-created']
-
+    def get_queryset(self):
+        return self.model.objects.filter(project=self.kwargs['project'])
 
 class ProjectQuestionAdd(ProjectQuestionMixin):
     template_name = 'projects/question_add.html'
