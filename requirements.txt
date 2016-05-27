@@ -6,3 +6,4 @@ six==1.10.0
 coverage==4.0.3
 django-compressor==2.0
 Pillow==2.7.0
+django-datetime-widget==0.9.3

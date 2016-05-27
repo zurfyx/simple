@@ -15,7 +15,7 @@ class AbstractProjectActivity(AbstractTimeStamped):
     """
     project = models.ForeignKey(Project)
     user = models.ForeignKey(User)
-    title = models.CharField(max_length=200)
+    title = models.CharField(max_length=200, unique=True)
     body = models.CharField(max_length=2000, blank=True, null=True)
     start_date = models.DateTimeField()
     due_date = models.DateTimeField()

@@ -6,6 +6,11 @@
 
 {% block app_content %}
     <div class="center page-width">
+        {# new activity #}
+        {% if request.user.is_staff or user_project_role.role == PROJECT_CONSTANTS.SCIENTIST %}
+            <a class="corner-btn" href="{% url "projects:activities:new" project.id %}">+</a>
+        {% endif %}
+
         {# grid header #}
         <div class="box box-header row">
             <div class="col-md-8">Title</div>

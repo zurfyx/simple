@@ -14,7 +14,6 @@
         <div class="project-detail-header row">
             <div class="project-image col-xs-6"
                  style="background-image: url({{ MEDIA_URL }}{{ project.picture }})">
-
                 {# project image as bg #}
             </div>
             <div class="project-info col-xs-6">
@@ -42,7 +41,7 @@
                         <a href="#">Contributors</a>
                         <a href="{% url "projects:question" project.id %}">Questions</a>
                         <a href="{% url "projects:contribute" project.id %}">Request membership</a>
-                        {% if request.user.is_staff or user_project_role == PROJECT_ROLES.SCIENTIST or user_project_role == PROJECT_ROLES.STUDENT %}
+                        {% if request.user.is_staff or user_project_role.role == PROJECT_ROLES.SCIENTIST or user_project_role.role == PROJECT_ROLES.STUDENT %}
                             <a href="{% url "projects:activities:list" project.id %}">Activities</a>
                         {% endif %}
                     </div>

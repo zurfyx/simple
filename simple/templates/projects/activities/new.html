@@ -1,0 +1,21 @@
+{% extends "projects/activities/base.html" %}
+
+{% block menu_title %}
+    <h1>New activity</h1>
+{% endblock %}
+
+{% block app_content %}
+    <div class="center box" style="width:800px">
+        <form method="post" enctype="multipart/form-data" action="">
+            <div class="row">
+                <div class="form-label">
+                    <label for="id_title">Project:</label>
+                </div>
+                {{ project.title }}
+            </div>
+
+            {% include "form.html" with required_mark="*" %}
+            <input type="submit" value="Create" />
+        </form>
+    </div>
+{% endblock %}

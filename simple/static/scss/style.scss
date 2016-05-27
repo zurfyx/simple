@@ -141,7 +141,7 @@ form {
     top: 14px;
   }
 
-  input {
+  input, textarea {
     background-color: transparent;
     display: block;
     padding: 10px 10px 5px 10px;
@@ -152,6 +152,12 @@ form {
      &[name="picture-clear"] {
       display: inline;
     }
+  }
+
+  textarea {
+    border: 1px solid #cecece;
+    margin-top: 15px;
+    width: 100%;
   }
 
   input + input {

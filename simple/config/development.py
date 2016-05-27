@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'annoying',
     'compressor',
+    'datetimewidget',
     'users',
     'projects',
     'projects.activities',
