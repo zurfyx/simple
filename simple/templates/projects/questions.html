@@ -23,6 +23,11 @@
                     </div>
                     <div>
                         <a href="{{ question.id}}">See</a>
+                        {% if question.answer %}
+                            (Question answered)
+                        {% else %}
+                            (No answered yet)
+                        {% endif %}
                     </div>
 
 

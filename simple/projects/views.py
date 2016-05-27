@@ -310,12 +310,13 @@ class ProjectAnswer(DetailView):
 
 
 class ProjectAddAnswer(UpdateView):
+    model = ProjectTechnicalRequest
     template_name = 'projects/answer_add.html'
     context_object_name = 'question'
     form_class = ProjectAnswerForm
 
     def get_success_url(self):
-        return HttpResponseRedirect('../')
+        return reverse('projects:answer', args=[self.kwargs['project'], self.kwargs['pk']])
 
 
 class VoteView(CustomLoginRequiredMixin, ApprovedProjectRequiredMixin,
