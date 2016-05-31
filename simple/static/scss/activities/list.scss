@@ -1,0 +1,11 @@
+.activity-description {
+  @extend .center, .box, .page-width, .long-text;
+}
+
+.activity-replies-list {
+  @extend .center, .page-width, .long-text;
+
+  h2 {
+    margin-top: 20px;
+  }
+}

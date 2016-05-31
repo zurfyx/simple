@@ -123,14 +123,13 @@ input[type="button"], input[type="submit"] {
   text-transform: uppercase;
 }
 
-a {
-  color: #000;
-  text-decoration: none;
-}
-
 a:link, a:visited, a:hover, a:active {
   color: $default-color;
   text-decoration: none;
+
+  &.no-link-color {
+    color: $default-font-color;
+  }
 }
 
 form {
@@ -448,3 +447,4 @@ ul.enumerateless li {
 @import 'home/base.scss';
 @import 'users/base.scss';
 @import 'projects/base.scss';
+@import 'activities/base.scss';

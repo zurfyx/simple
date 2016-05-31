@@ -1,6 +1,6 @@
 from django.conf.urls import url
 
-from .views import ActivityList, ActivityNewView
+from .views import ActivityList, ActivityNewView, ActivityDetailView
 
 urlpatterns = [
     # List of activities
@@ -16,6 +16,13 @@ urlpatterns = [
         ActivityNewView.as_view(),
         name='new'
     ),
+
+    # Activity details
+    url(
+        r'^\/(?P<pk>\d+)$',
+        ActivityDetailView.as_view(),
+        name='detail'
+    )
 
     # Edit activity
 

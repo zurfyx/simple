@@ -1,0 +1,36 @@
+{% extends "projects/activities/base.html" %}
+
+{% block menu_title %}
+    <h1>{{ activity.title }}</h1>
+{% endblock %}
+
+{% block app_content %}
+    {# activity #}
+    <div class="activity-description">
+        {{ activity.body }}
+    </div>
+
+    {# submissions #}
+    <div class="activity-replies-list">
+        {% if request.user.is_staff or request.user.role == PROJECT_ROLE.SCIENTIST %}
+            {# Students cannot see other student's submissions #}
+            <h2>Submissions</h2>
+            {% for response in activity_responses %}
+                <div class="box">
+                    Submitted: {{ response.created }}
+                    <span class="reply-body">{{ response.body }}</span>
+                </div>
+            {% endfor %}
+        {% else %}
+            {# Students can see / edit their own submission #}
+            <h2>Submission</h2>
+            {% for response in user_activity_responses %}
+                <div class="box">
+                    Submitted: {{ response.created }}
+                    <p>{{ response.body }}</p>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+
+{% endblock %}

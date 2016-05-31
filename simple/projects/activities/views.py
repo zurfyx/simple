@@ -1,6 +1,7 @@
 from django.core.urlresolvers import reverse
 from django.shortcuts import get_object_or_404
 from django.views.generic import ListView
+from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView
 
 from projects.activities.forms import ActivityNewForm
@@ -40,4 +41,18 @@ class ActivityNewView(ScientistRequiredMixin, CreateView):
     def get_context_data(self, **kwargs):
         context = super(ActivityNewView, self).get_context_data()
         context['project'] = get_object_or_404(Project, id=self.kwargs['project'])
+        return context
+
+
+class ActivityDetailView(DetailView):
+    template_name = 'projects/activities/detail.html'
+    model = ProjectActivity
+    context_object_name = 'activity'
+
+    def get_context_data(self, **kwargs):
+        context = super(ActivityDetailView, self).get_context_data()
+        context['activity_responses'] = context['activity']\
+            .projectactivityresponse_set.all()
+        context['user_activity_responses'] = context['activity']\
+            .projectactivityresponse_set.filter(user=self.request.user)
         return context
