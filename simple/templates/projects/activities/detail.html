@@ -7,7 +7,18 @@
 {% block app_content %}
     {# activity #}
     <div class="activity-description">
-        {{ activity.body }}
+        <div class="activity-info">
+            <span>Start date: {{ activity.start_date }}</span>
+            <span>
+                Due date: {{ activity.due_date }}
+                {% if activity.is_closed %}
+                    (closed)
+                {% endif %}
+            </span>
+        </div>
+        <div class="activity-body">
+            {{ activity.body }}
+        </div>
     </div>
 
     {# submissions #}
@@ -20,7 +31,12 @@
                     Submitted: {{ response.created }}
                     <span class="reply-body">{{ response.body }}</span>
                 </div>
+            {% empty %}
+                <div class="center-text">
+                    No submissions yet!
+                </div>
             {% endfor %}
+
         {% else %}
             {# Students can see / edit their own submission #}
             <h2>Submission</h2>
@@ -29,6 +45,14 @@
                     Submitted: {{ response.created }}
                     <p>{{ response.body }}</p>
                 </div>
+            {% empty %}
+                {% if activity.is_closed %}
+                    <div class="text-center">
+                        Activity is closed. No submissions are allowed.
+                    </div>
+                {% else %}
+                    <a href="{% url "projects:activities:response-new" project.id activity.id %}">Submit a response</a>
+                {% endif %}
             {% endfor %}
         {% endif %}
     </div>
