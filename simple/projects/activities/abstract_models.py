@@ -20,7 +20,6 @@ class AbstractProjectActivity(AbstractTimeStamped):
     body = models.CharField(max_length=2000, blank=True, null=True)
     start_date = models.DateTimeField()
     due_date = models.DateTimeField()
-    allowed_submissions = models.PositiveIntegerField(default=1)
     responses = models.ManyToManyField(User, through='ProjectActivityResponse',
                                        related_name='responded_activity')
 

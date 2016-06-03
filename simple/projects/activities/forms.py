@@ -11,8 +11,7 @@ class ActivityNewForm(forms.ModelForm):
 
     class Meta:
         model = ProjectActivity
-        fields = ('title', 'body', 'start_date', 'due_date',
-                  'allowed_submissions')
+        fields = ('title', 'body', 'start_date', 'due_date')
         widgets = {
             'body': forms.Textarea(attrs={'placeholder': u'Activity description'}),
             'start_date': DateTimeWidget(),

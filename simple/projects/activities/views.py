@@ -46,7 +46,7 @@ class ActivityNewView(ScientistRequiredMixin, CreateView):
         return context
 
 
-class ActivityDetailView(DetailView):
+class ActivityDetailView(ScientistOrStudentRequiredMixin, DetailView):
     template_name = 'projects/activities/detail.html'
     model = ProjectActivity
     context_object_name = 'activity'
