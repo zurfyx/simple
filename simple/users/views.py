@@ -4,6 +4,8 @@ from django.views.generic import DetailView, ListView
 from django.views.generic.base import TemplateView, RedirectView
 from django.views.generic.edit import CreateView, UpdateView
 from django.core.urlresolvers import reverse
+
+from core.utils import WordFilter
 from forms import UserCreationForm, UserChangeForm
 from users.mixins import NotLoginRequiredMixin
 from users.models import User
@@ -98,6 +100,15 @@ class UserEditView(UpdateView):
     context_object_name = 'user'
     template_name = 'users/edit.html'
     form_class = UserChangeForm
+
+    def form_valid(self, form):
+        form.instance.first_name = WordFilter().clean(form.instance.first_name)
+        form.instance.last_name = WordFilter().clean(form.instance.last_name)
+        form.instance.country = WordFilter().clean(form.instance.country)
+        form.instance.city = WordFilter().clean(form.instance.city)
+        form.instance.about_me = WordFilter().clean(form.instance.about_me)
+        form.instance.occupation = WordFilter().clean(form.instance.occupation)
+        return super(UserEditView, self).form_valid(form)
 
     def get_success_url(self):
         return reverse('users:account', args=[self.kwargs['pk']])
