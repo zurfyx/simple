@@ -1,6 +1,7 @@
 from django.conf.urls import url
 
-from .views import ActivityList, ActivityNewView, ActivityDetailView
+from .views import ActivityList, ActivityNewView, ActivityDetailView, \
+    ActivityResponseNewView
 
 urlpatterns = [
     # List of activities
@@ -22,13 +23,18 @@ urlpatterns = [
         r'^\/(?P<pk>\d+)$',
         ActivityDetailView.as_view(),
         name='detail'
-    )
+    ),
 
     # Edit activity
 
     # List of responses
 
     # Add new response
+    url(
+        r'^\/(?P<activity>\d+)/response/new$',
+        ActivityResponseNewView.as_view(),
+        name='response-new'
+    ),
 
     # Edit response
 ]

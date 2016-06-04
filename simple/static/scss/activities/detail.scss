@@ -2,3 +2,15 @@
   display: block;
   margin-top: 10px;
 }
+
+.activity-description {
+  div + div {
+    margin-top: 10px;
+  }
+
+  .activity-info {
+    span {
+      display: block;
+    }
+  }
+}

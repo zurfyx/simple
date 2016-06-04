@@ -92,10 +92,10 @@ class ProjectEditMixin(ScientistRequiredMixin, UpdateView):
         return super(ProjectEditMixin, self).form_valid(form)
 
 
-class ProjectQuestionMixin(OwnerRequiredMixin,CreateView):
+class ProjectAddQuestionMixin(OwnerRequiredMixin, CreateView):
     model = ProjectTechnicalRequest
 
     def form_valid(self, form):
-        form.instance.user = self.request.user
-        form.instance.project = Project.objects.get(id=self.kwargs['pk'])
-        return super(ProjectEditMixin, self).form_valid(form)
+        form.instance.from_user = self.request.user
+        form.instance.project = Project.objects.get(id=self.kwargs['project'])
+        return super(ProjectAddQuestionMixin, self).form_valid(form)

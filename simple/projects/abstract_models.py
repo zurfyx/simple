@@ -56,6 +56,10 @@ class AbstractProject(AbstractTimeStamped):
     class Meta:
         abstract = True
 
+    def increase_visits(self):
+        self.visits += 1
+        self.save()
+
 
 class AbstractProjectRole(models.Model):
     """
@@ -113,7 +117,7 @@ class AbstractProjectRating(AbstractTimeStamped):
 
 class AbstractProjectFavorite(AbstractTimeStamped):
     """
-    Project favorited by an User
+    Project favourite by an User
     """
     user = models.ForeignKey(User)
     project = models.ForeignKey('Project')

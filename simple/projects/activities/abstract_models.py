@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 
 from projects.abstract_models import AbstractTimeStamped
 from projects.models import Project
@@ -19,9 +20,12 @@ class AbstractProjectActivity(AbstractTimeStamped):
     body = models.CharField(max_length=2000, blank=True, null=True)
     start_date = models.DateTimeField()
     due_date = models.DateTimeField()
-    allowed_submissions = models.PositiveIntegerField(default=1)
     responses = models.ManyToManyField(User, through='ProjectActivityResponse',
                                        related_name='responded_activity')
+
+    def is_closed(self):
+        now = timezone.now()
+        return now < self.start_date or now > self.due_date
 
     def __str__(self):
         return self.title
@@ -39,10 +43,6 @@ class AbstractProjectActivityResponse(AbstractTimeStamped):
     activity = models.ForeignKey('ProjectActivity')
     body = models.CharField(max_length=20000)
     number_submissions = models.PositiveIntegerField(default=0)
-
-    def response(self, body):
-        self.body = body
-        self.number_submissions += 1
 
     def __str__(self):
         return self.body

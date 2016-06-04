@@ -14,9 +14,10 @@ from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView
 from core.mixins import CustomLoginRequiredMixin, HeadOfDepartmentMixin
 from django.core.mail import EmailMessage
+from core.utils import WordFilter
 from projects import constants
 from projects.forms import ProjectNewForm, ProjectEditForm, ProjectContributeForm, ProjectQuestionForm,ProjectAnswerForm
-from projects.mixins import ApprovedProjectRequiredMixin, ProjectQuestionMixin
+from projects.mixins import ApprovedProjectRequiredMixin, ProjectAddQuestionMixin
 from users.models import User
 from mixins import ProjectEditMixin
 from .models import Project, ProjectRole, ProjectRating, ProjectTechnicalRequest, ProjectFavorite
@@ -55,6 +56,12 @@ class ProjectDetail(DetailView):
     model = Project
     template_name = 'projects/detail.html'
     context_object_name = 'project'
+
+    def get_object(self, queryset=None):
+        obj = get_object_or_404(self.model, pk=self.kwargs['pk'])
+        obj.increase_visits()
+        obj.save()
+        return obj
 
     def get_context_data(self, **kwargs):
         context = super(ProjectDetail, self).get_context_data(**kwargs)
@@ -276,6 +283,10 @@ class ProjectEdit(ProjectEditMixin):
     context_object_name = 'project'
     form_class = ProjectEditForm
 
+    def form_valid(self, form):
+        form.instance.body = WordFilter().clean(form.instance.body)
+        return super(ProjectEdit, self).form_valid(form)
+
     def get_success_url(self):
         project = Project.objects.get(pk=self.kwargs['pk'])
         user = self.request.user
@@ -289,10 +300,12 @@ class ProjectQuestions(ListView):
     context_object_name = 'questions'
     template_name = 'projects/questions.html'
     ordering = ['-created']
+
     def get_queryset(self):
         return self.model.objects.filter(project=self.kwargs['project'])
 
-class ProjectQuestionAdd(ProjectQuestionMixin):
+
+class ProjectQuestionAdd(ProjectAddQuestionMixin):
     template_name = 'projects/question_add.html'
     form_class = ProjectQuestionForm
     def form_valid(self, form, **kwargs):
@@ -304,6 +317,15 @@ class ProjectQuestionAdd(ProjectQuestionMixin):
                             + str(question.question) , to =[question.to_user])
         email.send()
         return HttpResponseRedirect("../")
+
+
+    def form_valid(self, form):
+        form.instance.question = WordFilter().clean(form.instance.question)
+        return super(ProjectQuestionAdd, self).form_valid(form)
+
+    def get_success_url(self):
+        return reverse('projects:question', args=[self.kwargs['project']])
+
 
 
 class ProjectAnswer(DetailView):
@@ -321,6 +343,10 @@ class ProjectAddAnswer(UpdateView):
     template_name = 'projects/answer_add.html'
     context_object_name = 'question'
     form_class = ProjectAnswerForm
+
+    def form_valid(self, form):
+        form.instance.answer = WordFilter().clean(form.instance.answer)
+        return super(ProjectAddAnswer, self).form_valid(form)
 
     def get_success_url(self):
         question = ProjectTechnicalRequest.objects.get(pk=self.kwargs['pk'])
@@ -415,4 +441,5 @@ class NotificationsView(ListView):
 
     def queryset(self):
         return self.model.objects.filter(to_user=self.request.user, replied = False)
+
 
