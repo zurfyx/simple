@@ -89,7 +89,7 @@ class SearchProject(ListView):
 
     def get_queryset(self):
         filter = self.kwargs['title']
-        search= self.model.objects.filter(title__icontains = filter)
+        search = self.model.objects.filter(title__icontains=filter)
         return search
 
 
@@ -110,6 +110,8 @@ class ProjectNewView(CustomLoginRequiredMixin, CreateView):
     def form_valid(self, form):
         project = form.save(commit=False)
         project.user = self.request.user
+        form.instance.title = WordFilter().clean(form.instance.title)
+        form.instance.body = WordFilter().clean(form.instance.body)
         project.save()
         self._create_owner_role(project, project.user)
         messages.success(self.request, project.title)
