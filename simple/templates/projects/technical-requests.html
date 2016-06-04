@@ -1,0 +1,46 @@
+{% extends "projects/base.html" %}
+{% load breadcrumb %}
+
+{% block breadcrumb_ %}
+    {{ block.super }}
+    {% with "Project '"|add:project.title|add:"'" as project_name %}
+        {% breadcrumb_url project_name "projects:detail" project.id %}
+    {% endwith %}
+    {% breadcrumb_url "Technical requests" "projects:technical-requests" project.id %}
+{% endblock %}
+
+{% block app_content %}
+
+    <div>
+        <h2>Questions</h2>
+        <a href="{% url "projects:technical-request-new" project.id %}">New Question</a>
+        {% for question in questions %}
+
+                <div>
+                    From: {{ question.from_user.first_name }}
+                    To:   {{ question.to_user.first_name }}
+
+                </div>
+                <div>
+                     Question: {{ question.question }}
+                </div>
+                <div>
+                    Published: {{ question.created }}
+                </div>
+                <div>
+                    <a href="{% url "projects:technical-request-answer" project.id question.id %}">See</a>
+                    {% if question.answer %}
+                        (Question answered)
+                    {% else %}
+                        (No answered yet)
+                    {% endif %}
+                </div>
+
+
+            <hr>
+        {% empty %}
+            No questions
+        {% endfor %}
+    </div>
+
+{% endblock %}

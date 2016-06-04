@@ -1,5 +1,6 @@
-{%  load compress %}
-{%  load static %}
+{% load compress %}
+{% load static %}
+{% load breadcrumb %}
 <html>
 <head>
     <title>Simple - The project sharing platform</title>
@@ -31,20 +32,31 @@
 </head>
 <body>
     {% block header %}
-        <header id="header">
-        {% block header_ %}
-            <a id="logo" href="{% url "projects:list" %}">{{ PROJECT_NAME }}</a>
+        <header>
+            <div id="header-top">
+                {% block header_ %}
+                    <a id="logo" href="{% url "projects:list" %}">{{ PROJECT_NAME }}</a>
 
-            {# header navigation #}
-            {% block header-nav %}
-                <nav id="header-nav">
-                {% block header-nav_ %}
-                    {% include "header-nav.html" %}
+                    {# header navigation #}
+                    {% block header-nav %}
+                        <nav id="header-nav">
+                        {% block header-nav_ %}
+                            {% include "header-nav.html" %}
+                        {% endblock %}
+                        </nav>
+                    {% endblock %}
                 {% endblock %}
-                </nav>
+            </div>
+            {% block breadcrumb %}
+                <div id="breadcrumb">
+                    {% block breadcrumb_ %}
+                        {# home case exception - do others with breadcrumb or breadcrumb_url #}
+                        <a href="{% url "projects:list" %}">
+                            <i class="fa fa-home fa-2" aria-hidden="true"></i>
+                        </a>
+                    {% endblock %}
+                </div>
             {% endblock %}
-
-        {% endblock %}
         </header>
     {% endblock %}
 
@@ -58,8 +70,8 @@
 
     {% block content %}
         <div id="content">
-        {% block content_ %}
-        {% endblock %}
+            {% block content_ %}
+            {% endblock %}
         </div>
     {% endblock %}
 

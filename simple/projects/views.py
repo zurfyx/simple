@@ -297,53 +297,66 @@ class ProjectEdit(ProjectEditMixin):
         return reverse('projects:detail', args=[self.kwargs['pk']])
 
 
-class ProjectQuestions(ListView):
+class ProjectTechnicalRequestList(ListView):
     model = ProjectTechnicalRequest
     context_object_name = 'questions'
-    template_name = 'projects/questions.html'
+    template_name = 'projects/technical-requests.html'
     ordering = ['-created']
 
     def get_queryset(self):
         return self.model.objects.filter(project=self.kwargs['project'])
 
+    def get_context_data(self, **kwargs):
+        context = super(ProjectTechnicalRequestList, self).get_context_data(**kwargs)
+        context['project'] = get_object_or_404(Project, id=self.kwargs['project'])
+        return context
 
-class ProjectQuestionAdd(ProjectAddQuestionMixin):
-    template_name = 'projects/question_add.html'
+
+class ProjectTechnicalRequestNewView(ProjectAddQuestionMixin):
+    template_name = 'projects/technical-request-new.html'
     form_class = ProjectQuestionForm
 
     def form_valid(self, form):
         form.instance.question = WordFilter().clean(form.instance.question)
-        return super(ProjectQuestionAdd, self).form_valid(form)
+        return super(ProjectTechnicalRequestNewView, self).form_valid(form)
 
     def get_success_url(self):
-        return reverse('projects:question', args=[self.kwargs['project']])
-
-
-class ProjectAnswer(DetailView):
-    model = ProjectTechnicalRequest
-    template_name = 'projects/answer.html'
-    context_object_name = 'question'
+        return reverse('projects:technical-requests', args=[self.kwargs['project']])
 
     def get_context_data(self, **kwargs):
-        context = super(ProjectAnswer, self).get_context_data(**kwargs)
+        context = super(ProjectTechnicalRequestNewView, self)\
+            .get_context_data(**kwargs)
+        context['project'] = get_object_or_404(Project, id=self.kwargs['project'])
         return context
 
 
-class ProjectAddAnswer(UpdateView):
+class ProjectTechnicalRequestAnswerDetail(DetailView):
     model = ProjectTechnicalRequest
-    template_name = 'projects/answer_add.html'
+    template_name = 'projects/technical-request-answer.html'
+    context_object_name = 'question'
+
+    def get_context_data(self, **kwargs):
+        context = super(ProjectTechnicalRequestAnswerDetail, self)\
+            .get_context_data(**kwargs)
+        return context
+
+
+class ProjectTechnicalRequestAnswerNewView(UpdateView):
+    model = ProjectTechnicalRequest
+    template_name = 'projects/technical-request-answer-new.html'
     context_object_name = 'question'
     form_class = ProjectAnswerForm
 
     def form_valid(self, form):
         form.instance.answer = WordFilter().clean(form.instance.answer)
-        return super(ProjectAddAnswer, self).form_valid(form)
+        return super(ProjectTechnicalRequestAnswerNewView, self).form_valid(form)
 
     def get_success_url(self):
         question = ProjectTechnicalRequest.objects.get(pk=self.kwargs['pk'])
         question.replied = True
         question.save()
-        return reverse('projects:answer', args=[self.kwargs['project'], self.kwargs['pk']])
+        return reverse('projects:technical-request-answer',
+                       args=[self.kwargs['project'], self.kwargs['pk']])
 
 
 class VoteView(CustomLoginRequiredMixin, ApprovedProjectRequiredMixin,

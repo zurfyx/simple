@@ -1,4 +1,10 @@
 {% extends "base.html" %}
+{% load breadcrumb %}
+
+{% block breadcrumb_ %}
+    {{ block.super }}
+    {% breadcrumb_url "Projects" "projects:list" %}
+{% endblock %}
 
 {% block content_ %}
     {% block app_content %}

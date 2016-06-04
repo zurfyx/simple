@@ -6,8 +6,8 @@ from .views import ProjectDetail, ProjectList, ProjectNewView,\
     ProjectContributeView, ProjectPendingApproval, \
     ProjectApproveContributionList, UserProjectList, \
     ProjectContributionApproveView, ProjectContributionDenyView,\
-    SearchProject, UpvoteView, DownvoteView, ProjectQuestions, \
-    ProjectQuestionAdd, FavoritesView,ProjectAnswer, ProjectAddAnswer, NotificationsView
+    SearchProject, UpvoteView, DownvoteView, ProjectTechnicalRequestList, \
+    ProjectTechnicalRequestNewView, FavoritesView,ProjectTechnicalRequestAnswerDetail, ProjectTechnicalRequestAnswerNewView, NotificationsView
 
 urlpatterns = [
     # Include comments application
@@ -121,32 +121,32 @@ urlpatterns = [
         name='edit'
     ),
 
-    # Question list
+    # Technical Requests list
     url(
-        r'^\/(?P<project>\d+)/questions/$',
-        ProjectQuestions.as_view(),
-        name='question'
+        r'^\/(?P<project>\d+)/technical-requests$',
+        ProjectTechnicalRequestList.as_view(),
+        name='technical-requests'
     ),
 
-    # Add question
+    # Add Technical Request
     url(
-        r'^\/(?P<project>\d+)/questions/add/$',
-        ProjectQuestionAdd.as_view(),
-        name='question_add'
+        r'^\/(?P<project>\d+)/technical-requests/new$',
+        ProjectTechnicalRequestNewView.as_view(),
+        name='technical-request-new'
     ),
 
-    # See answer
+    # See Technical Request Answer
     url(
-        r'^\/(?P<project>\d+)/questions/(?P<pk>\d+)$',
-        ProjectAnswer.as_view(),
-        name='answer'
+        r'^\/(?P<project>\d+)/technical-requests/(?P<pk>\d+)$',
+        ProjectTechnicalRequestAnswerDetail.as_view(),
+        name='technical-request-answer'
     ),
 
-    # Add answer
+    # Reply Technical Request
     url(
-        r'^\/(?P<project>\d+)/questions/(?P<pk>\d+)/addanswer$',
-        ProjectAddAnswer.as_view(),
-        name='answer_add'
+        r'^\/(?P<project>\d+)/technical-requests/(?P<pk>\d+)/reply',
+        ProjectTechnicalRequestAnswerNewView.as_view(),
+        name='technical-request-answer-new'
     ),
 
 

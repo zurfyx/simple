@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'annoying',
     'compressor',
     'datetimewidget',
+    'core',
     'users',
     'projects',
     'projects.activities',

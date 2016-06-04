@@ -1,0 +1,21 @@
+{% extends "projects/base.html" %}
+{% load breadcrumb %}
+
+{% block breadcrumb_ %}
+    {{ block.super }}
+    {% with "Project '"|add:question.project.title|add:"'" as project_name %}
+        {% breadcrumb_url project_name "projects:detail" question.project.id %}
+    {% endwith %}
+    {% breadcrumb_url "Technical requests" "projects:technical-requests" question.project.id %}
+    {% with "Technical request '"|add:question.question|add:"'" as technical_name %}
+        {% breadcrumb_url technical_name "projects:technical-request-answer" question.project.id question.id %}
+    {% endwith %}
+{% endblock %}
+
+{% block app_content %}
+    <h1>Answer</h1>
+    <form method="post" action="">
+        {% include "form.html" %}
+        <input type="submit" value="Add" />
+    </form>
+{% endblock %}

@@ -1,4 +1,12 @@
 {% extends "projects/base.html" %}
+{% load breadcrumb %}
+
+{% block breadcrumb_ %}
+    {{ block.super }}
+    {% with "Edit project '"|add:project.title|add:"'" as edit_project %}
+        {% breadcrumb_url edit_project "projects:edit" project.id %}
+    {% endwith %}
+{% endblock %}
 
 {% block menu_title %}
     <h1>Edit project</h1>

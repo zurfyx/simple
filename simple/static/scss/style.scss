@@ -381,7 +381,7 @@ ul.enumerateless li {
   word-wrap: break-word;
 }
 
-#header {
+#header-top {
   @extend .min-page-padding;
   @extend .clear;
   color: $default-contrast-font-color;
@@ -434,6 +434,26 @@ ul.enumerateless li {
   h1 {
     color: #333;
     font-weight: bold;
+  }
+}
+
+#breadcrumb {
+  @extend .min-page-padding;
+  background-color: $hyper-light-grey;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid #e0e0e0;
+
+  a {
+    color: $default-font-color;
+
+    &:hover {
+      color: $default-color;
+    }
+  }
+
+  .breadcrumb-arrow {
+    padding: 0 8px 0 8px;
   }
 }
 

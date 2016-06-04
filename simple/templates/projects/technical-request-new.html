@@ -1,0 +1,19 @@
+{% extends "projects/base.html" %}
+{% load breadcrumb %}
+
+{% block breadcrumb_ %}
+    {{ block.super }}
+    {% with "Project '"|add:project.title|add:"'" as project_name %}
+        {% breadcrumb_url project_name "projects:detail" project.id %}
+    {% endwith %}
+    {% breadcrumb_url "Technical requests" "projects:technical-requests" project.id %}
+    {% breadcrumb_url "New technical request" "projects:technical-request-new" project.id %}
+{% endblock %}
+
+{% block app_content %}
+    <h1>New technical request</h1>
+    <form method="post" action="">
+        {% include "form.html" %}
+        <input type="submit" value="Create" />
+    </form>
+{% endblock %}

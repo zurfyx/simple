@@ -8,6 +8,10 @@
 {% block menu %}
 {% endblock %}
 
+{% block breadcrumb %}
+    {# exception: breadcrumb exempt #}
+{% endblock %}
+
 {% block app_content %}
     <div class="project-detail container-fluid">
         <input type="hidden" id="project_id" value="{{ project.id }}" />
@@ -39,10 +43,9 @@
                         <i>Views: {{ project.visits }}</i>
                     </div>
                     <div class="tools">
-                        <!-- <a href="#">Activities</a> -->
                         <a href="#">Members</a>
                         <a href="#">Contributors</a>
-                        <a href="{% url "projects:question" project.id %}">Questions</a>
+                        <a href="{% url "projects:technical-requests" project.id %}">Technical requests</a>
                         <a href="{% url "projects:contribute" project.id %}">Request membership</a>
                         {% if request.user.is_staff or user_project_role.role == PROJECT_ROLES.SCIENTIST or user_project_role.role == PROJECT_ROLES.STUDENT %}
                             <a href="{% url "projects:activities:list" project.id %}">Activities</a>
