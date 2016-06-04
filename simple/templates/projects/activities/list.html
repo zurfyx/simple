@@ -20,17 +20,19 @@
 
         {# grid content #}
         {% for activity in activities %}
-            <div class="box row">
-                <div class="col-md-8">
-                    {{ activity.title }}
+            <a class="no-link-color" href="{% url "projects:activities:detail" project.id activity.id %}">
+                <div class="box row">
+                    <div class="col-md-8">
+                        {{ activity.title }}
+                    </div>
+                    <div class="col-md-2">
+                        {{ activity.start_date | date:'Y-m-d H:i' }}
+                    </div>
+                    <div class="col-md-2">
+                        {{ activity.due_date | date:'Y-m-d H:i' }}
+                    </div>
                 </div>
-                <div class="col-md-2">
-                    {{ activity.start_date | date:'Y-m-d H:i' }}
-                </div>
-                <div class="col-md-2">
-                    {{ activity.due_date | date:'Y-m-d H:i' }}
-                </div>
-            </div>
+            </a>
         {% endfor %}
     </div>
 {% endblock %}

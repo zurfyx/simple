@@ -1,0 +1,34 @@
+{% extends "projects/activities/base.html" %}
+
+{% block menu_title %}
+    <h1>New activity response</h1>
+{% endblock %}
+
+{% block app_content %}
+    {% if activity_response %}
+        <div class="center-text">
+            You have already submitted a response to this activity.
+        </div>
+    {% else %}
+        <div class="center box" style="width:800px">
+            <form method="post" enctype="multipart/form-data" action="">
+                <div class="row">
+                    <div class="form-label">
+                        <label for="id_title">Project:</label>
+                    </div>
+                    {{ project.title }}
+                </div>
+
+                <div class="row">
+                    <div class="form-label">
+                        <label for="id_title">Activity:</label>
+                    </div>
+                    {{ activity.title }}
+                </div>
+
+                {% include "form.html" with required_mark="*" %}
+                <input type="submit" value="Create" />
+            </form>
+        </div>
+    {% endif %}
+{% endblock %}
