@@ -35,6 +35,9 @@
                     <div class="row">
                         <i>Author: <a href="{% url "users:account" project.user.id %}">{{ project.user.get_short_name }}</a></i>
                     </div>
+                    <div class="row">
+                        <i>Views: {{ project.visits }}</i>
+                    </div>
                     <div class="tools">
                         <!-- <a href="#">Activities</a> -->
                         <a href="#">Members</a>
