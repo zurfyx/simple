@@ -7,7 +7,7 @@ from .views import ProjectDetail, ProjectList, ProjectNewView,\
     ProjectApproveContributionList, UserProjectList, \
     ProjectContributionApproveView, ProjectContributionDenyView,\
     SearchProject, UpvoteView, DownvoteView, ProjectQuestions, \
-    ProjectQuestionAdd, FavoritesView,ProjectAnswer, ProjectAddAnswer
+    ProjectQuestionAdd, FavoritesView,ProjectAnswer, ProjectAddAnswer, NotificationsView
 
 urlpatterns = [
     # Include comments application
@@ -170,5 +170,11 @@ urlpatterns = [
         FavoritesView.as_view(),
         name='favorites'
     ),
+    url(
+        r'^\/(?P<pk>\d+)/notifications$',
+        NotificationsView.as_view(),
+        name='notifications'
+    ),
+
 
 ]

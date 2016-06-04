@@ -143,6 +143,12 @@ USE_TZ = True
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
+EMAIL_HOST= 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'simpleprojectinfo@gmail.com'
+EMAIL_HOST_PASSWORD = 'simpleproject12345'
+EMAIL_USE_TLS = True
+
 STATIC_URL = '/static/'
 COMPRESS_ROOT = 'static/'
 STATIC_ROOT = 'static_root/'

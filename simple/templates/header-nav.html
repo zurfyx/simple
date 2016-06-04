@@ -2,7 +2,7 @@
     <li><a href="{% url "projects:list" %}">Projects</a></li>
     <li><a href="{% url "users:list" %}">Users</a></li>
     {% if request.user.is_authenticated %}
-        <li><a href="#">Notifications (0)</a></li>
+        <li><a href="{% url "projects:notifications" request.user.id %}">Notifications (0)</a></li>
         <li><a href="{% url "users:account" request.user.id %}">{{ request.user.first_name }}</a></li>
         <li><a href="javascript:void(document.body.style.fontSize='20Px')"><span class="glyphicon glyphicon-zoom-in"></span></a> </li>
         <li><a href="javascript:void(document.body.style.fontSize='16Px')"><span class="glyphicon glyphicon-zoom-out"></span></a> </li>

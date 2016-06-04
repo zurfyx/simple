@@ -13,7 +13,7 @@ from django.views.generic.base import RedirectView, TemplateView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView
 from core.mixins import CustomLoginRequiredMixin, HeadOfDepartmentMixin
-
+from django.core.mail import EmailMessage
 from projects import constants
 from projects.forms import ProjectNewForm, ProjectEditForm, ProjectContributeForm, ProjectQuestionForm,ProjectAnswerForm
 from projects.mixins import ApprovedProjectRequiredMixin, ProjectQuestionMixin
@@ -277,6 +277,10 @@ class ProjectEdit(ProjectEditMixin):
     form_class = ProjectEditForm
 
     def get_success_url(self):
+        project = Project.objects.get(pk=self.kwargs['pk'])
+        user = self.request.user
+        email = EmailMessage('Simple Technical Request','Your project '+str(project.title)+' has been edited by '+ str(user.first_name) , to =[project.user])
+        email.send()
         return reverse('projects:detail', args=[self.kwargs['pk']])
 
 
@@ -296,6 +300,9 @@ class ProjectQuestionAdd(ProjectQuestionMixin):
         question.project = Project.objects.get(pk=self.kwargs['project'])
         question.from_user= self.request.user
         question.save()
+        email = EmailMessage('Simple Technical Request', 'You have a new technical request from '+str(question.from_user.first_name) +': \n'
+                            + str(question.question) , to =[question.to_user])
+        email.send()
         return HttpResponseRedirect("../")
 
 
@@ -316,6 +323,9 @@ class ProjectAddAnswer(UpdateView):
     form_class = ProjectAnswerForm
 
     def get_success_url(self):
+        question = ProjectTechnicalRequest.objects.get(pk=self.kwargs['pk'])
+        question.replied = True
+        question.save()
         return reverse('projects:answer', args=[self.kwargs['project'], self.kwargs['pk']])
 
 
@@ -398,5 +408,11 @@ class FavoritesView(ListView):
     def queryset(self):
         return self.model.objects.filter(user=self.request.user)
 
+class NotificationsView(ListView):
+    template_name = 'projects/notifications.html'
+    model = ProjectTechnicalRequest
+    context_object_name = 'questions'
 
+    def queryset(self):
+        return self.model.objects.filter(to_user=self.request.user, replied = False)
 
