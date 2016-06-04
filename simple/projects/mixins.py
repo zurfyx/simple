@@ -2,6 +2,7 @@ from annoying.functions import get_object_or_None
 from django.http import Http404
 from django.shortcuts import get_object_or_404
 from django.views.generic import UpdateView, CreateView
+from django.core.mail import EmailMessage
 
 from core.mixins import OwnerRequiredMixin, CustomLoginRequiredMixin
 from .models import Project, ProjectTechnicalRequest, ProjectRole
@@ -96,6 +97,13 @@ class ProjectAddQuestionMixin(OwnerRequiredMixin, CreateView):
     model = ProjectTechnicalRequest
 
     def form_valid(self, form):
+        question = form.save(commit=False)
         form.instance.from_user = self.request.user
         form.instance.project = Project.objects.get(id=self.kwargs['project'])
+        question.save()
+        email = EmailMessage('Simple Technical Request', 'You have a new technical request from ' +
+                             str(question.from_user.first_name) + ': \n' + str(question.question),
+                             to=[question.to_user])
+
+        email.send()
         return super(ProjectAddQuestionMixin, self).form_valid(form)
