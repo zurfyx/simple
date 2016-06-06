@@ -1,4 +1,12 @@
 {% extends "projects/activities/base.html" %}
+{% load breadcrumb %}
+
+{% block breadcrumb_ %}
+    {{ block.super }}
+    {% with "Activity '"|add:activity.title|add:"'" as activity_name %}
+        {% breadcrumb_url activity_name "projects:activities:detail" project.id activity.id %}
+    {% endwith %}
+{% endblock %}
 
 {% block menu_title %}
     <h1>{{ activity.title }}</h1>

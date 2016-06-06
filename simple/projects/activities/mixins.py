@@ -1,7 +1,16 @@
 from django.core.urlresolvers import reverse
 from django.shortcuts import get_object_or_404, redirect
+from django.views.generic import View
 
+from projects.models import Project
 from .models import ProjectActivity
+
+
+class ActivityBaseMixin(View):
+    def get_context_data(self, **kwargs):
+        context = super(ActivityBaseMixin, self).get_context_data(**kwargs)
+        context['project'] = get_object_or_404(Project, id=self.kwargs['project'])
+        return context
 
 
 class ActivityOpenMixin(object):

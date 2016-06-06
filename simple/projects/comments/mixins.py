@@ -7,14 +7,14 @@ from projects.comments.models import Comment
 from projects.models import Project
 
 
-class CommentMixin(View):
+class CommentBaseMixin(View):
     def get_context_data(self, **kwargs):
-        context = super(CommentMixin, self).get_context_data(**kwargs)
+        context = super(CommentBaseMixin, self).get_context_data(**kwargs)
         context['project'] = get_object_or_404(Project, id=self.kwargs['project'])
         return context
 
 
-class CommentAddMixin(CustomLoginRequiredMixin, CommentMixin, CreateView):
+class CommentAddMixin(CustomLoginRequiredMixin, CommentBaseMixin, CreateView):
     model = Comment
 
     def form_valid(self, form):
@@ -23,7 +23,7 @@ class CommentAddMixin(CustomLoginRequiredMixin, CommentMixin, CreateView):
         return super(CommentAddMixin, self).form_valid(form)
 
 
-class CommentEditMixin(OwnerRequiredMixin, CommentMixin, UpdateView):
+class CommentEditMixin(OwnerRequiredMixin, CommentBaseMixin, UpdateView):
     model = Comment
 
     def form_valid(self, form):
@@ -32,6 +32,6 @@ class CommentEditMixin(OwnerRequiredMixin, CommentMixin, UpdateView):
         return super(CommentEditMixin, self).form_valid(form)
 
 
-class CommentDeleteMixin(OwnerRequiredOrModeratorMixin, CommentMixin, DeleteView):
+class CommentDeleteMixin(OwnerRequiredOrModeratorMixin, CommentBaseMixin, DeleteView):
     model = Comment
 

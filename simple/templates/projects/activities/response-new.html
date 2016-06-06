@@ -1,4 +1,10 @@
 {% extends "projects/activities/base.html" %}
+{% load breadcrumb %}
+
+{% block breadcrumb_ %}
+    {{ block.super }}
+    {% breadcrumb_url "New activity response" "projects:activities:response-new" project.id activity.id %}
+{% endblock %}
 
 {% block menu_title %}
     <h1>New activity response</h1>

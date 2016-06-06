@@ -6,17 +6,19 @@ from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView
 
 from projects.activities.forms import ActivityNewForm, ActivityResponseNewForm
-from projects.activities.mixins import ActivityOpenMixin
+from projects.activities.mixins import ActivityOpenMixin, ActivityBaseMixin
 from projects.mixins import ScientistOrStudentRequiredMixin, \
     ScientistRequiredMixin, StudentRequiredMixin
 from projects.models import Project, ProjectRole
 from .models import ProjectActivity, ProjectActivityResponse
 
 
-class ActivityList(ScientistOrStudentRequiredMixin, ListView):
+class ActivityList(ScientistOrStudentRequiredMixin,
+                   ActivityBaseMixin, ListView):
     template_name = 'projects/activities/list.html'
     model = ProjectActivity
     context_object_name = 'activities'
+    ordering = ['-created']
 
     def get_context_data(self, **kwargs):
         context = super(ActivityList, self).get_context_data()
@@ -27,7 +29,7 @@ class ActivityList(ScientistOrStudentRequiredMixin, ListView):
         return context
 
 
-class ActivityNewView(ScientistRequiredMixin, CreateView):
+class ActivityNewView(ScientistRequiredMixin, ActivityBaseMixin, CreateView):
     template_name = 'projects/activities/new.html'
     model = ProjectActivity
     form_class = ActivityNewForm
@@ -46,7 +48,8 @@ class ActivityNewView(ScientistRequiredMixin, CreateView):
         return context
 
 
-class ActivityDetailView(ScientistOrStudentRequiredMixin, DetailView):
+class ActivityDetailView(ScientistOrStudentRequiredMixin,
+                         ActivityBaseMixin, DetailView):
     template_name = 'projects/activities/detail.html'
     model = ProjectActivity
     context_object_name = 'activity'
@@ -65,8 +68,8 @@ class ActivityDetailView(ScientistOrStudentRequiredMixin, DetailView):
 #
 
 
-class ActivityResponseNewView(StudentRequiredMixin, ActivityOpenMixin,
-                              CreateView):
+class ActivityResponseNewView(StudentRequiredMixin, ActivityBaseMixin,
+                              ActivityOpenMixin, CreateView):
     template_name = "projects/activities/response-new.html"
     model = ProjectActivityResponse
     form_class = ActivityResponseNewForm
