@@ -1,4 +1,12 @@
 {% extends "projects/base.html" %}
+{% load breadcrumb %}
+
+{% block breadcrumb_ %}
+    {{ block.super }}
+    {% with "User '"|add:user.get_short_name|add:"' projects" as user_projects_name %}
+        {% breadcrumb_url user_projects_name "projects:user-list" user.id %}
+    {% endwith %}
+{% endblock %}
 
 {% block menu_title %}
     <h1>{{ user.get_short_name }} projects</h1>

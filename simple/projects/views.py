@@ -45,6 +45,11 @@ class UserProjectList(ProjectList):
     def get_queryset(self):
         return self.model.objects.filter(user=self.kwargs['user'])
 
+    def get_context_data(self, **kwargs):
+        context = super(UserProjectList, self).get_context_data(**kwargs)
+        context['user'] = get_object_or_404(User, id=self.kwargs['user'])
+        return context
+
 
 class ProjectDetail(DetailView):
     """
@@ -239,6 +244,7 @@ class ProjectContributionApproveDeny(RedirectView):
      further operations.
     """
     # TODO project owner required
+    # TODO POST request
     pattern_name = 'projects:approve-contributions-list'
 
     def __init__(self):
