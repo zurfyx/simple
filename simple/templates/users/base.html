@@ -1,4 +1,10 @@
 {% extends "base.html" %}
+{% load breadcrumb %}
+
+{% block breadcrumb_ %}
+    {{ block.super }}
+    {% breadcrumb_url "Users" "users:list" %}
+{% endblock %}
 
 {% block content_ %}
     {% include "users/left-sidebar.html" with selection="account" %}
