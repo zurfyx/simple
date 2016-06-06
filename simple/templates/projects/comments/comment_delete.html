@@ -1,7 +1,16 @@
 {% extends "projects/comments/base.html" %}
+{% load breadcrumb %}
+
+{% block breadcrumb_ %}
+    {{ block.super }}
+    {% breadcrumb_url "Delete comment" "projects:comments:comment_delete" comment.id project.id %}
+{% endblock %}
+
+{% block menu_title %}
+    <h1>Remove comment</h1>
+{% endblock %}
 
 {% block app_content %}
-    <h1>Remove comment</h1>
     <form method="post" action="">
         {% include "form_delete.html" %}
     </form>

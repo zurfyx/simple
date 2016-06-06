@@ -1,4 +1,10 @@
 {% extends "projects/comments/base.html" %}
+{% load breadcrumb %}
+
+{% block breadcrumb_ %}
+    {{ block.super }}
+    {% breadcrumb_url "Edit comment" "projects:comments:comment_edit" comment.id project.id %}
+{% endblock %}
 
 {% block menu_title %}
     <h1>Edit comment</h1>

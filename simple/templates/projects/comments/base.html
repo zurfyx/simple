@@ -1,4 +1,12 @@
 {% extends "projects/base.html" %}
+{% load breadcrumb %}
+
+{% block breadcrumb_ %}
+    {{ block.super }}
+    {% with "Project '"|add:project.title|add:"'" as project_name %}
+        {% breadcrumb_url project_name "projects:detail" project.id %}
+    {% endwith %}
+{% endblock %}
 
 {% block content_ %}
     {% block app_content %}

@@ -4,9 +4,9 @@
 {% block breadcrumb_ %}
     {{ block.super }}
     {% with "Project '"|add:project.title|add:"'" as project_name %}
-        {% breadcrumb_url project_name "projects:detail" project_role.project.id %}
+        {% breadcrumb_url project_name "projects:detail" project.id %}
     {% endwith %}
-    {% breadcrumb_url "Contribute" "projects:contribute" project_role.project.id %}
+    {% breadcrumb_url "Contribute" "projects:contribute" project.id %}
 {% endblock %}
 
 {% block menu_title %}
