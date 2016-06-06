@@ -5,7 +5,7 @@ from django.db import transaction
 from django.db.models import Q
 from django.http.response import JsonResponse
 from django.http import HttpResponseRedirect
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, render
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_protect
 from django.views.generic import ListView
@@ -445,6 +445,29 @@ class FavoritesView(ListView):
         return self.model.objects.filter(user=self.request.user)
 
 
+def favorite_create(request):
+    if request.method == 'POST':
+        project_id = request.POST.get('project')
+        project = Project.objects.get(pk=project_id)
+        user = request.user
+        try:
+            ProjectFavorite.objects.get(project=project, user=user)
+            return render(request, 'projects/favorites.html', {'exist': '1', 'project': project.title})
+
+        except:
+            favorite = ProjectFavorite(project=project, user=user)
+            favorite.save()
+            return render(request, 'projects/favorites.html', {'added': '1', 'project': project.title})
+
+
+def favorite_delete(request):
+    project_id = request.POST.get('project')
+    project = Project.objects.get(pk=project_id)
+    favorite = ProjectFavorite.objects.get(project=project, user=request.user)
+    favorite.delete()
+    return HttpResponseRedirect('/projects/favorites')
+
+
 class NotificationsView(ListView):
     template_name = 'projects/notifications.html'
     model = ProjectTechnicalRequest
@@ -454,3 +477,9 @@ class NotificationsView(ListView):
         return self.model.objects.filter(to_user=self.request.user, replied=False)
 
 
+def revokeproject(request):
+    project_id = request.POST.get('project')
+    project = Project.objects.get(pk=project_id)
+    projectrole = ProjectRole.objects.get(project=project, user= request.user)
+    projectrole.delete()
+    return HttpResponseRedirect('/projects/'+ project_id)

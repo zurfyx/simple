@@ -1,13 +1,7 @@
 {% extends "projects/base.html" %}
-{% load breadcrumb %}
-
-{% block breadcrumb_ %}
-    {{ block.super }}
-    {% breadcrumb_url "Favorites" "projects:favorites" %}
-{% endblock %}
 
 {% block menu_title %}
-    <h1>My favorite projects</h1>
+    <h1>My Favorites Projects</h1>
 {% endblock %}
 
 {% block app_content %}
@@ -19,49 +13,52 @@
             }
         }
     </script>
+  <div style="margin: 25px "class="row">
 
-    <div class="row search">
-        <div class="input-group">
-            <span class="input-group-addon">
-                <i class="glyphicon glyphicon-search"></i>
-            </span>
-            <input id="txtSearch" type="text" class="form-control" placeholder="Search for Project..." onkeypress="if(this.value)search(event,this.value)"/>
-        </div>
-    </div>
-    <a class="corner-btn" href="{% url "projects:new" %}">+</a>
-    <ul class="projects-list">
-        {% for project in favorites %}
-        {% if project.project.approved %}
-            <li>
-                <div class="project-header">
-                    <img class ="image-header" src="{{ MEDIA_URL }}{{project.picture }}" />
-                    <a href="{% url "projects:detail" project.id %}">
-                        {{ project.project.title }}
-                    </a>
+        {% if added %}
+            <strong>Success!</strong>Project {{ project }}has been added <a href="/projects/favorites">Back</a>
+        {% elif exist %}
+             <strong>Error!</strong>Project {{ project }} already exists in your Favorites. <a href="/projects/favorites">Back</a>
+        {% else %}
+            {% for project in favorites %}
+            {% if project.project.approved %}
+                <div class='alert alert-info alert-dismissible' role='alert'>
+                <img src="{{ MEDIA_URL }}{{ project.project.picture }}" style="height:70px;margin-right:35px;float:left;" />
+                    <div class="project-title">
+                    {{ project.project.title }}
+                    </div>
+                    <div class="project-body">
+                        <div class="project-description">
+                            {{ project.body | truncatechars:150 }}
+                        </div>
+                        <div class="project-author">
+                            Started by {{ project.user.get_short_name }}
+                        </div>
+                        <div class="project-buttons">
+                            <a href="{% url "projects:detail" project.id %}">
+                                Explore
+                            </a>
+                            {% if project.user == request.user %}
+                                <a href = "{% url "projects:edit" project.id %}">Edit</a>
+                            {% endif %}
+                        </div>
+
+                    </div>
+                 <form action="{% url 'projects:favorite_delete' %}" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="project" value="{{ project.project.id }}">
+                        <button type="button" type="submit" class="btn btn-danger" style="float: right;margin-top:-50px;">Delete</button>
+                 </form>
                 </div>
-                <div class="project-body">
-                    <div class="project-description">
-                        {{ project.body | truncatechars:150 }}
+            {% endif %}
+                {% empty %}
+                    <div class='alert alert-info alert-dismissible error-search'  role= 'alert'>
+                        <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hideen='true'>&times;</span></button>
+                        <strong>No results</strong> Your search returned no matches.
                     </div>
-                    <div class="project-author">
-                        Started by {{ project.user.get_short_name }}
-                    </div>
-                    <div class="project-buttons">
-                        <a href="{% url "projects:detail" project.id %}">
-                            Explore
-                        </a>
-                        {% if project.user == request.user %}
-                            <a href = "{% url "projects:edit" project.id %}">Edit</a>
-                        {% endif %}
-                    </div>
-                </div>
-            </li>
+            {% endfor %}
         {% endif %}
-            {% empty %}
-                <div class='alert alert-info alert-dismissible error-search'  role= 'alert'>
-                    <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hideen='true'>&times;</span></button>
-                    <strong>No results</strong> Your search returned no matches.
-                </div>
-        {% endfor %}
-    </ul>
+  </div>
+
 {% endblock %}
+
