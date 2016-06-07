@@ -1,5 +1,6 @@
 from django.contrib import admin
 
+from projects.abstract_models import ProjectAttachment
 from projects.forms import ProjectRoleNewAdminForm, ProjectRoleEditAdminForm
 from .models import Project, ProjectRole, ProjectTechnicalRequest, ProjectLog, \
     ProjectRating, ProjectFavorite
@@ -7,6 +8,10 @@ from .models import Project, ProjectRole, ProjectTechnicalRequest, ProjectLog, \
 
 class ProjectAdmin(admin.ModelAdmin):
     list_display = ('title', 'user', 'created')
+
+
+class ProjectAttachmentAdmin(admin.ModelAdmin):
+    list_display = ('project', 'object')
 
 
 class ProjectRoleAdmin(admin.ModelAdmin):
@@ -31,6 +36,7 @@ class ProjectTechnicalRequestAdmin(admin.ModelAdmin):
     list_display = ('project', 'question')
 
 admin.site.register(Project, ProjectAdmin)
+admin.site.register(ProjectAttachment, ProjectAttachmentAdmin)
 admin.site.register(ProjectRole, ProjectRoleAdmin)
 admin.site.register(ProjectRating, ProjectRatingAdmin)
 admin.site.register(ProjectFavorite, ProjectFavoriteAdmin)

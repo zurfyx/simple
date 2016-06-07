@@ -81,6 +81,11 @@
         <div class="page-detail-description">
             {{ project.body }}
         </div>
+
+        <div class="page-detail-attachments">
+            {% include "attachments.html" with attachments=project.attachments.all %}
+        </div>
+
         <div class="page-detail-comments">
             <h2>Comments</h2>
             <a href = "{% url 'projects:comments:comment_add' project.id %}">New Comment</a>

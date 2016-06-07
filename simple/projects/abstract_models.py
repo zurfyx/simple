@@ -1,6 +1,6 @@
 from django.db import models
 from config import constants as globalConstants
-from core.fields import RestrictedNonAnimatedImageField
+from core.fields import RestrictedNonAnimatedImageField, RestrictedFile
 from users.models import User
 from .constants import ProjectRoles, ProjectLogTypes
 
@@ -59,6 +59,14 @@ class AbstractProject(AbstractTimeStamped):
     def increase_visits(self):
         self.visits += 1
         self.save()
+
+
+class ProjectAttachment(models.Model):
+    project = models.ForeignKey('projects.Project', related_name='attachments')
+    object = RestrictedFile(
+        upload_to=globalConstants.MediaFile.PROJECT_ATTACHMENT.path,
+        max_upload_size=globalConstants.MediaFile.PROJECT_ATTACHMENT.max_size,
+        blank=True, null=True)
 
 
 class AbstractProjectRole(models.Model):

@@ -1,0 +1,11 @@
+{% load file %}
+
+{% for attachment in attachments %}
+    <span class="attachment">
+        <i class="fa fa-paperclip fa-2" aria-hidden="true"></i>
+        <a href="{{ attachment.object.url }}" target="_blank">
+            {{ attachment.object|filename }}
+        </a>
+        <span class="attachment-meta">{{ attachment.object.size|filesize }}</span>
+    </span>
+{% endfor %}

@@ -1,5 +1,7 @@
 from django import forms
+from multiupload.fields import MultiFileField
 
+from config.constants import MediaFile
 from projects.constants import ProjectRoles
 from projects.models import Project, ProjectRole, ProjectTechnicalRequest
 
@@ -31,6 +33,8 @@ class ProjectNewForm(forms.ModelForm):
     """
     Form for creating a new Project
     """
+    attachments = MultiFileField(required=False, min_num=1, max_num=10,
+                                 max_file_size=MediaFile.PROJECT_ATTACHMENT.max_size)
 
     class Meta:
         model = Project
@@ -41,6 +45,8 @@ class ProjectEditForm(forms.ModelForm):
     """
     Form for editing a Project
     """
+    attachments = MultiFileField(required=False, min_num=1, max_num=10,
+                                 max_file_size=MediaFile.PROJECT_ATTACHMENT.max_size)
 
     class Meta:
         model = Project

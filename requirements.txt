@@ -7,3 +7,4 @@ coverage==4.0.3
 django-compressor==2.0
 Pillow==2.7.0
 django-datetime-widget==0.9.3
+django-multiupload==0.5.1

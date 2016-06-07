@@ -44,6 +44,10 @@
   }
 }
 
+.page-detail-stats {
+  background-color: $lighter-grey;
+}
+
 .page-detail-description {
   @extend .center, .page-width, .long-text;
   font-size: 16px;
@@ -51,8 +55,16 @@
   padding-bottom: 50px;
 }
 
-.page-detail-stats {
-  background-color: $lighter-grey;
+.page-detail-attachments {
+  @extend .center, .page-width;
+
+  .attachment {
+    display: block;
+  }
+
+  .attachment-meta {
+    color: $light-grey;
+  }
 }
 
 .page-detail-comments {

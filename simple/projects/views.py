@@ -16,6 +16,7 @@ from core.mixins import CustomLoginRequiredMixin, HeadOfDepartmentMixin
 from django.core.mail import EmailMessage
 from core.utils import WordFilter
 from projects import constants
+from projects.abstract_models import ProjectAttachment
 from projects.forms import ProjectNewForm, ProjectEditForm, ProjectContributeForm, ProjectQuestionForm, ProjectAnswerForm
 from projects.mixins import ApprovedProjectRequiredMixin, ProjectAddQuestionMixin
 from users.models import User
@@ -118,7 +119,14 @@ class ProjectNewView(CustomLoginRequiredMixin, CreateView):
         form.instance.title = WordFilter().clean(form.instance.title)
         form.instance.body = WordFilter().clean(form.instance.body)
         project.save()
+
+        # save attachments
+        for each in form.cleaned_data['attachments']:
+            ProjectAttachment.objects.create(project=project, object=each)
+
+        # create owner role
         self._create_owner_role(project, project.user)
+
         messages.success(self.request, project.title)
         return HttpResponseRedirect(reverse(self.success_url))
 
@@ -292,7 +300,13 @@ class ProjectEdit(ProjectEditMixin):
     form_class = ProjectEditForm
 
     def form_valid(self, form):
+        # word filters
         form.instance.body = WordFilter().clean(form.instance.body)
+
+        # save attachments
+        for each in form.cleaned_data['attachments']:
+            ProjectAttachment.objects.create(project=form.instance, object=each)
+
         return super(ProjectEdit, self).form_valid(form)
 
     def get_success_url(self):
