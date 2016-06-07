@@ -123,7 +123,7 @@ class AbstractProjectRating(AbstractTimeStamped):
         unique_together = ('user', 'project')
 
 
-class AbstractProjectFavorite(models.Model):
+class AbstractProjectFavorite(AbstractTimeStamped):
     """
     Project favourite by an User
     """

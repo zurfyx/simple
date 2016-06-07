@@ -171,9 +171,20 @@ urlpatterns = [
         FavoritesView.as_view(),
         name='favorites'
     ),
-    url(r'^/favorites/create$', favorite_create, name='favorite_create'),
 
-    url(r'^/favorites/delete$', favorite_delete, name='favorite_delete'),
+    # New favorite
+    url(
+        r'^\/favorites/create$',
+        favorite_create,
+        name='favorite_create'
+    ),
+
+    # Delete favorite
+    url(
+        r'^\/favorites/delete$',
+        favorite_delete,
+        name='favorite_delete'
+    ),
 
     url(
         r'^\/(?P<pk>\d+)/notifications$',
