@@ -7,6 +7,7 @@ from django.http.response import JsonResponse
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.utils.decorators import method_decorator
+from django.utils.functional import SimpleLazyObject
 from django.views.decorators.csrf import csrf_protect
 from django.views.generic import ListView
 from django.views.generic.base import RedirectView, TemplateView
@@ -48,7 +49,8 @@ class UserProjectList(ProjectList):
 
     def get_context_data(self, **kwargs):
         context = super(UserProjectList, self).get_context_data(**kwargs)
-        context['user'] = get_object_or_404(User, id=self.kwargs['user'])
+        if type(self.kwargs['user']) != SimpleLazyObject:
+            context['user'] = get_object_or_404(User, id=self.kwargs['user'])
         return context
 
 
