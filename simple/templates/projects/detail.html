@@ -23,6 +23,11 @@
             <div class="project-info col-xs-6">
                 <div class="container-fluid">
                     <div class="row">
+                        <form method="post" action="{% url 'projects:favorite_create' %}" style="float: right">
+                            {% csrf_token %}
+                            <input name="project" type="hidden" value="{{ project.id }}" />
+                            <button type="submit" class="btn btn-warning"><span class="glyphicon glyphicon-star-empty"></span> Add Favorite</button>
+                        </form>
                       <h1>{{ project.title }}</h1>
                     </div>
                     <div class = "row">

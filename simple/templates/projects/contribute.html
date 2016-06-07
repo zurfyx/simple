@@ -31,7 +31,11 @@
             {% if project_role.user == project_role.project.user %}
                 <i class="light-grey">Transfer the project to be able to revoke your role</i>
             {% else %}
-                <a href="#">Revoke role</a> <!-- TODO -->
+                <form method="post" action="{% url "projects:revoke" %}">
+                {% csrf_token %}
+                    <input type="hidden" name="project" value="{{ project_role.project.id }}" />
+                    <button type="submit">Revoke role</button>
+                </form>
             {% endif %}
         {% else %}
             <form method="post">

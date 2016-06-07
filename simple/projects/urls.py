@@ -1,6 +1,7 @@
 from django.conf.urls import url, include
 from views import ProjectEdit
 from forms import ProjectQuestionForm
+from views import revokeproject, favorite_create, favorite_delete
 from .views import ProjectDetail, ProjectList, ProjectNewView,\
     ProjectApproveList, ProjectApproveView, ProjectDenyView, \
     ProjectContributeView, ProjectPendingApproval, \
@@ -170,11 +171,19 @@ urlpatterns = [
         FavoritesView.as_view(),
         name='favorites'
     ),
+    url(r'^/favorites/create$', favorite_create, name='favorite_create'),
+
+    url(r'^/favorites/delete$', favorite_delete, name='favorite_delete'),
+
     url(
         r'^\/(?P<pk>\d+)/notifications$',
         NotificationsView.as_view(),
         name='notifications'
     ),
-
+    # Revoke in a project
+    url(r'\/contribute/delete$',
+        revokeproject,
+        name='revoke'
+        )
 
 ]
