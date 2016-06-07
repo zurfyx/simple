@@ -35,11 +35,6 @@
                         <a href="{% url "projects:detail" project.id %}">
                             Explore
                         </a>
-                        {% if project.user == request.user %}
-                            <a href="{% url "projects:edit" project.id %}">
-                                Edit
-                            </a>
-                        {% endif %}
                     </div>
                 </div>
             </li>
