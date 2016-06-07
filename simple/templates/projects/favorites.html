@@ -1,11 +1,16 @@
 {% extends "projects/base.html" %}
+{% load breadcrumb %}
+
+{% block breadcrumb_ %}
+    {{ block.super }}
+    {% breadcrumb_url "New favorite" "projects:favorite_create" %}
+{% endblock %}
 
 {% block menu_title %}
-    <h1>My Favorites Projects</h1>
+    <h1>New favorite</h1>
 {% endblock %}
 
 {% block app_content %}
-
     <script type="text/javascript">
         function search(event, project) {
             if (event.which == 13 || event.keyCode == 13){
@@ -13,12 +18,12 @@
             }
         }
     </script>
-  <div style="margin: 25px "class="row">
 
+    <div class="center box" style="width:800px">
         {% if added %}
-            <strong>Success!</strong>Project {{ project }}has been added <a href="/projects/favorites">Back</a>
+            <strong>Success!</strong> Project {{ project }}has been added <a href="/projects/favorites">Back</a>
         {% elif exist %}
-             <strong>Error!</strong>Project {{ project }} already exists in your Favorites. <a href="/projects/favorites">Back</a>
+             <strong>Error!</strong> Project {{ project }} already exists in your Favorites. <a href="/projects/favorites">Back</a>
         {% else %}
             {% for project in favorites %}
             {% if project.project.approved %}
@@ -58,7 +63,7 @@
                     </div>
             {% endfor %}
         {% endif %}
-  </div>
+    </div>
 
 {% endblock %}
 

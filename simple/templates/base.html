@@ -16,20 +16,6 @@
             <link rel="stylesheet" type="text/scss" href="{% static "scss/style.scss" %}" />
         {% endcompress %}
     {% endblock %}
-
-    {% block cdn_scripts %}
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
-        <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-        {{ form.media }}
-    {% endblock %}
-
-    {% block scripts %}
-        <script src="{% static "js/jquery.config.js" %}"></script>
-    {% endblock %}
-
-    {% block local_scripts %}
-    {% endblock %}
 </head>
 <body>
     {% block header %}
@@ -76,5 +62,30 @@
         </div>
     {% endblock %}
 
+    {% block footer %}
+        <footer>
+            <div>
+                <img height="20" src="{% static "img/favicon.png" %}" />
+            </div>
+            <div>
+                Copyright &copy; 2016 Simple
+            </div>
+        </footer>
+    {% endblock %}
+
+    {# Scripts #}
+    {% block cdn_scripts %}
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+        {{ form.media }}
+    {% endblock %}
+
+    {% block scripts %}
+        <script src="{% static "js/jquery.config.js" %}"></script>
+    {% endblock %}
+
+    {% block local_scripts %}
+    {% endblock %}
 </body>
 </html>

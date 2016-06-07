@@ -199,6 +199,14 @@ form {
   }
 }
 
+footer {
+  border-top: 1px solid #e0e0e0;
+  background-color: #fff;
+  display: block;
+  padding: 10px;
+  text-align:center;
+}
+
 .attachment {
   display: block;
   .attachment-meta {
@@ -466,7 +474,7 @@ ul.enumerateless li {
 
 #content {
   background-color: $hyper-light-grey;
-  height: 800px; /* TODO */
+  padding-bottom: 30px;
 }
 
 /* IMPORTS */

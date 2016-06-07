@@ -10,10 +10,15 @@
     {% breadcrumb_url "New technical request" "projects:technical-request-new" project.id %}
 {% endblock %}
 
-{% block app_content %}
+{% block menu_title %}
     <h1>New technical request</h1>
-    <form method="post" action="">
-        {% include "form.html" %}
-        <input type="submit" value="Create" />
-    </form>
+{% endblock %}
+
+{% block app_content %}
+    <div class="center box" style="width:800px">
+        <form method="post" action="">
+            {% include "form.html" %}
+            <input type="submit" value="Create" />
+        </form>
+    </div>
 {% endblock %}

@@ -16,6 +16,10 @@ class CommentAddForm(forms.ModelForm):
     class Meta:
         model = Comment
         fields = ('content',)
+        widgets = {
+            'content': forms.Textarea(
+                attrs={'placeholder': u'Comment description'}),
+        }
 
 
 class CommentEditForm(forms.ModelForm):
@@ -29,3 +33,7 @@ class CommentEditForm(forms.ModelForm):
     class Meta:
         model = Comment
         fields = ('content',)
+        widgets = {
+            'content': forms.Textarea(
+                attrs={'placeholder': u'Content description'}),
+        }

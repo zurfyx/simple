@@ -13,20 +13,17 @@
 {% endblock %}
 
 {% block app_content %}
-
-    <div>
-        <h2>{{ question.question }}</h2>
-    </div>
-    <div>
-        {% if question.answer %}
-            <p>Answer :</p>
-            {{ question.answer }}
-        {% else %}
-           <p>No answers yet!</p>
-            {% if question.to_user == request.user %}
-                <a href="{% url "projects:technical-request-answer-new" question.project.id question.id %}">Add an answer</a>
+    <div class="center box" style="width:800px">
+        <p><b>{{ question.question }}</b></p>
+        <div>
+            {% if question.answer %}
+                {{ question.answer }}
+            {% else %}
+                No answer yet!
+                {% if question.to_user == request.user %}
+                    <a href="{% url "projects:technical-request-answer-new" question.project.id question.id %}">Add an answer</a>
+                {% endif %}
             {% endif %}
-        {% endif %}
-
+        </div>
     </div>
 {% endblock %}

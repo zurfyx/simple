@@ -9,17 +9,18 @@
     {% breadcrumb_url "Technical requests" "projects:technical-requests" project.id %}
 {% endblock %}
 
+{% block menu_title %}
+    <h1>Technical requests</h1>
+{% endblock %}
+
 {% block app_content %}
+    <div class="center box" style="width:800px">
+        <a class="corner-btn" href="{% url "projects:technical-request-new" project.id %}">+</a>
 
-    <div>
-        <h2>Questions</h2>
-        <a href="{% url "projects:technical-request-new" project.id %}">New Question</a>
         {% for question in questions %}
-
                 <div>
                     From: {{ question.from_user.first_name }}
                     To:   {{ question.to_user.first_name }}
-
                 </div>
                 <div>
                      Question: {{ question.question }}
@@ -28,19 +29,14 @@
                     Published: {{ question.created }}
                 </div>
                 <div>
-                    <a href="{% url "projects:technical-request-answer" project.id question.id %}">See</a>
+                    <a href="{% url "projects:technical-request-answer" project.id question.id %}">View</a>
                     {% if question.answer %}
-                        (Question answered)
-                    {% else %}
-                        (No answered yet)
+                        (answered)
                     {% endif %}
                 </div>
-
-
             <hr>
         {% empty %}
             No questions
         {% endfor %}
     </div>
-
 {% endblock %}

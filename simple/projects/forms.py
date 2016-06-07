@@ -40,6 +40,10 @@ class ProjectNewForm(forms.ModelForm):
     class Meta:
         model = Project
         fields = ('title', 'body', 'picture',)
+        widgets = {
+            'body': forms.Textarea(
+                attrs={'placeholder': u'Project description'}),
+        }
 
 
 class ProjectEditForm(forms.ModelForm):
@@ -53,6 +57,10 @@ class ProjectEditForm(forms.ModelForm):
     class Meta:
         model = Project
         fields = ('title', 'body', 'picture',)
+        widgets = {
+            'body': forms.Textarea(
+                attrs={'placeholder': u'Project description'}),
+        }
 
 
 class ProjectContributeForm(forms.ModelForm):
@@ -73,7 +81,7 @@ class ProjectQuestionForm(forms.ModelForm):
 
     class Meta:
         model = ProjectTechnicalRequest
-        fields = ['question','to_user']
+        fields = ['question', 'to_user']
 
 
 class ProjectAnswerForm(forms.ModelForm):
@@ -84,3 +92,7 @@ class ProjectAnswerForm(forms.ModelForm):
     class Meta:
         model = ProjectTechnicalRequest
         fields = ['answer']
+        widgets = {
+            'answer': forms.Textarea(
+                attrs={'placeholder': u'Type your answer'}),
+        }

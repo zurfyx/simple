@@ -12,10 +12,22 @@
     {% endwith %}
 {% endblock %}
 
+{% block menu_title %}
+    <h1>Technical request answer</h1>
+{% endblock %}
+
 {% block app_content %}
-    <h1>Answer</h1>
-    <form method="post" action="">
-        {% include "form.html" %}
-        <input type="submit" value="Add" />
-    </form>
+    <div class="center box" style="width:800px">
+        <form method="post" action="">
+            <div class="row">
+                <div class="form-label">
+                    <label>Question:</label>
+                </div>
+                {{ question.question }}
+            </div>
+
+            {% include "form.html" %}
+            <input type="submit" value="Reply" />
+        </form>
+    </div>
 {% endblock %}

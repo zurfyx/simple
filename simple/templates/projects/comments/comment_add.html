@@ -11,8 +11,10 @@
 {% endblock %}
 
 {% block app_content %}
-    <form method="post" action="">
-        {% include "form.html" with required_mark="*" %}
-        <input type="submit" value="Create" />
-    </form>
+    <div class="center box" style="width:800px">
+        <form method="post" action="">
+            {% include "form.html" with required_mark="*" %}
+            <input type="submit" value="Create" />
+        </form>
+    </div>
 {% endblock %}
