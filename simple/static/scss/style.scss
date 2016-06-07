@@ -199,6 +199,13 @@ form {
   }
 }
 
+.attachment {
+  display: block;
+  .attachment-meta {
+    color: $light-grey;
+  }
+}
+
 .box {
   background-color: #fff;
   border: 1px solid #e8e8e8;

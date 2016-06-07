@@ -57,14 +57,6 @@
 
 .page-detail-attachments {
   @extend .center, .page-width;
-
-  .attachment {
-    display: block;
-  }
-
-  .attachment-meta {
-    color: $light-grey;
-  }
 }
 
 .page-detail-comments {

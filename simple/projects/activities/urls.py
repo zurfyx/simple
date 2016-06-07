@@ -27,8 +27,6 @@ urlpatterns = [
 
     # Edit activity
 
-    # List of responses
-
     # Add new response
     url(
         r'^\/(?P<activity>\d+)/response/new$',

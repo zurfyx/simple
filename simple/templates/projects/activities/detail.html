@@ -26,6 +26,7 @@
         </div>
         <div class="activity-body">
             {{ activity.body }}
+            {% include "attachments.html" with attachments=activity.activity_attachments.all %}
         </div>
     </div>
 
@@ -38,6 +39,7 @@
                 <div class="box">
                     Submitted: {{ response.created }}
                     <span class="reply-body">{{ response.body }}</span>
+                    {% include "attachments.html" with attachments=response.activity_response_attachments.all %}
                 </div>
             {% empty %}
                 <div class="center-text">
@@ -52,6 +54,7 @@
                 <div class="box">
                     Submitted: {{ response.created }}
                     <p>{{ response.body }}</p>
+                    {% include "attachments.html" with attachments=response.activity_response_attachments.all %}
                 </div>
             {% empty %}
                 {% if activity.is_closed %}

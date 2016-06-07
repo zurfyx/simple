@@ -1,23 +1,31 @@
-from django.forms import ModelForm
+from django import forms
+from multiupload.fields import MultiFileField
 
-from projects.comments.models import *
+from config.constants import MediaFile
+from .models import Comment
 
 
-class CommentAddForm(ModelForm):
+class CommentAddForm(forms.ModelForm):
     """
     A form for creating comments.
     """
+    attachments = MultiFileField(required=False, min_num=1,
+                                 max_num=MediaFile.PROJECT_ATTACHMENT_MULTIUPLOAD,
+                                 max_file_size=MediaFile.PROJECT_ATTACHMENT.max_size)
 
     class Meta:
         model = Comment
-        fields = ['content']
+        fields = ('content',)
 
 
-class CommentEditForm(ModelForm):
+class CommentEditForm(forms.ModelForm):
     """
     A form for editing comments.
     """
+    attachments = MultiFileField(required=False, min_num=1,
+                                 max_num=MediaFile.PROJECT_ATTACHMENT_MULTIUPLOAD,
+                                 max_file_size=MediaFile.PROJECT_ATTACHMENT.max_size)
 
     class Meta:
         model = Comment
-        fields = ['content']
+        fields = ('content',)

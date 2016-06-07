@@ -14,15 +14,6 @@ class CommentBaseMixin(View):
         return context
 
 
-class CommentAddMixin(CustomLoginRequiredMixin, CommentBaseMixin, CreateView):
-    model = Comment
-
-    def form_valid(self, form):
-        form.instance.user = self.request.user
-        form.instance.project = Project.objects.get(id=self.kwargs['project'])
-        return super(CommentAddMixin, self).form_valid(form)
-
-
 class CommentEditMixin(OwnerRequiredMixin, CommentBaseMixin, UpdateView):
     model = Comment
 

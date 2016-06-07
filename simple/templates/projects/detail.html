@@ -115,6 +115,7 @@
                             <i>Removed</i>
                         {% else %}
                             {{ comment.content }}
+                            {% include "attachments.html" with attachments=comment.comment_attachments.all %}
                         {% endif %}
                     </div>
                 </div>

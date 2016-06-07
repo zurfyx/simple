@@ -1,6 +1,8 @@
 from django.db import models
 from django.utils import timezone
 
+from config import constants as globalConstants
+from core.fields import RestrictedFile
 from projects.abstract_models import AbstractTimeStamped
 from projects.models import Project
 from users.models import User
@@ -35,6 +37,18 @@ class AbstractProjectActivity(AbstractTimeStamped):
         verbose_name_plural = 'project activities'
 
 
+class AbstractProjectActivityAttachment(models.Model):
+    activity = models.ForeignKey('activities.ProjectActivity',
+                                 related_name='activity_attachments')
+    object = RestrictedFile(
+        upload_to=globalConstants.MediaFile.PROJECT_ATTACHMENT.path,
+        max_upload_size=globalConstants.MediaFile.PROJECT_ATTACHMENT.max_size,
+        blank=True, null=True)
+
+    class Meta:
+        abstract = True
+
+
 class AbstractProjectActivityResponse(AbstractTimeStamped):
     """
     Project Activity Response from User.
@@ -50,3 +64,15 @@ class AbstractProjectActivityResponse(AbstractTimeStamped):
     class Meta:
         abstract = True
         unique_together = ('user', 'activity')
+
+
+class AbstractProjectActivityResponseAttachment(models.Model):
+    response = models.ForeignKey('activities.ProjectActivityResponse',
+                                 related_name='activity_response_attachments')
+    object = RestrictedFile(
+        upload_to=globalConstants.MediaFile.PROJECT_ATTACHMENT.path,
+        max_upload_size=globalConstants.MediaFile.PROJECT_ATTACHMENT.max_size,
+        blank=True, null=True)
+
+    class Meta:
+        abstract = True

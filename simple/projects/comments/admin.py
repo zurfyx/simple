@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from projects.comments.models import Comment
+from projects.comments.models import Comment, CommentAttachment
 
 
 class CommentAdmin(admin.ModelAdmin):
@@ -12,4 +12,9 @@ class CommentAdmin(admin.ModelAdmin):
 
     content_shortener.short_description = 'Content'
 
+
+class CommentAttachmentAdmin(admin.ModelAdmin):
+    list_display = ('comment', 'object')
+
 admin.site.register(Comment, CommentAdmin)
+admin.site.register(CommentAttachment, CommentAttachmentAdmin)

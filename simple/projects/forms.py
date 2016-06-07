@@ -33,7 +33,8 @@ class ProjectNewForm(forms.ModelForm):
     """
     Form for creating a new Project
     """
-    attachments = MultiFileField(required=False, min_num=1, max_num=10,
+    attachments = MultiFileField(required=False, min_num=1,
+                                 max_num=MediaFile.PROJECT_ATTACHMENT_MULTIUPLOAD,
                                  max_file_size=MediaFile.PROJECT_ATTACHMENT.max_size)
 
     class Meta:
@@ -45,7 +46,8 @@ class ProjectEditForm(forms.ModelForm):
     """
     Form for editing a Project
     """
-    attachments = MultiFileField(required=False, min_num=1, max_num=10,
+    attachments = MultiFileField(required=False, min_num=1,
+                                 max_num=MediaFile.PROJECT_ATTACHMENT_MULTIUPLOAD,
                                  max_file_size=MediaFile.PROJECT_ATTACHMENT.max_size)
 
     class Meta:

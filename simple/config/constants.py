@@ -10,6 +10,7 @@ class MediaFile(object):
     USER_AVATAR = File('users/avatar', 2 * 1024 * 1024)  # 2 MB
     PROJECT_PICTURE = File('projects/picture', 2 * 1024 * 1024)
     PROJECT_ATTACHMENT = File('projects/attachment', 20 * 1024 * 1024)
+    PROJECT_ATTACHMENT_MULTIUPLOAD = 5  # number of attachments
 
 
 def app_constants(request):
